@@ -60,7 +60,7 @@ and `reports/`, and the key, so no extra flags are needed.
 docker compose run --rm tools npx tsx scripts/seed/demo-data.ts
 # Booking settings and owner blocks on demo listings
 docker compose run --rm tools node scripts/seed/booking-settings.mjs
-# 12 policies and 24 passages as demonstration drafts
+# 12 policies (version 1.0, approved, imported as published) and 24 passages
 docker compose run --rm tools node scripts/seed/policies.mjs
 # Reviewer role for the Jawharah demo persona (demo accounts only)
 docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role reviewer
@@ -83,7 +83,7 @@ Demo accounts (fictional personas, password from `SEED_USER_PASSWORD`, default b
 | users | 3 | Hanadi, Leen, Jawharah |
 | listings | 48 | 44 published, 2 draft, 2 paused |
 | media | 48 | 46 openly licensed photos (credits: `seed-data/PHOTO_CREDITS.md`) and 2 text placeholders; Base64 JPEG in separate documents |
-| policies / policyChunks | 12 / 24 | Demonstration drafts until approved |
+| policies / policyChunks | 12 / 24 | Version 1.0, approved by the project team on 4 Nov 2026, published |
 
 ## Checks
 
@@ -192,5 +192,4 @@ curl -X POST -H "x-sweep-secret: $SWEEP_SECRET" http://127.0.0.1:3001/v1/interna
 5. The item page shows "You might also need" (AI-assisted, with the AI note) or
    "Similar items" (no key).
 6. Hanadi asks on Policies: "What happens to my deposit if the item comes back
-   damaged?"; the answer cites the deposit and dispute policies and shows the
-   draft notice.
+   damaged?"; the answer cites the deposit and dispute policies (version 1.0).

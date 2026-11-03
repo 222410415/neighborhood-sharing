@@ -6,7 +6,8 @@
  * and records the answer, the cited policies and three automatic checks:
  *   cited_expected   every expected policy id is among the cited sources
  *   no_action_claim  the answer does not claim to have carried out an action
- *   draft_disclosed  a draft notice is present when the case requires it
+ *   draft_disclosed  a draft notice is present when the case requires it and a
+ *                    cited policy is still a draft
  * It writes a JSON file and a CSV with an empty `manual_score` column
  * (correct / partial / wrong) for the team's manual review. Automatic and
  * manual scores are reported separately; nothing is scored by guesswork.
@@ -92,7 +93,10 @@ for (const c of cases) {
     cited_expected: c.expected_policy_ids.every((k) => cited.includes(k)),
     cited_any_expected: c.expected_policy_ids.some((k) => cited.includes(k)),
     no_action_claim: !ACTION_CLAIM.test(body.answer ?? ""),
-    draft_disclosed: c.must_disclose_draft_demo_context ? !!body.draftNotice : true,
+    // A draft notice is required only while a cited policy is still a draft;
+    // answers from approved (published) policies correctly carry none.
+    draft_disclosed:
+      c.must_disclose_draft_demo_context && (body.sources ?? []).some((s) => s.isDemoDraft) ? !!body.draftNotice : true,
     latency_ms: latencyMs,
     answer: body.answer ?? JSON.stringify(body.error ?? body).slice(0, 300),
     manual_score: "",

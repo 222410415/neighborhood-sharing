@@ -364,3 +364,14 @@ Each credit is stored in `seed-data/collections/assets.json`, saved on the media
 document by the seed, and shown on the item page ("Photo: author, licence");
 `seed-data/PHOTO_CREDITS.md` lists all. Presentation Clicker and Backdrop Stand
 keep a text placeholder. Photo media ids are `media_photo_<listingId>`.
+
+## D-34: Policies approved (version 1.0)
+
+The project team approved all 12 policies on 4 November 2026. In the seed data
+they are version 1.0 with status "approved"; `scripts/seed/policies.mjs`
+imports approved policies as published (audit event per policy, actor
+`seed:approved-dataset`) and anything unapproved as a draft. Later versions are
+published through the admin policy page or `scripts/admin/publish-policies.mjs`
+(same changes as the publish endpoint, audited). The policy assistant shows a
+draft notice only when a cited policy is still a draft, and the evaluation
+script checks for it only in that case.
