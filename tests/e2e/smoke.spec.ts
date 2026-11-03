@@ -143,11 +143,12 @@ test.describe("Sprint 3 pages", () => {
     await expect(page.locator("h1")).toContainText("Ask for an item", { timeout: 20000 });
   });
 
-  test("Policy page shows the text, draft label and assistant panel", async ({ page }) => {
+  test("Policy page shows the text, status label and assistant panel", async ({ page }) => {
     await page.goto("/policies");
     await expect(page.locator("h1")).toContainText("Policies", { timeout: 20000 });
     await page.goto("/policies/pol_deposit");
     await expect(page.locator("h1")).toContainText("Refundable deposits", { timeout: 20000 });
+    await expect(page.getByText(/Version .+ · (Approved|Demonstration draft)/)).toBeVisible();
     await expect(page.getByRole("heading", { name: /Ask about policies/ })).toBeVisible();
   });
 
