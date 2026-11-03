@@ -1,0 +1,65 @@
+[
+  {
+    "id": "src_regions",
+    "publisher": "Saudipedia",
+    "title": "Provinces of Saudi Arabia",
+    "url": "https://saudipedia.com/en/provinces-of-saudi-arabia",
+    "accessed_on": "2026-09-25",
+    "kind": "geographic_reference",
+    "note": "Reference for the 13 administrative regions and their capitals. No boundary geometry or address verification is provided."
+  },
+  {
+    "id": "src_tent",
+    "publisher": "Decathlon Saudi Arabia",
+    "title": "Camping tent MH100 4 person",
+    "url": "https://decathlon.com.sa/products/camping-tent-mh100-4-person",
+    "accessed_on": "2026-09-25",
+    "kind": "retail_price",
+    "note": "Displayed purchase price SAR 470. A retail observation, not a rental quote."
+  },
+  {
+    "id": "src_tables",
+    "publisher": "Decathlon Saudi Arabia",
+    "title": "Camping tables",
+    "url": "https://ar.decathlon.com.sa/collections/tables",
+    "accessed_on": "2026-09-25",
+    "kind": "retail_price",
+    "note": "Observed a four-to-six-person folding table at SAR 325 and a table with chairs at SAR 470. Prices and stock may change."
+  },
+  {
+    "id": "src_washer",
+    "publisher": "SACO",
+    "title": "Pressure washers",
+    "url": "https://www.saco.sa/en/category/auto-care/auto-cleaning-tools/pressure-washers-c-1234",
+    "accessed_on": "2026-09-25",
+    "kind": "retail_price",
+    "note": "Observed domestic Karcher K1 at SAR 329 and K2 Universal Home at SAR 429. These are sale prices for specific retail products."
+  },
+  {
+    "id": "src_cleaner_rental",
+    "publisher": "Estajer",
+    "title": "Carpet and upholstery cleaner rental in Saudi Arabia",
+    "url": "https://estajer.com/en/resources/carpet-cleaner-rental-saudi",
+    "accessed_on": "2026-09-25",
+    "kind": "commercial_rental_reference",
+    "note": "Published daily range SAR 94–155; page describes VAT-inclusive rentals and delivery. Commercial service terms are not copied into the demo."
+  },
+  {
+    "id": "src_projector_rental",
+    "publisher": "Estajer",
+    "title": "Projector rentals",
+    "url": "https://estajer.com/parties-and-events/projectors/products",
+    "accessed_on": "2026-09-25",
+    "kind": "commercial_rental_reference",
+    "note": "Observed an Epson projector listing in Jeddah at SAR 345 per day with owner pickup. This is not a verified quote for a basic neighborhood projector."
+  },
+  {
+    "id": "src_2days",
+    "publisher": "2days",
+    "title": "2days platform and application",
+    "url": "https://www.2days.sa/",
+    "accessed_on": "2026-09-25",
+    "kind": "workflow_reference",
+    "note": "Public rental workflow distinguishes date selection, request submission, owner approval, and subsequent payment. Used as design context only."
+  }
+]

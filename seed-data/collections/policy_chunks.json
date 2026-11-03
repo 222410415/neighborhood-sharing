@@ -1,0 +1,194 @@
+[
+  {
+    "id": "pol_eligibility_en",
+    "policy_id": "pol_eligibility",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "The demo is designed for participants aged 18 or over. One account can borrow and lend. Verification labels in this seed dataset are simulated and do not establish any real person's identity.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_eligibility_ar",
+    "policy_id": "pol_eligibility",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "صُممت النسخة التجريبية للمشاركين بعمر 18 سنة فأكثر. يمكن للحساب نفسه الاستعارة والإعارة. حالات التحقق في هذه البيانات محاكاة ولا تثبت هوية أي شخص.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_booking_en",
+    "policy_id": "pol_booking",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "A request is not a confirmed reservation. The owner must accept it. Accepted, confirmed, active, overdue, return-pending and disputed bookings block overlapping reservations. Pending requests do not block dates. Payment, when required, follows acceptance.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_booking_ar",
+    "policy_id": "pol_booking",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "إرسال الطلب لا يعني تأكيد الحجز. يجب أن يقبله المالك. تمنع الحجوزات المقبولة والمؤكدة والجارية والمتأخرة والتي تنتظر تأكيد الإرجاع أو تتضمن نزاعاً الحجوزات المتعارضة. الطلبات المعلقة لا تحجز المواعيد. يأتي الدفع عند الحاجة بعد القبول.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_pricing_en",
+    "policy_id": "pol_pricing",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "Prices are owner-set demo amounts in SAR. One daily unit is 24 hours; a partial day rounds up. The demo allows 1 to 14 billable days. Free listings have no rental fee but may explicitly require a deposit. Taxes and service fees are not modeled; this is not a statement about legal tax treatment.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_pricing_ar",
+    "policy_id": "pol_pricing",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "الأسعار مبالغ تجريبية يحددها المالك بالريال السعودي. اليوم 24 ساعة ويُحسب جزء اليوم يوماً كاملاً. المدة التجريبية من يوم إلى 14 يوماً. قد تتطلب الإعارة المجانية مبلغ ضمان موضحاً. لا تحاكي هذه النسخة الضرائب أو رسوم الخدمة ولا تحدد المعاملة الضريبية القانونية.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_deposit_en",
+    "policy_id": "pol_deposit",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "A deposit is separate from the rental fee. In the demo it is collected after acceptance and before collection when required. After the owner confirms return without an unresolved issue, it becomes refundable. A disputed deposit remains under review; an administrator records any agreed refund and compensation allocation. No refund timing guarantee is configured.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_deposit_ar",
+    "policy_id": "pol_deposit",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "مبلغ الضمان منفصل عن رسوم الاستئجار. يُحصّل في النسخة التجريبية بعد قبول الطلب وقبل الاستلام عند اشتراطه. يصبح قابلاً للاسترداد بعد تأكيد المالك الإرجاع وعدم وجود مشكلة معلقة. يبقى مبلغ الضمان محل النزاع قيد المراجعة ويُسجل المسؤول توزيع الاسترداد والتعويض. لا توجد مدة مضمونة للاسترداد.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_payment_en",
+    "policy_id": "pol_payment",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "All payment records are simulated. Do not enter real card or bank details. A zero-fee booking with no deposit needs no payment. The demo payment adapter can show success, failure and refunds without transferring money.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_payment_ar",
+    "policy_id": "pol_payment",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "جميع سجلات الدفع محاكاة. لا تُدخل بيانات بطاقة أو حساب بنكي حقيقية. لا يحتاج الحجز المجاني دون ضمان إلى دفع. تعرض آلية الدفع التجريبية النجاح والفشل والاسترداد دون تحويل أموال.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_handover_en",
+    "policy_id": "pol_handover",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "Agree a collection time and location in the booking conversation. Record condition and included accessories before collection and again on return. Condition records belong to the booking. Existing illustration assets are placeholders, not genuine evidence.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_handover_ar",
+    "policy_id": "pol_handover",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "اتفق على وقت ومكان الاستلام في محادثة الحجز. وثّق حالة الغرض وملحقاته قبل الاستلام وعند الإرجاع. ترتبط سجلات الحالة بالحجز. الرسومات الموجودة صور بديلة وليست أدلة حقيقية.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_return_en",
+    "policy_id": "pol_return",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "Mark the item returned, then wait for the owner to confirm receipt. A borrower's return action alone does not complete the booking. Request an extension through the owner; it is effective only after a new availability and price check. An overdue reminder does not impose an automatic penalty.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_return_ar",
+    "policy_id": "pol_return",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "سجّل إرجاع الغرض وانتظر تأكيد المالك استلامه. إجراء المستعير وحده لا يكمل الحجز. اطلب التمديد من المالك ولا يصبح سارياً إلا بعد فحص التوفر والسعر مجدداً. لا يفرض تذكير التأخير غرامة تلقائية.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_cancellation_en",
+    "policy_id": "pol_cancellation",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "For development, cancellation before collection has no penalty and any collected amount is refunded. After collection, use the return or dispute workflow. Pending requests may be withdrawn. Expired requests reserve no dates. These cancellation assumptions need team approval before launch.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_cancellation_ar",
+    "policy_id": "pol_cancellation",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "لأغراض التطوير، يمكن الإلغاء قبل الاستلام دون غرامة مع استرداد أي مبلغ محصّل. بعد الاستلام استخدم مسار الإرجاع أو النزاع. يمكن سحب الطلب المعلق ولا تحجز الطلبات المنتهية مواعيد. تحتاج هذه الافتراضات إلى اعتماد الفريق قبل الإطلاق.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_disputes_en",
+    "policy_id": "pol_disputes",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "Submit the booking, issue description and relevant evidence for damage, non-return, missing accessories or conduct concerns. An administrator may ask both participants for information and record a resolution. Reporting an issue does not automatically transfer a deposit to the owner.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_disputes_ar",
+    "policy_id": "pol_disputes",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "أرسل الحجز ووصف المشكلة والأدلة ذات الصلة عند التلف أو عدم الإرجاع أو نقص الملحقات أو مشكلات السلوك. قد يطلب المسؤول معلومات من الطرفين ويسجل الحل. لا يؤدي البلاغ تلقائياً إلى تحويل مبلغ الضمان إلى المالك.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_privacy_en",
+    "policy_id": "pol_privacy",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "Public listings show a neighborhood, not a home address. Share agreed handover details only within the authorized booking context. The dataset contains no real phone numbers or addresses. Map points in the separate geo fixture are synthetic test points, not verified neighborhood coordinates.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_privacy_ar",
+    "policy_id": "pol_privacy",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "تعرض الإعلانات العامة الحي دون عنوان المنزل. تُشارك تفاصيل التسليم المتفق عليها ضمن الحجز المصرح به فقط. لا تتضمن البيانات أرقام هاتف أو عناوين حقيقية. نقاط الخريطة في ملف الاختبار منفصلة ومصطنعة وليست إحداثيات أحياء موثقة.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_reviews_en",
+    "policy_id": "pol_reviews",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "Only participants in a completed exchange can review one another. Each participant may submit one review per booking. Reviews and ratings in this dataset are fictional test records and must not be presented as research findings or genuine customer feedback.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_reviews_ar",
+    "policy_id": "pol_reviews",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "يستطيع طرفا العملية المكتملة تقييم بعضهما مرة واحدة لكل طرف في الحجز. المراجعات والتقييمات الموجودة بيانات اختبار خيالية ولا تمثل نتائج بحث أو آراء عملاء حقيقية.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_ai_en",
+    "policy_id": "pol_ai",
+    "version": "0.1-draft",
+    "locale": "en-SA",
+    "text": "The policy assistant answers only from the supplied policy version, identifies uncertainty and directs unresolved cases to support. It cannot verify identities, approve refunds or decide disputes. Recommendations must reference existing listings and remain subject to current availability. No insurance guarantee is configured.",
+    "usage": "demo_retrieval_only_until_approved"
+  },
+  {
+    "id": "pol_ai_ar",
+    "policy_id": "pol_ai",
+    "version": "0.1-draft",
+    "locale": "ar-SA",
+    "text": "يجيب مساعد السياسات من إصدار السياسة المقدم فقط، ويوضح عدم اليقين ويوجه الحالات غير المحسومة للدعم. لا يثبت الهويات ولا يوافق على الاسترداد ولا يحسم النزاعات. يجب أن تشير التوصيات إلى إعلانات موجودة مع فحص التوفر الحالي. لا يوجد ضمان تأمين مهيأ.",
+    "usage": "demo_retrieval_only_until_approved"
+  }
+]

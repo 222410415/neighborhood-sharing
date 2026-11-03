@@ -1,0 +1,86 @@
+[
+  {
+    "id": "price_001",
+    "source_id": "src_tent",
+    "product": "Four-person camping tent",
+    "observation_type": "retail_purchase",
+    "currency": "SAR",
+    "amount_min_halalas": 47000,
+    "amount_max_halalas": 47000,
+    "observed_on": "2026-09-25",
+    "scope_note": "Per item; not a rental rate.",
+    "is_market_average": false
+  },
+  {
+    "id": "price_002",
+    "source_id": "src_tables",
+    "product": "Four-to-six-person camping table",
+    "observation_type": "retail_purchase",
+    "currency": "SAR",
+    "amount_min_halalas": 32500,
+    "amount_max_halalas": 32500,
+    "observed_on": "2026-09-25",
+    "scope_note": "Per table; stock and promotions can change.",
+    "is_market_average": false
+  },
+  {
+    "id": "price_003",
+    "source_id": "src_tables",
+    "product": "Camping table with chairs",
+    "observation_type": "retail_purchase",
+    "currency": "SAR",
+    "amount_min_halalas": 47000,
+    "amount_max_halalas": 47000,
+    "observed_on": "2026-09-25",
+    "scope_note": "Different bundle from the table-only listing.",
+    "is_market_average": false
+  },
+  {
+    "id": "price_004",
+    "source_id": "src_washer",
+    "product": "Domestic K1 pressure washer",
+    "observation_type": "retail_purchase",
+    "currency": "SAR",
+    "amount_min_halalas": 32900,
+    "amount_max_halalas": 32900,
+    "observed_on": "2026-09-25",
+    "scope_note": "Per unit; not a rental rate.",
+    "is_market_average": false
+  },
+  {
+    "id": "price_005",
+    "source_id": "src_washer",
+    "product": "Domestic K2 Universal Home pressure washer",
+    "observation_type": "retail_purchase",
+    "currency": "SAR",
+    "amount_min_halalas": 42900,
+    "amount_max_halalas": 42900,
+    "observed_on": "2026-09-25",
+    "scope_note": "Per unit; different model from K1.",
+    "is_market_average": false
+  },
+  {
+    "id": "price_006",
+    "source_id": "src_cleaner_rental",
+    "product": "Commercial carpet cleaner offer range",
+    "observation_type": "rental_daily",
+    "currency": "SAR",
+    "amount_min_halalas": 9400,
+    "amount_max_halalas": 15500,
+    "observed_on": "2026-09-25",
+    "scope_note": "Advertised range; page describes VAT and delivery as included. Not a peer-to-peer benchmark.",
+    "is_market_average": false
+  },
+  {
+    "id": "price_007",
+    "source_id": "src_projector_rental",
+    "product": "Epson projector listing in Jeddah",
+    "observation_type": "rental_daily",
+    "currency": "SAR",
+    "amount_min_halalas": 34500,
+    "amount_max_halalas": 34500,
+    "observed_on": "2026-09-25",
+    "scope_note": "Commercial offer; pickup shown. Not equivalent to the small demo projector.",
+    "is_market_average": false
+  }
+]

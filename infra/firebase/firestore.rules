@@ -1,0 +1,23 @@
+rules_version = '2';
+
+// ─────────────────────────────────────────────────────────────
+// Firestore Security Rules — Neighborhood Sharing Platform
+//
+// This API-led design does not allow browser clients to read or
+// write Firestore directly. All data access goes through the
+// NestJS backend, which verifies Firebase ID tokens and applies
+// its own authorization checks.
+//
+// These rules deny all client access. Backend code uses the
+// Admin SDK which bypasses these rules — that is why server-side
+// authorization checks remain mandatory.
+// ─────────────────────────────────────────────────────────────
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Deny all browser reads and writes
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

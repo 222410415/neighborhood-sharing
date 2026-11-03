@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+*.tsbuildinfo
+
+# Environment and secrets (never commit)
+.env
+.env.local
+.env.*.local
+*.pem
+*.p12
+*service-account*.json
+*firebase-adminsdk*.json
+
+# Generated reports (evaluation, performance)
+reports/
+
+# Test artifacts
+coverage/
+playwright-report/
+test-results/
+.jest-cache/
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

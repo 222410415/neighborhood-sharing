@@ -1,0 +1,66 @@
+[
+  {
+    "id": "cat_tools",
+    "slug": "tools",
+    "name_en": "Tools",
+    "name_ar": "الأدوات",
+    "icon_key": "wrench",
+    "sort_order": 1
+  },
+  {
+    "id": "cat_electronics",
+    "slug": "electronics",
+    "name_en": "Electronics",
+    "name_ar": "الإلكترونيات",
+    "icon_key": "monitor",
+    "sort_order": 2
+  },
+  {
+    "id": "cat_camping",
+    "slug": "camping",
+    "name_en": "Camping Equipment",
+    "name_ar": "معدات التخييم",
+    "icon_key": "tent",
+    "sort_order": 3
+  },
+  {
+    "id": "cat_cleaning",
+    "slug": "cleaning",
+    "name_en": "Cleaning Equipment",
+    "name_ar": "معدات التنظيف",
+    "icon_key": "sparkles",
+    "sort_order": 4
+  },
+  {
+    "id": "cat_kitchen",
+    "slug": "kitchen",
+    "name_en": "Kitchen Appliances",
+    "name_ar": "أجهزة المطبخ",
+    "icon_key": "utensils",
+    "sort_order": 5
+  },
+  {
+    "id": "cat_party",
+    "slug": "party",
+    "name_en": "Party Supplies",
+    "name_ar": "مستلزمات المناسبات",
+    "icon_key": "party-popper",
+    "sort_order": 6
+  },
+  {
+    "id": "cat_sports",
+    "slug": "sports",
+    "name_en": "Sports Equipment",
+    "name_ar": "المعدات الرياضية",
+    "icon_key": "dumbbell",
+    "sort_order": 7
+  },
+  {
+    "id": "cat_moving",
+    "slug": "moving",
+    "name_en": "Moving and Household",
+    "name_ar": "النقل والمستلزمات المنزلية",
+    "icon_key": "package",
+    "sort_order": 8
+  }
+]

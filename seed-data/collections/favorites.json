@@ -1,0 +1,128 @@
+[
+  {
+    "id": "fav_hanadi_cordless-drill",
+    "user_id": "usr_hanadi",
+    "listing_id": "itm_cordless-drill",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_hanadi_hand-tool-kit",
+    "user_id": "usr_hanadi",
+    "listing_id": "itm_hand-tool-kit",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_hanadi_laser-level",
+    "user_id": "usr_hanadi",
+    "listing_id": "itm_laser-level",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_hanadi_measuring-tape",
+    "user_id": "usr_hanadi",
+    "listing_id": "itm_measuring-tape",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_hanadi_portable-projector",
+    "user_id": "usr_hanadi",
+    "listing_id": "itm_portable-projector",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_hanadi_presentation-clicker",
+    "user_id": "usr_hanadi",
+    "listing_id": "itm_presentation-clicker",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_leen_folding-ladder",
+    "user_id": "usr_leen",
+    "listing_id": "itm_folding-ladder",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_leen_screwdriver-set",
+    "user_id": "usr_leen",
+    "listing_id": "itm_screwdriver-set",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_leen_hand-tool-kit",
+    "user_id": "usr_leen",
+    "listing_id": "itm_hand-tool-kit",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_leen_measuring-tape",
+    "user_id": "usr_leen",
+    "listing_id": "itm_measuring-tape",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_leen_portable-projector",
+    "user_id": "usr_leen",
+    "listing_id": "itm_portable-projector",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_leen_projection-screen",
+    "user_id": "usr_leen",
+    "listing_id": "itm_projection-screen",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_jawharah_cordless-drill",
+    "user_id": "usr_jawharah",
+    "listing_id": "itm_cordless-drill",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_jawharah_folding-ladder",
+    "user_id": "usr_jawharah",
+    "listing_id": "itm_folding-ladder",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_jawharah_screwdriver-set",
+    "user_id": "usr_jawharah",
+    "listing_id": "itm_screwdriver-set",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_jawharah_laser-level",
+    "user_id": "usr_jawharah",
+    "listing_id": "itm_laser-level",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_jawharah_projection-screen",
+    "user_id": "usr_jawharah",
+    "listing_id": "itm_projection-screen",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "fav_jawharah_presentation-clicker",
+    "user_id": "usr_jawharah",
+    "listing_id": "itm_presentation-clicker",
+    "created_at": "2026-09-25T09:00:00+03:00",
+    "is_demo": true
+  }
+]

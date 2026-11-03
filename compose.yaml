@@ -1,0 +1,110 @@
+name: neighborhood-sharing
+
+# Local development stack against the REAL Firebase project (Auth + Firestore); there are
+# no emulators. Before the first run, set in .env:
+#   FIREBASE_KEY_FILE   absolute path to the service-account key JSON, kept
+#                       outside this folder (mounted read-only, never copied
+#                       into an image)
+#   FIREBASE_PROJECT_ID the project id (default neighborhood-sharing)
+# Test runs write real data; clean it with `scripts/admin/reset-demo-data.mjs`.
+# Production runs on Google Cloud Run (infra/gcp/, docs/deployment.md).
+
+x-firebase-key: &firebase-key
+  type: bind
+  source: ${FIREBASE_KEY_FILE:-./FIREBASE_KEY_FILE-is-not-set-in-.env}
+  target: /run/secrets/firebase-key.json
+  read_only: true
+  bind:
+    create_host_path: false
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/docker/dev/api.Dockerfile
+    ports:
+      - "127.0.0.1:3001:3001"
+    volumes:
+      - *firebase-key
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID:-neighborhood-sharing}
+      - GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/firebase-key.json
+      # AI is off unless GEMINI_API_KEY is set in .env (entered by the team).
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - GEMINI_MODEL=${GEMINI_MODEL:-}
+      # Local stack only: lets the functional checks select an AI stub per request.
+      - AI_TEST_HOOKS=true
+      # Rate limits (count/seconds). Policy questions stay at the default so F-69 can see a 429.
+      - RATE_LIMIT_BOOKINGS=100/60
+      - RATE_LIMIT_REQUESTS=50/3600
+      - RATE_LIMIT_REPORTS=50/3600
+      - RATE_LIMIT_POLICY=10/60
+      - POLICY_ASSISTANT_DIAGNOSTICS=${POLICY_ASSISTANT_DIAGNOSTICS:-false}
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3001/v1/health/live',r=>process.exit(r.statusCode===200?0:1)).on('error',()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+    stop_grace_period: 10s
+
+  web:
+    build:
+      context: .
+      dockerfile: infra/docker/dev/web.Dockerfile
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      - NODE_ENV=development
+      - API_INTERNAL_ORIGIN=http://api:3001
+      # The browser signs in against the real project; its public web config is
+      # the default in apps/web/src/lib/firebase-client.ts.
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3000/',r=>process.exit(r.statusCode<500?0:1)).on('error',()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 15
+      start_period: 30s
+    stop_grace_period: 10s
+
+  # One-off commands (seed, roles, checks, evaluation); not a running service.
+  #   docker compose run --rm tools node scripts/seed/policies.mjs
+  tools:
+    build:
+      context: .
+      dockerfile: infra/docker/dev/tools.Dockerfile
+    volumes:
+      - *firebase-key
+      - ./scripts:/app/scripts:ro
+      - ./seed-data:/app/seed-data:ro
+      - ./tests:/app/tests:ro
+      - ./reports:/app/reports
+    environment:
+      - NODE_ENV=development
+      - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID:-neighborhood-sharing}
+      - GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/firebase-key.json
+      - API_URL=http://api:3001/v1
+      - WEB_URL=http://web:3000
+      # Public web API key (the same value the browser uses); needed by the
+      # checks to sign the demo members in. Not a secret.
+      - FIREBASE_WEB_API_KEY=${FIREBASE_WEB_API_KEY:-AIzaSyBRD-CHSC306RLREaSjdUVUGuci95u5ON8}
+    profiles: ["tools"]
+    stdin_open: true
+    tty: true

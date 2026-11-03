@@ -1,0 +1,434 @@
+[
+  {
+    "id": "asset_cordless-drill",
+    "path": "assets/cordless-drill.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Cordless Drill Kit — demonstration placeholder",
+    "alt_ar": "طقم مثقاب لاسلكي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_folding-ladder",
+    "path": "assets/folding-ladder.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Folding Ladder — demonstration placeholder",
+    "alt_ar": "سلم قابل للطي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_screwdriver-set",
+    "path": "assets/screwdriver-set.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Screwdriver Set — demonstration placeholder",
+    "alt_ar": "طقم مفكات — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_hand-tool-kit",
+    "path": "assets/hand-tool-kit.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Household Tool Kit — demonstration placeholder",
+    "alt_ar": "حقيبة أدوات منزلية — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_laser-level",
+    "path": "assets/laser-level.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Compact Laser Level — demonstration placeholder",
+    "alt_ar": "ميزان ليزر صغير — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_measuring-tape",
+    "path": "assets/measuring-tape.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Measuring Tape — demonstration placeholder",
+    "alt_ar": "شريط قياس — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_portable-projector",
+    "path": "assets/portable-projector.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Portable Projector — demonstration placeholder",
+    "alt_ar": "جهاز عرض محمول — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_projection-screen",
+    "path": "assets/projection-screen.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Portable Projection Screen — demonstration placeholder",
+    "alt_ar": "شاشة عرض محمولة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_presentation-clicker",
+    "path": "assets/presentation-clicker.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Presentation Clicker — demonstration placeholder",
+    "alt_ar": "جهاز تحكم بالعروض — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_usb-microphone",
+    "path": "assets/usb-microphone.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "USB Microphone — demonstration placeholder",
+    "alt_ar": "ميكروفون يو إس بي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_camera-tripod",
+    "path": "assets/camera-tripod.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Camera Tripod — demonstration placeholder",
+    "alt_ar": "حامل كاميرا ثلاثي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_led-video-light",
+    "path": "assets/led-video-light.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "LED Video Light — demonstration placeholder",
+    "alt_ar": "إضاءة تصوير ليد — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_camping-tent",
+    "path": "assets/camping-tent.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Camping Tent for Four — demonstration placeholder",
+    "alt_ar": "خيمة تخييم لأربعة أشخاص — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_camping-chairs",
+    "path": "assets/camping-chairs.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Pair of Camping Chairs — demonstration placeholder",
+    "alt_ar": "كرسيان للتخييم — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_camping-table",
+    "path": "assets/camping-table.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Folding Camping Table — demonstration placeholder",
+    "alt_ar": "طاولة تخييم قابلة للطي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_cooler-box",
+    "path": "assets/cooler-box.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Cooler Box — demonstration placeholder",
+    "alt_ar": "صندوق تبريد — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_camping-lantern",
+    "path": "assets/camping-lantern.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Rechargeable Camping Lantern — demonstration placeholder",
+    "alt_ar": "فانوس تخييم قابل للشحن — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_picnic-mat",
+    "path": "assets/picnic-mat.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Large Picnic Mat — demonstration placeholder",
+    "alt_ar": "حصيرة نزهات كبيرة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_carpet-cleaner",
+    "path": "assets/carpet-cleaner.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Carpet Cleaner — demonstration placeholder",
+    "alt_ar": "جهاز تنظيف السجاد — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_pressure-washer",
+    "path": "assets/pressure-washer.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Compact Pressure Washer — demonstration placeholder",
+    "alt_ar": "جهاز غسيل بالضغط — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_steam-mop",
+    "path": "assets/steam-mop.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Steam Mop — demonstration placeholder",
+    "alt_ar": "ممسحة بخارية — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_wet-dry-vacuum",
+    "path": "assets/wet-dry-vacuum.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Wet and Dry Vacuum — demonstration placeholder",
+    "alt_ar": "مكنسة للشفط الرطب والجاف — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_window-cleaner",
+    "path": "assets/window-cleaner.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Window Vacuum — demonstration placeholder",
+    "alt_ar": "جهاز تنظيف النوافذ — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_cleaning-brush-kit",
+    "path": "assets/cleaning-brush-kit.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Cleaning Brush Kit — demonstration placeholder",
+    "alt_ar": "طقم فرش تنظيف — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_stand-mixer",
+    "path": "assets/stand-mixer.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Stand Mixer — demonstration placeholder",
+    "alt_ar": "عجانة كهربائية — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_air-fryer",
+    "path": "assets/air-fryer.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Air Fryer — demonstration placeholder",
+    "alt_ar": "قلاية هوائية — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_coffee-urn",
+    "path": "assets/coffee-urn.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Coffee and Tea Urn — demonstration placeholder",
+    "alt_ar": "غلاية للقهوة والشاي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_waffle-maker",
+    "path": "assets/waffle-maker.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Waffle Maker — demonstration placeholder",
+    "alt_ar": "جهاز صنع الوافل — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_food-processor",
+    "path": "assets/food-processor.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Food Processor — demonstration placeholder",
+    "alt_ar": "محضرة طعام — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_serving-trays",
+    "path": "assets/serving-trays.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Serving Tray Set — demonstration placeholder",
+    "alt_ar": "طقم صواني تقديم — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_folding-party-table",
+    "path": "assets/folding-party-table.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Folding Event Table — demonstration placeholder",
+    "alt_ar": "طاولة مناسبات قابلة للطي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_event-chairs",
+    "path": "assets/event-chairs.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Set of Four Event Chairs — demonstration placeholder",
+    "alt_ar": "أربعة كراسي للمناسبات — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_bluetooth-speaker",
+    "path": "assets/bluetooth-speaker.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Portable Bluetooth Speaker — demonstration placeholder",
+    "alt_ar": "سماعة بلوتوث محمولة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_backdrop-stand",
+    "path": "assets/backdrop-stand.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Backdrop Stand — demonstration placeholder",
+    "alt_ar": "حامل خلفية تصوير — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_string-lights",
+    "path": "assets/string-lights.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Decorative String Lights — demonstration placeholder",
+    "alt_ar": "سلسلة إضاءة للزينة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_serving-dispenser",
+    "path": "assets/serving-dispenser.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Cold Drink Dispenser — demonstration placeholder",
+    "alt_ar": "موزع مشروبات باردة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_padel-rackets",
+    "path": "assets/padel-rackets.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Pair of Padel Rackets — demonstration placeholder",
+    "alt_ar": "مضربا بادل — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_badminton-set",
+    "path": "assets/badminton-set.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Badminton Set — demonstration placeholder",
+    "alt_ar": "طقم ريشة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_football",
+    "path": "assets/football.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Football — demonstration placeholder",
+    "alt_ar": "كرة قدم — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_dumbbells",
+    "path": "assets/dumbbells.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Adjustable Dumbbell Pair — demonstration placeholder",
+    "alt_ar": "زوج دمبل قابل للتعديل — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_table-tennis-set",
+    "path": "assets/table-tennis-set.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Table Tennis Set — demonstration placeholder",
+    "alt_ar": "طقم تنس طاولة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_bicycle-pump",
+    "path": "assets/bicycle-pump.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Bicycle Pump — demonstration placeholder",
+    "alt_ar": "مضخة دراجة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_hand-trolley",
+    "path": "assets/hand-trolley.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Folding Hand Trolley — demonstration placeholder",
+    "alt_ar": "عربة نقل يدوية قابلة للطي — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_moving-crates",
+    "path": "assets/moving-crates.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Set of Four Moving Crates — demonstration placeholder",
+    "alt_ar": "أربعة صناديق نقل — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_furniture-dolly",
+    "path": "assets/furniture-dolly.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Furniture Dolly — demonstration placeholder",
+    "alt_ar": "قاعدة بعجلات لنقل الأثاث — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_moving-blankets",
+    "path": "assets/moving-blankets.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Pair of Moving Blankets — demonstration placeholder",
+    "alt_ar": "بطانيتان لحماية الأثاث — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_sewing-machine",
+    "path": "assets/sewing-machine.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Portable Sewing Machine — demonstration placeholder",
+    "alt_ar": "ماكينة خياطة محمولة — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  },
+  {
+    "id": "asset_garment-steamer",
+    "path": "assets/garment-steamer.svg",
+    "mime_type": "image/svg+xml",
+    "alt_en": "Garment Steamer — demonstration placeholder",
+    "alt_ar": "جهاز بخار للملابس — صورة تجريبية",
+    "is_placeholder": true,
+    "rights": "Original text-only placeholder; no vendor image copied."
+  }
+]

@@ -1,0 +1,34 @@
+{
+  "name": "neighborhood-sharing",
+  "version": "1.0.0",
+  "private": true,
+  "packageManager": "pnpm@12.6.0",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "docker compose up --build",
+    "build": "pnpm -r --filter=!neighborhood-sharing build",
+    "lint": "eslint .",
+    "typecheck": "pnpm --filter @neighborhood/contracts build && pnpm -r typecheck",
+    "test:unit": "pnpm -r test:unit",
+    "test:api": "pnpm -r test:api",
+    "test:e2e": "playwright test --config tests/e2e/playwright.config.ts",
+    "verify": "pnpm lint && pnpm typecheck && pnpm build && pnpm test:unit && pnpm test:api",
+    "seed:demo": "npx tsx scripts/seed/demo-data.ts",
+    "seed:bookings": "node scripts/seed/booking-settings.mjs",
+    "seed:policies": "node scripts/seed/policies.mjs",
+    "demo:reset": "node scripts/admin/reset-demo-data.mjs",
+    "test:functional": "node tests/functional/functional-check.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@types/node": "26.6.2",
+    "eslint": "10.11.0",
+    "prettier": "3.9.9",
+    "sharp": "0.35.4",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.70.1"
+  }
+}

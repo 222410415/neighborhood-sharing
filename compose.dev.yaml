@@ -1,0 +1,29 @@
+# Development overlay: mounts source folders into the running containers so
+# code changes are picked up without rebuilding the images.
+#
+#   docker compose -f compose.yaml -f compose.dev.yaml up -d --build --wait
+#
+# - api: NestJS watch mode recompiles on changes under apps/api/src. The shared
+#   contracts package is rebuilt once when the container starts; after editing
+#   packages/contracts/src run `docker compose restart api`.
+# - web: Next.js dev server recompiles on changes under apps/web/src.
+# Changing any package.json still requires an image rebuild.
+
+services:
+  api:
+    volumes:
+      - ./apps/api/src:/app/apps/api/src:ro
+      - ./packages/contracts/src:/app/packages/contracts/src:ro
+    command:
+      - sh
+      - -c
+      - >-
+        cd /app/packages/contracts && ../../node_modules/.bin/tsc -p tsconfig.json &&
+        cd /app/apps/api && exec ./node_modules/.bin/nest start --watch --preserveWatchOutput
+
+  web:
+    volumes:
+      - ./apps/web/src:/app/apps/web/src:ro
+      - ./packages/contracts/src:/app/packages/contracts/src:ro
+    environment:
+      - WATCHPACK_POLLING=true

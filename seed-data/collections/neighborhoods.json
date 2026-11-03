@@ -1,0 +1,86 @@
+[
+  {
+    "id": "area_al-nakheel",
+    "city_id": "city_riyadh",
+    "name_en": "Al Nakheel",
+    "name_ar": "النخيل",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-yasmin",
+    "city_id": "city_riyadh",
+    "name_en": "Al Yasmin",
+    "name_ar": "الياسمين",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-nuzhah",
+    "city_id": "city_riyadh",
+    "name_en": "Al Nuzhah",
+    "name_ar": "النزهة",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_salah-ad-din",
+    "city_id": "city_riyadh",
+    "name_en": "Salah Ad Din",
+    "name_ar": "صلاح الدين",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-muruj",
+    "city_id": "city_riyadh",
+    "name_en": "Al Muruj",
+    "name_ar": "المروج",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-wurud",
+    "city_id": "city_riyadh",
+    "name_en": "Al Wurud",
+    "name_ar": "الورود",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-olaya",
+    "city_id": "city_riyadh",
+    "name_en": "Al Olaya",
+    "name_ar": "العليا",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-sulaymaniyah",
+    "city_id": "city_riyadh",
+    "name_en": "Al Sulaymaniyah",
+    "name_ar": "السليمانية",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-malqa",
+    "city_id": "city_riyadh",
+    "name_en": "Al Malqa",
+    "name_ar": "الملقا",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-aqiq",
+    "city_id": "city_riyadh",
+    "name_en": "Al Aqiq",
+    "name_ar": "العقيق",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-izdihar",
+    "city_id": "city_riyadh",
+    "name_en": "Al Izdihar",
+    "name_ar": "الازدهار",
+    "geometry_status": "not_supplied"
+  },
+  {
+    "id": "area_al-taawun",
+    "city_id": "city_riyadh",
+    "name_en": "Al Taawun",
+    "name_ar": "التعاون",
+    "geometry_status": "not_supplied"
+  }
+]

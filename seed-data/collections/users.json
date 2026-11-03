@@ -1,0 +1,53 @@
+[
+  {
+    "id": "usr_hanadi",
+    "display_name": "Hanadi Alrajhi",
+    "email": "hanadi@neighborhood-demo.test",
+    "neighborhood_id": "area_al-nakheel",
+    "preferred_locale": "ar-SA",
+    "verification_status": "demo_verified",
+    "account_status": "active",
+    "roles": [
+      "borrower",
+      "owner"
+    ],
+    "biography_en": "Fictional profile for testing neighborhood sharing.",
+    "biography_ar": "ملف تجريبي لاختبار مشاركة الأغراض بين الجيران.",
+    "created_at": "2026-08-01T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "usr_leen",
+    "display_name": "Leen Alshaya",
+    "email": "leen@neighborhood-demo.test",
+    "neighborhood_id": "area_al-nuzhah",
+    "preferred_locale": "ar-SA",
+    "verification_status": "demo_verified",
+    "account_status": "active",
+    "roles": [
+      "borrower",
+      "owner"
+    ],
+    "biography_en": "Fictional profile for testing neighborhood sharing.",
+    "biography_ar": "ملف تجريبي لاختبار مشاركة الأغراض بين الجيران.",
+    "created_at": "2026-08-01T09:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "usr_jawharah",
+    "display_name": "Jawharah Ababtain",
+    "email": "jawharah@neighborhood-demo.test",
+    "neighborhood_id": "area_al-yasmin",
+    "preferred_locale": "ar-SA",
+    "verification_status": "demo_pending",
+    "account_status": "active",
+    "roles": [
+      "borrower",
+      "owner"
+    ],
+    "biography_en": "Fictional profile for testing neighborhood sharing.",
+    "biography_ar": "ملف تجريبي لاختبار مشاركة الأغراض بين الجيران.",
+    "created_at": "2026-08-01T09:00:00+03:00",
+    "is_demo": true
+  }
+]

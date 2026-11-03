@@ -1,0 +1,242 @@
+[
+  {
+    "id": "rec_001",
+    "source_listing_id": "itm_cordless-drill",
+    "target_listing_id": "itm_screwdriver-set",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_002",
+    "source_listing_id": "itm_cordless-drill",
+    "target_listing_id": "itm_measuring-tape",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 2,
+    "is_demo": true
+  },
+  {
+    "id": "rec_003",
+    "source_listing_id": "itm_cordless-drill",
+    "target_listing_id": "itm_laser-level",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 3,
+    "is_demo": true
+  },
+  {
+    "id": "rec_004",
+    "source_listing_id": "itm_hand-tool-kit",
+    "target_listing_id": "itm_folding-ladder",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_005",
+    "source_listing_id": "itm_portable-projector",
+    "target_listing_id": "itm_projection-screen",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_006",
+    "source_listing_id": "itm_portable-projector",
+    "target_listing_id": "itm_presentation-clicker",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 2,
+    "is_demo": true
+  },
+  {
+    "id": "rec_007",
+    "source_listing_id": "itm_portable-projector",
+    "target_listing_id": "itm_bluetooth-speaker",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 3,
+    "is_demo": true
+  },
+  {
+    "id": "rec_008",
+    "source_listing_id": "itm_usb-microphone",
+    "target_listing_id": "itm_camera-tripod",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_009",
+    "source_listing_id": "itm_camera-tripod",
+    "target_listing_id": "itm_led-video-light",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_010",
+    "source_listing_id": "itm_camping-tent",
+    "target_listing_id": "itm_camping-lantern",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_011",
+    "source_listing_id": "itm_camping-tent",
+    "target_listing_id": "itm_camping-chairs",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 2,
+    "is_demo": true
+  },
+  {
+    "id": "rec_012",
+    "source_listing_id": "itm_camping-tent",
+    "target_listing_id": "itm_camping-table",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 3,
+    "is_demo": true
+  },
+  {
+    "id": "rec_013",
+    "source_listing_id": "itm_camping-tent",
+    "target_listing_id": "itm_cooler-box",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 4,
+    "is_demo": true
+  },
+  {
+    "id": "rec_014",
+    "source_listing_id": "itm_camping-table",
+    "target_listing_id": "itm_picnic-mat",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_015",
+    "source_listing_id": "itm_carpet-cleaner",
+    "target_listing_id": "itm_wet-dry-vacuum",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_016",
+    "source_listing_id": "itm_pressure-washer",
+    "target_listing_id": "itm_cleaning-brush-kit",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_017",
+    "source_listing_id": "itm_stand-mixer",
+    "target_listing_id": "itm_serving-trays",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_018",
+    "source_listing_id": "itm_waffle-maker",
+    "target_listing_id": "itm_coffee-urn",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_019",
+    "source_listing_id": "itm_folding-party-table",
+    "target_listing_id": "itm_event-chairs",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_020",
+    "source_listing_id": "itm_folding-party-table",
+    "target_listing_id": "itm_serving-dispenser",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 2,
+    "is_demo": true
+  },
+  {
+    "id": "rec_021",
+    "source_listing_id": "itm_backdrop-stand",
+    "target_listing_id": "itm_led-video-light",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_022",
+    "source_listing_id": "itm_backdrop-stand",
+    "target_listing_id": "itm_string-lights",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 2,
+    "is_demo": true
+  },
+  {
+    "id": "rec_023",
+    "source_listing_id": "itm_hand-trolley",
+    "target_listing_id": "itm_moving-crates",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 1,
+    "is_demo": true
+  },
+  {
+    "id": "rec_024",
+    "source_listing_id": "itm_hand-trolley",
+    "target_listing_id": "itm_moving-blankets",
+    "reason_en": "May help with the same activity; check suitability and availability.",
+    "reason_ar": "قد يفيد في النشاط نفسه؛ تحقّق من الملاءمة والتوفر.",
+    "method": "curated_demo_relation",
+    "rank": 2,
+    "is_demo": true
+  }
+]

@@ -1,0 +1,407 @@
+[
+  {
+    "id": "msg_bkg_001_1",
+    "conversation_id": "chat_bkg_001",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-08-30T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_001_2",
+    "conversation_id": "chat_bkg_001",
+    "sender_id": "usr_leen",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-08-30T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_002_1",
+    "conversation_id": "chat_bkg_002",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-01T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_002_2",
+    "conversation_id": "chat_bkg_002",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-01T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_003_1",
+    "conversation_id": "chat_bkg_003",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-03T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_003_2",
+    "conversation_id": "chat_bkg_003",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-03T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_004_1",
+    "conversation_id": "chat_bkg_004",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-05T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_004_2",
+    "conversation_id": "chat_bkg_004",
+    "sender_id": "usr_leen",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-05T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_005_1",
+    "conversation_id": "chat_bkg_005",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-07T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_005_2",
+    "conversation_id": "chat_bkg_005",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-07T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_006_1",
+    "conversation_id": "chat_bkg_006",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-09T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_006_2",
+    "conversation_id": "chat_bkg_006",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-09T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_007_1",
+    "conversation_id": "chat_bkg_007",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-11T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_007_2",
+    "conversation_id": "chat_bkg_007",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-11T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_008_1",
+    "conversation_id": "chat_bkg_008",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-13T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_008_2",
+    "conversation_id": "chat_bkg_008",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-13T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_009_1",
+    "conversation_id": "chat_bkg_009",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_010_1",
+    "conversation_id": "chat_bkg_010",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_010_2",
+    "conversation_id": "chat_bkg_010",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-23T12:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_011_1",
+    "conversation_id": "chat_bkg_011",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-21T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_011_2",
+    "conversation_id": "chat_bkg_011",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-21T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_012_1",
+    "conversation_id": "chat_bkg_012",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-19T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_012_2",
+    "conversation_id": "chat_bkg_012",
+    "sender_id": "usr_leen",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-19T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_013_1",
+    "conversation_id": "chat_bkg_013",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-21T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_013_2",
+    "conversation_id": "chat_bkg_013",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-21T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_014_1",
+    "conversation_id": "chat_bkg_014",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-18T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_014_2",
+    "conversation_id": "chat_bkg_014",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-18T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_015_1",
+    "conversation_id": "chat_bkg_015",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_015_2",
+    "conversation_id": "chat_bkg_015",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-23T12:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_016_1",
+    "conversation_id": "chat_bkg_016",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_016_2",
+    "conversation_id": "chat_bkg_016",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-23T12:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_017_1",
+    "conversation_id": "chat_bkg_017",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_018_1",
+    "conversation_id": "chat_bkg_018",
+    "sender_id": "usr_hanadi",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_018_2",
+    "conversation_id": "chat_bkg_018",
+    "sender_id": "usr_jawharah",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-23T12:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_019_1",
+    "conversation_id": "chat_bkg_019",
+    "sender_id": "usr_leen",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_019_2",
+    "conversation_id": "chat_bkg_019",
+    "sender_id": "usr_hanadi",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-23T12:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_020_1",
+    "conversation_id": "chat_bkg_020",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-15T09:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_020_2",
+    "conversation_id": "chat_bkg_020",
+    "sender_id": "usr_leen",
+    "body_en": "Yes, the listing shows the included accessories. Please follow the booking status for confirmation.",
+    "body_ar": "نعم، يوضح الإعلان الملحقات المشمولة. يُرجى متابعة حالة الحجز للتأكيد.",
+    "sent_at": "2026-09-15T09:10:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_bkg_021_1",
+    "conversation_id": "chat_bkg_021",
+    "sender_id": "usr_jawharah",
+    "body_en": "I have requested these dates. Are the listed accessories included?",
+    "body_ar": "أرسلت طلباً لهذه المواعيد. هل الملحقات المذكورة مشمولة؟",
+    "sent_at": "2026-09-23T12:05:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_offer_001",
+    "conversation_id": "chat_offer_001",
+    "sender_id": "usr_leen",
+    "body_en": "This item may suit your request. Please check the dates and listing details.",
+    "body_ar": "قد يناسب هذا الغرض طلبك. يُرجى مراجعة المواعيد وتفاصيل الإعلان.",
+    "sent_at": "2026-09-25T00:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_offer_002",
+    "conversation_id": "chat_offer_002",
+    "sender_id": "usr_jawharah",
+    "body_en": "This item may suit your request. Please check the dates and listing details.",
+    "body_ar": "قد يناسب هذا الغرض طلبك. يُرجى مراجعة المواعيد وتفاصيل الإعلان.",
+    "sent_at": "2026-09-25T00:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_offer_003",
+    "conversation_id": "chat_offer_003",
+    "sender_id": "usr_hanadi",
+    "body_en": "This item may suit your request. Please check the dates and listing details.",
+    "body_ar": "قد يناسب هذا الغرض طلبك. يُرجى مراجعة المواعيد وتفاصيل الإعلان.",
+    "sent_at": "2026-09-25T00:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_offer_004",
+    "conversation_id": "chat_offer_004",
+    "sender_id": "usr_leen",
+    "body_en": "This item may suit your request. Please check the dates and listing details.",
+    "body_ar": "قد يناسب هذا الغرض طلبك. يُرجى مراجعة المواعيد وتفاصيل الإعلان.",
+    "sent_at": "2026-09-25T00:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_offer_005",
+    "conversation_id": "chat_offer_005",
+    "sender_id": "usr_leen",
+    "body_en": "This item may suit your request. Please check the dates and listing details.",
+    "body_ar": "قد يناسب هذا الغرض طلبك. يُرجى مراجعة المواعيد وتفاصيل الإعلان.",
+    "sent_at": "2026-09-25T00:00:00+03:00",
+    "is_demo": true
+  },
+  {
+    "id": "msg_offer_006",
+    "conversation_id": "chat_offer_006",
+    "sender_id": "usr_hanadi",
+    "body_en": "This item may suit your request. Please check the dates and listing details.",
+    "body_ar": "قد يناسب هذا الغرض طلبك. يُرجى مراجعة المواعيد وتفاصيل الإعلان.",
+    "sent_at": "2026-09-25T00:00:00+03:00",
+    "is_demo": true
+  }
+]

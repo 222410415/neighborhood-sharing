@@ -1,0 +1,20 @@
+# Patterns apply at every depth: local installs and builds must never be
+# copied over the container's own install.
+**/node_modules
+**/.next
+**/dist
+**/*.tsbuildinfo
+.git/
+coverage/
+playwright-report/
+test-results/
+reports/
+.jest-cache/
+**/.env
+**/.env.local
+*.log
+*.pem
+*.p12
+*service-account*.json
+*firebase-adminsdk*.json
+.DS_Store

@@ -1,0 +1,108 @@
+# Cloud Build pipeline: builds both images, pushes them to Artifact Registry and
+# deploys them to Cloud Run. Started by infra/gcp/deploy.sh.
+#
+# Order matters: the web image needs the API URL at build time (Next.js fixes
+# the /api rewrite target during `next build`), so the API is deployed first.
+
+substitutions:
+  _REGION: me-central1
+  _REPO: neighborhood
+  _API_SERVICE: neighborhood-api
+  _WEB_SERVICE: neighborhood-web
+  _GEMINI_MODEL: gemini-2.5-flash
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+  dynamicSubstitutions: true
+
+steps:
+  - id: build-api
+    name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - -f
+      - infra/docker/api.Dockerfile
+      - -t
+      - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${BUILD_ID}
+      - .
+
+  - id: push-api
+    name: gcr.io/cloud-builders/docker
+    args: [push, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${BUILD_ID}"]
+
+  - id: deploy-api
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_API_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${BUILD_ID}
+      - --region=${_REGION}
+      - --service-account=neighborhood-api@${PROJECT_ID}.iam.gserviceaccount.com
+      - --allow-unauthenticated
+      - --port=8080
+      - --memory=512Mi
+      - --min-instances=0
+      # One instance keeps the in-memory rate limits consistent.
+      - --max-instances=1
+      - --set-env-vars=NODE_ENV=production,FIREBASE_PROJECT_ID=${PROJECT_ID},GEMINI_MODEL=${_GEMINI_MODEL}
+
+  # Optional secrets: attached only when they exist in Secret Manager.
+  - id: api-secrets
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        set -e
+        SECRETS=""
+        if gcloud secrets describe gemini-api-key >/dev/null 2>&1; then SECRETS="GEMINI_API_KEY=gemini-api-key:latest"; fi
+        if gcloud secrets describe sweep-secret >/dev/null 2>&1; then SECRETS="$${SECRETS:+$$SECRETS,}SWEEP_SECRET=sweep-secret:latest"; fi
+        if [ -n "$$SECRETS" ]; then
+          gcloud run services update ${_API_SERVICE} --region=${_REGION} --update-secrets="$$SECRETS"
+        else
+          echo "No optional secrets found; AI features use their fallbacks."
+        fi
+
+  - id: api-url
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - gcloud run services describe ${_API_SERVICE} --region=${_REGION} --format='value(status.url)' > /workspace/api_url && cat /workspace/api_url
+
+  - id: build-web
+    name: gcr.io/cloud-builders/docker
+    entrypoint: bash
+    args:
+      - -c
+      - >-
+        docker build -f infra/docker/web.Dockerfile
+        --build-arg API_INTERNAL_ORIGIN="$$(cat /workspace/api_url)"
+        -t ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${BUILD_ID} .
+
+  - id: push-web
+    name: gcr.io/cloud-builders/docker
+    args: [push, "${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${BUILD_ID}"]
+
+  - id: deploy-web
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: gcloud
+    args:
+      - run
+      - deploy
+      - ${_WEB_SERVICE}
+      - --image=${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${BUILD_ID}
+      - --region=${_REGION}
+      - --service-account=neighborhood-web@${PROJECT_ID}.iam.gserviceaccount.com
+      - --allow-unauthenticated
+      - --port=8080
+      - --memory=1Gi
+      - --min-instances=0
+      - --max-instances=2
+      - --set-env-vars=NODE_ENV=production
+
+images:
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/api:${BUILD_ID}
+  - ${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPO}/web:${BUILD_ID}
