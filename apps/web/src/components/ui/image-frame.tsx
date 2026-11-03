@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { cn } from "@/lib/cn";
 
 interface ImageFrameProps {
@@ -20,6 +20,13 @@ export function ImageFrame({
 }: ImageFrameProps) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
+  const imgRef = useRef<HTMLImageElement>(null);
+
+  // An image the browser already has shows at once, before the first paint.
+  useLayoutEffect(() => {
+    const img = imgRef.current;
+    if (img?.complete && img.naturalWidth > 0) setLoaded(true);
+  }, [src]);
 
   const ratioClass =
     aspectRatio === "square" ? "aspect-square" : "aspect-video";
@@ -45,6 +52,7 @@ export function ImageFrame({
         </div>
       )}
       <img
+        ref={imgRef}
         src={src}
         alt={alt}
         loading="lazy"

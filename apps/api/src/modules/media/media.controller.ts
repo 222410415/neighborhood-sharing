@@ -139,7 +139,9 @@ export class MediaController {
     }
 
     res.setHeader("Content-Type", result.mimeType);
-    res.setHeader("Cache-Control", "no-store");
+    // Media ids are never reused, so the browser may keep a public photo. "private"
+    // keeps it out of shared caches; new requests still check the listing is published.
+    res.setHeader("Cache-Control", "private, max-age=3600");
     res.setHeader("X-Content-Type-Options", "nosniff");
     res.send(result.bytes);
   }

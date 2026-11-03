@@ -121,7 +121,8 @@ try {
   rec("MAN-13", (search.data?.items ?? []).some((x) => x.id === id), "New listing found by keyword search for its title");
 
   const pubMedia = await call("GET", `/media/${mediaId}`);
-  rec("MAN-14", pubMedia.status === 200 && pubMedia.headers.get("cache-control") === "no-store", `Listing photograph publicly readable with caching disabled (status ${pubMedia.status})`);
+  const ownMedia = await call("GET", `/me/media/${mediaId}`, hanadi.token);
+  rec("MAN-14", pubMedia.status === 200 && pubMedia.headers.get("cache-control") === "private, max-age=3600" && ownMedia.status === 200 && ownMedia.headers.get("cache-control") === "no-store", `Listing photograph publicly readable, cached only by the browser for 1 hour (status ${pubMedia.status}); owner media route stays no-store (status ${ownMedia.status}); MAN-18 proves pausing hides it at once`);
   const thumb = await call("GET", `/media/${mediaId}?variant=thumbnail`);
   const md = jpegSize(Buffer.from(pubMedia.data)); const td = jpegSize(Buffer.from(thumb.data));
   rec("MAN-21", md && td && Math.max(md.w, md.h) <= 1600 && Math.max(td.w, td.h) <= 480, `Served images resized: main ${md?.w}x${md?.h}, thumbnail ${td?.w}x${td?.h}`);

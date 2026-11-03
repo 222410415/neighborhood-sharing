@@ -137,7 +137,7 @@ docs/                     documentation
 - Owner-only endpoints check `ownerUid` from token, not from request body
 - Revision-based optimistic concurrency prevents stale edits
 - Media access follows current listing visibility
-- `Cache-Control: no-store` on all media responses
+- Media caching: public listing photos `private, max-age=3600` (browser only); owner and private media (condition, report, profile routes) `no-store`
 - Security headers: nosniff, DENY frame, referrer-policy, permissions-policy
 - Payments and deposits are simulated records only (`mode: "simulated"`)
 - Booking, conversation and condition-photo routes return 404 to non-participants

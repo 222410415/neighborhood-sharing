@@ -106,6 +106,16 @@ function ListingCard({ item }: { item: PublicListingItem }) {
   );
 }
 
+interface CataloguePage {
+  items: PublicListingItem[];
+  nextCursor: string | null;
+  hasMore: boolean;
+  scanLimitReached: boolean;
+}
+
+/** First page per filter set, kept while the tab is open so returning to Explore is instant. */
+const cataloguePages = new Map<string, CataloguePage>();
+
 function ExploreContent() {
   const router = useRouter();
   const params = useSearchParams();
@@ -118,13 +128,15 @@ function ExploreContent() {
   const minPrice = params.get("minPrice") ?? "";
   const maxPrice = params.get("maxPrice") ?? "";
   const [searchInput, setSearchInput] = useState(search);
-  const [scanLimitReached, setScanLimitReached] = useState(false);
-  const [items, setItems] = useState<PublicListingItem[]>([]);
-  const [loading, setLoading] = useState(true);
+  const pageKey = params.toString();
+  const remembered = cataloguePages.get(pageKey);
+  const [scanLimitReached, setScanLimitReached] = useState(remembered?.scanLimitReached ?? false);
+  const [items, setItems] = useState<PublicListingItem[]>(remembered?.items ?? []);
+  const [loading, setLoading] = useState(!remembered);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState(false);
-  const [nextCursor, setNextCursor] = useState<string | null>(null);
-  const [hasMore, setHasMore] = useState(false);
+  const [nextCursor, setNextCursor] = useState<string | null>(remembered?.nextCursor ?? null);
+  const [hasMore, setHasMore] = useState(remembered?.hasMore ?? false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const requestId = useRef(0);
   const hasFilters = Boolean(
@@ -136,9 +148,17 @@ function ExploreContent() {
   const load = useCallback(
     async (cursor?: string) => {
       const currentRequest = ++requestId.current;
+      const known = cursor ? undefined : cataloguePages.get(pageKey);
       if (cursor) setLoadingMore(true);
       else {
-        setLoading(true);
+        // A remembered list stays on screen while it refreshes in the background.
+        if (known) {
+          setItems(known.items);
+          setNextCursor(known.nextCursor);
+          setHasMore(known.hasMore);
+          setScanLimitReached(known.scanLimitReached);
+        }
+        setLoading(!known);
         setLoadingMore(false);
       }
       setError(false);
@@ -158,8 +178,16 @@ function ExploreContent() {
       if (cursor) setLoadingMore(false);
       else setLoading(false);
       if (!result) {
-        setError(true);
+        if (!known) setError(true);
         return;
+      }
+      if (!cursor) {
+        cataloguePages.set(pageKey, {
+          items: result.items,
+          nextCursor: result.nextCursor,
+          hasMore: result.hasMore,
+          scanLimitReached: !!result.scanLimitReached,
+        });
       }
       setItems((current) =>
         cursor ? [...current, ...result.items] : result.items,
@@ -168,7 +196,7 @@ function ExploreContent() {
       setHasMore(result.hasMore);
       setScanLimitReached(!!result.scanLimitReached);
     },
-    [category, neighborhood, lendingMode, search, fromDay, toDay, minPrice, maxPrice],
+    [pageKey, category, neighborhood, lendingMode, search, fromDay, toDay, minPrice, maxPrice],
   );
   useEffect(() => {
     void load();

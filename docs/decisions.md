@@ -394,3 +394,17 @@ page, with the API field that fed it. Credits stay in `assets.json`, on the medi
 documents and in `PHOTO_CREDITS.md`. Known consequence: 40 of the 46 photos are CC BY
 or CC BY-SA and need visible attribution, so public use needs a credits page or
 replacement photos (the 6 CC0 and public domain photos do not).
+
+## D-37: Browser caching for public listing photos (4 November 2026)
+
+Public listing photos were `no-store`, so every return to Explore downloaded them
+again (about 0.24 seconds and two Firestore reads each). The user chose a 1-hour
+browser cache: `Cache-Control: private, max-age=3600` on `GET /media/:id` only.
+Media ids are never reused. Trade-off accepted: someone who already saw a photo may
+see it from their own browser for up to 1 hour after a listing is paused; all new
+requests are still checked and refused at once (MAN-18). MAN-14 was changed with the
+user's approval and now also requires owner media to stay `no-store`.
+
+Explore also keeps the first page per filter set in memory while the tab is open and
+refreshes it in the background, and `ImageFrame` skips the fade for images the
+browser already has.
