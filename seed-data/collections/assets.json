@@ -1,75 +1,131 @@
 [
   {
     "id": "asset_cordless-drill",
-    "path": "assets/cordless-drill.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Cordless Drill Kit — demonstration placeholder",
-    "alt_ar": "طقم مثقاب لاسلكي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/cordless-drill.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Cordless Drill Kit (illustrative photo)",
+    "alt_ar": "طقم مثقاب لاسلكي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Cordless Electric Drill.jpg",
+      "creator": "Tony Webster",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cordless_Electric_Drill.jpg"
+    }
   },
   {
     "id": "asset_folding-ladder",
-    "path": "assets/folding-ladder.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Folding Ladder — demonstration placeholder",
-    "alt_ar": "سلم قابل للطي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/folding-ladder.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Folding Ladder (illustrative photo)",
+    "alt_ar": "سلم قابل للطي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Just a stepladder standing at a street corner.jpg",
+      "creator": "Ser Amantio di Nicolao",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Just_a_stepladder_standing_at_a_street_corner.jpg"
+    }
   },
   {
     "id": "asset_screwdriver-set",
-    "path": "assets/screwdriver-set.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Screwdriver Set — demonstration placeholder",
-    "alt_ar": "طقم مفكات — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/screwdriver-set.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Screwdriver Set (illustrative photo)",
+    "alt_ar": "طقم مفكات (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Precision Screwdriver Set 2.jpg",
+      "creator": "oomlout",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Precision_Screwdriver_Set_2.jpg"
+    }
   },
   {
     "id": "asset_hand-tool-kit",
-    "path": "assets/hand-tool-kit.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Household Tool Kit — demonstration placeholder",
-    "alt_ar": "حقيبة أدوات منزلية — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/hand-tool-kit.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Household Tool Kit (illustrative photo)",
+    "alt_ar": "حقيبة أدوات منزلية (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC0); cropped or framed to 4:3 and resized. No credit required; credited anyway.",
+    "credit": {
+      "title": "Repair tool kit.jpg",
+      "creator": "Wilfredor",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Repair_tool_kit.jpg"
+    }
   },
   {
     "id": "asset_laser-level",
-    "path": "assets/laser-level.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Compact Laser Level — demonstration placeholder",
-    "alt_ar": "ميزان ليزر صغير — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/laser-level.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Compact Laser Level (illustrative photo)",
+    "alt_ar": "ميزان ليزر صغير (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Kölnisches Stadtmuseum - 125 x gekauft - geschenkt - gestiftet-1116.jpg",
+      "creator": "Raimond Spekking",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:K%C3%B6lnisches_Stadtmuseum_-_125_x_gekauft_-_geschenkt_-_gestiftet-1116.jpg"
+    }
   },
   {
     "id": "asset_measuring-tape",
-    "path": "assets/measuring-tape.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Measuring Tape — demonstration placeholder",
-    "alt_ar": "شريط قياس — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/measuring-tape.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Measuring Tape (illustrative photo)",
+    "alt_ar": "شريط قياس (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 3.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Tape measure No 1.jpg",
+      "creator": "Boatbuilder",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tape_measure_No_1.jpg"
+    }
   },
   {
     "id": "asset_portable-projector",
-    "path": "assets/portable-projector.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Portable Projector — demonstration placeholder",
-    "alt_ar": "جهاز عرض محمول — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/portable-projector.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Portable Projector (illustrative photo)",
+    "alt_ar": "جهاز عرض محمول (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "EPSON CH-TW5400 LCD PROJECTOR.jpg",
+      "creator": "Dinkun Chen",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:EPSON_CH-TW5400_LCD_PROJECTOR.jpg"
+    }
   },
   {
     "id": "asset_projection-screen",
-    "path": "assets/projection-screen.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Portable Projection Screen — demonstration placeholder",
-    "alt_ar": "شاشة عرض محمولة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/projection-screen.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Portable Projection Screen (illustrative photo)",
+    "alt_ar": "شاشة عرض محمولة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (Public domain); cropped or framed to 4:3 and resized. No credit required; credited anyway.",
+    "credit": {
+      "title": "Projection-screen-home.jpg",
+      "creator": "Unknown",
+      "license": "Public domain",
+      "license_url": null,
+      "source_url": "https://commons.wikimedia.org/wiki/File:Projection-screen-home.jpg"
+    }
   },
   {
     "id": "asset_presentation-clicker",
@@ -82,219 +138,387 @@
   },
   {
     "id": "asset_usb-microphone",
-    "path": "assets/usb-microphone.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "USB Microphone — demonstration placeholder",
-    "alt_ar": "ميكروفون يو إس بي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/usb-microphone.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "USB Microphone (illustrative photo)",
+    "alt_ar": "ميكروفون يو إس بي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 3.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Samson Go Mic Clip-On USB Mikrofon 02.jpg",
+      "creator": "Rillke",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Samson_Go_Mic_Clip-On_USB_Mikrofon_02.jpg"
+    }
   },
   {
     "id": "asset_camera-tripod",
-    "path": "assets/camera-tripod.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Camera Tripod — demonstration placeholder",
-    "alt_ar": "حامل كاميرا ثلاثي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/camera-tripod.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Camera Tripod (illustrative photo)",
+    "alt_ar": "حامل كاميرا ثلاثي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "( a bit of Photography equipment Tripods Photo Camera Tripod) camera tripod.jpg",
+      "creator": "David Adam Kess",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:(_a_bit_of_Photography_equipment_Tripods_Photo_Camera_Tripod)_camera_tripod.jpg"
+    }
   },
   {
     "id": "asset_led-video-light",
-    "path": "assets/led-video-light.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "LED Video Light — demonstration placeholder",
-    "alt_ar": "إضاءة تصوير ليد — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/led-video-light.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "LED Video Light (illustrative photo)",
+    "alt_ar": "إضاءة تصوير ليد (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Digitek Video Light - LED D132 ML RGB.jpg",
+      "creator": "Sumitsurai",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Digitek_Video_Light_-_LED_D132_ML_RGB.jpg"
+    }
   },
   {
     "id": "asset_camping-tent",
-    "path": "assets/camping-tent.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Camping Tent for Four — demonstration placeholder",
-    "alt_ar": "خيمة تخييم لأربعة أشخاص — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/camping-tent.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Camping Tent for Four (illustrative photo)",
+    "alt_ar": "خيمة تخييم لأربعة أشخاص (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 3.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Dome tent.JPG",
+      "creator": "Paste",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Dome_tent.JPG"
+    }
   },
   {
     "id": "asset_camping-chairs",
-    "path": "assets/camping-chairs.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Pair of Camping Chairs — demonstration placeholder",
-    "alt_ar": "كرسيان للتخييم — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/camping-chairs.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Pair of Camping Chairs (illustrative photo)",
+    "alt_ar": "كرسيان للتخييم (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "SAKURAKO - Director's chair. (4629352335).jpg",
+      "creator": "MIKI Yoshihito",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:SAKURAKO_-_Director%27s_chair._(4629352335).jpg"
+    }
   },
   {
     "id": "asset_camping-table",
-    "path": "assets/camping-table.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Folding Camping Table — demonstration placeholder",
-    "alt_ar": "طاولة تخييم قابلة للطي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/camping-table.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Folding Camping Table (illustrative photo)",
+    "alt_ar": "طاولة تخييم قابلة للطي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Folding Picnic Table 2.jpg",
+      "creator": "Steven Groves",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Folding_Picnic_Table_2.jpg"
+    }
   },
   {
     "id": "asset_cooler-box",
-    "path": "assets/cooler-box.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Cooler Box — demonstration placeholder",
-    "alt_ar": "صندوق تبريد — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/cooler-box.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Cooler Box (illustrative photo)",
+    "alt_ar": "صندوق تبريد (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Red Coleman cooler.jpg",
+      "creator": "Victor Grigas",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Red_Coleman_cooler.jpg"
+    }
   },
   {
     "id": "asset_camping-lantern",
-    "path": "assets/camping-lantern.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Rechargeable Camping Lantern — demonstration placeholder",
-    "alt_ar": "فانوس تخييم قابل للشحن — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/camping-lantern.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Rechargeable Camping Lantern (illustrative photo)",
+    "alt_ar": "فانوس تخييم قابل للشحن (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Streamlight LED Camping Lantern - The Siege (41339394074).jpg",
+      "creator": "Tony Webster",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Streamlight_LED_Camping_Lantern_-_The_Siege_(41339394074).jpg"
+    }
   },
   {
     "id": "asset_picnic-mat",
-    "path": "assets/picnic-mat.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Large Picnic Mat — demonstration placeholder",
-    "alt_ar": "حصيرة نزهات كبيرة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/picnic-mat.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Large Picnic Mat (illustrative photo)",
+    "alt_ar": "حصيرة نزهات كبيرة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Wine glasses on a box cutting board with cheese fruit and bread chalkboard and personalized pillows on a picnic blanket (19924590745).jpg",
+      "creator": "Personal Creations",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Wine_glasses_on_a_box_cutting_board_with_cheese_fruit_and_bread_chalkboard_and_personalized_pillows_on_a_picnic_blanket_(19924590745).jpg"
+    }
   },
   {
     "id": "asset_carpet-cleaner",
-    "path": "assets/carpet-cleaner.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Carpet Cleaner — demonstration placeholder",
-    "alt_ar": "جهاز تنظيف السجاد — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/carpet-cleaner.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Carpet Cleaner (illustrative photo)",
+    "alt_ar": "جهاز تنظيف السجاد (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 3.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Bissell spot clean pro.jpg",
+      "creator": "Artoria2e5",
+      "license": "CC BY 3.0",
+      "license_url": "https://creativecommons.org/licenses/by/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Bissell_spot_clean_pro.jpg"
+    }
   },
   {
     "id": "asset_pressure-washer",
-    "path": "assets/pressure-washer.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Compact Pressure Washer — demonstration placeholder",
-    "alt_ar": "جهاز غسيل بالضغط — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/pressure-washer.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Compact Pressure Washer (illustrative photo)",
+    "alt_ar": "جهاز غسيل بالضغط (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Kawasaki Pressure Washer HPW 302.jpg",
+      "creator": "FBenjr123",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kawasaki_Pressure_Washer_HPW_302.jpg"
+    }
   },
   {
     "id": "asset_steam-mop",
-    "path": "assets/steam-mop.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Steam Mop — demonstration placeholder",
-    "alt_ar": "ممسحة بخارية — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/steam-mop.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Steam Mop (illustrative photo)",
+    "alt_ar": "ممسحة بخارية (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Polti steam mop or portable.jpg",
+      "creator": "Cjp24",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Polti_steam_mop_or_portable.jpg"
+    }
   },
   {
     "id": "asset_wet-dry-vacuum",
-    "path": "assets/wet-dry-vacuum.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Wet and Dry Vacuum — demonstration placeholder",
-    "alt_ar": "مكنسة للشفط الرطب والجاف — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/wet-dry-vacuum.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Wet and Dry Vacuum (illustrative photo)",
+    "alt_ar": "مكنسة للشفط الرطب والجاف (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 2.5); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Craftsman 16 Gallon Wet-Dry Vac.jpg",
+      "creator": "Nynexman4464",
+      "license": "CC BY-SA 2.5",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.5",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Craftsman_16_Gallon_Wet-Dry_Vac.jpg"
+    }
   },
   {
     "id": "asset_window-cleaner",
-    "path": "assets/window-cleaner.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Window Vacuum — demonstration placeholder",
-    "alt_ar": "جهاز تنظيف النوافذ — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/window-cleaner.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Window Vacuum (illustrative photo)",
+    "alt_ar": "جهاز تنظيف النوافذ (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Dornbirn-Kaercher KW1 Plus-Electric Window Vac Set-Vac downside (Window cleaning)-01ASD.jpg",
+      "creator": "Asurnipal",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Dornbirn-Kaercher_KW1_Plus-Electric_Window_Vac_Set-Vac_downside_(Window_cleaning)-01ASD.jpg"
+    }
   },
   {
     "id": "asset_cleaning-brush-kit",
-    "path": "assets/cleaning-brush-kit.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Cleaning Brush Kit — demonstration placeholder",
-    "alt_ar": "طقم فرش تنظيف — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/cleaning-brush-kit.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Cleaning Brush Kit (illustrative photo)",
+    "alt_ar": "طقم فرش تنظيف (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "A DISH SCRUBBER.jpg",
+      "creator": "Samuel Harper Muldoon",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:A_DISH_SCRUBBER.jpg"
+    }
   },
   {
     "id": "asset_stand-mixer",
-    "path": "assets/stand-mixer.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Stand Mixer — demonstration placeholder",
-    "alt_ar": "عجانة كهربائية — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/stand-mixer.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Stand Mixer (illustrative photo)",
+    "alt_ar": "عجانة كهربائية (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC0); cropped or framed to 4:3 and resized. No credit required; credited anyway.",
+    "credit": {
+      "title": "Sunbeam Heritage Mixmaster Stand Mixer.jpg",
+      "creator": "Shenderson1",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Sunbeam_Heritage_Mixmaster_Stand_Mixer.jpg"
+    }
   },
   {
     "id": "asset_air-fryer",
-    "path": "assets/air-fryer.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Air Fryer — demonstration placeholder",
-    "alt_ar": "قلاية هوائية — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/air-fryer.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Air Fryer (illustrative photo)",
+    "alt_ar": "قلاية هوائية (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Air Fryer 5458.jpg",
+      "creator": "Ashley Pomeroy",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Air_Fryer_5458.jpg"
+    }
   },
   {
     "id": "asset_coffee-urn",
-    "path": "assets/coffee-urn.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Coffee and Tea Urn — demonstration placeholder",
-    "alt_ar": "غلاية للقهوة والشاي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/coffee-urn.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Coffee and Tea Urn (illustrative photo)",
+    "alt_ar": "غلاية للقهوة والشاي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Al Dallah, Bait al Zubair Museum, Oman.jpg",
+      "creator": "Reda Kerbush",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Al_Dallah,_Bait_al_Zubair_Museum,_Oman.jpg"
+    }
   },
   {
     "id": "asset_waffle-maker",
-    "path": "assets/waffle-maker.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Waffle Maker — demonstration placeholder",
-    "alt_ar": "جهاز صنع الوافل — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/waffle-maker.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Waffle Maker (illustrative photo)",
+    "alt_ar": "جهاز صنع الوافل (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Cast Iron Waffle Maker Blackhawk Museum.jpg",
+      "creator": "TaurusEmerald",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Cast_Iron_Waffle_Maker_Blackhawk_Museum.jpg"
+    }
   },
   {
     "id": "asset_food-processor",
-    "path": "assets/food-processor.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Food Processor — demonstration placeholder",
-    "alt_ar": "محضرة طعام — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/food-processor.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Food Processor (illustrative photo)",
+    "alt_ar": "محضرة طعام (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Hamilton Beach Food Processor.jpg",
+      "creator": "Warren Layton",
+      "license": "CC BY-SA 2.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Hamilton_Beach_Food_Processor.jpg"
+    }
   },
   {
     "id": "asset_serving-trays",
-    "path": "assets/serving-trays.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Serving Tray Set — demonstration placeholder",
-    "alt_ar": "طقم صواني تقديم — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/serving-trays.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Serving Tray Set (illustrative photo)",
+    "alt_ar": "طقم صواني تقديم (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Tiffany - silver serving tray - HLAMBG.png",
+      "creator": "Eric Polk",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Tiffany_-_silver_serving_tray_-_HLAMBG.png"
+    }
   },
   {
     "id": "asset_folding-party-table",
-    "path": "assets/folding-party-table.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Folding Event Table — demonstration placeholder",
-    "alt_ar": "طاولة مناسبات قابلة للطي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/folding-party-table.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Folding Event Table (illustrative photo)",
+    "alt_ar": "طاولة مناسبات قابلة للطي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Tin Man Balloon Hand Launch",
+      "creator": "NASA Goddard Photo and Video",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0/",
+      "source_url": "https://www.flickr.com/photos/24662369@N07/53975368586"
+    }
   },
   {
     "id": "asset_event-chairs",
-    "path": "assets/event-chairs.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Set of Four Event Chairs — demonstration placeholder",
-    "alt_ar": "أربعة كراسي للمناسبات — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/event-chairs.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Set of Four Event Chairs (illustrative photo)",
+    "alt_ar": "أربعة كراسي للمناسبات (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "A red plastic stool stands out among rows of black folding chairs..png",
+      "creator": "Bennet Andrew",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:A_red_plastic_stool_stands_out_among_rows_of_black_folding_chairs..png"
+    }
   },
   {
     "id": "asset_bluetooth-speaker",
-    "path": "assets/bluetooth-speaker.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Portable Bluetooth Speaker — demonstration placeholder",
-    "alt_ar": "سماعة بلوتوث محمولة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/bluetooth-speaker.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Portable Bluetooth Speaker (illustrative photo)",
+    "alt_ar": "سماعة بلوتوث محمولة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "JBL Flip bluetooth speaker.jpg",
+      "creator": "Gpkp",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:JBL_Flip_bluetooth_speaker.jpg"
+    }
   },
   {
     "id": "asset_backdrop-stand",
@@ -307,128 +531,226 @@
   },
   {
     "id": "asset_string-lights",
-    "path": "assets/string-lights.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Decorative String Lights — demonstration placeholder",
-    "alt_ar": "سلسلة إضاءة للزينة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/string-lights.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Decorative String Lights (illustrative photo)",
+    "alt_ar": "سلسلة إضاءة للزينة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 3.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Damrak, Amsterdam architecture.jpg",
+      "creator": "Beatriz Posada Alonso",
+      "license": "CC BY-SA 3.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Damrak,_Amsterdam_architecture.jpg"
+    }
   },
   {
     "id": "asset_serving-dispenser",
-    "path": "assets/serving-dispenser.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Cold Drink Dispenser — demonstration placeholder",
-    "alt_ar": "موزع مشروبات باردة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/serving-dispenser.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Cold Drink Dispenser (illustrative photo)",
+    "alt_ar": "موزع مشروبات باردة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "02026 0554 A social kitchen food stall during a Pride event accompanying the Equality March in Bielsko-Biała, Poland.jpg",
+      "creator": "Marsilar",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:02026_0554_A_social_kitchen_food_stall_during_a_Pride_event_accompanying_the_Equality_March_in_Bielsko-Bia%C5%82a,_Poland.jpg"
+    }
   },
   {
     "id": "asset_padel-rackets",
-    "path": "assets/padel-rackets.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Pair of Padel Rackets — demonstration placeholder",
-    "alt_ar": "مضربا بادل — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/padel-rackets.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Pair of Padel Rackets (illustrative photo)",
+    "alt_ar": "مضربا بادل (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Padel rackets and balls.jpg",
+      "creator": "Anton Gustafsson",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Padel_rackets_and_balls.jpg"
+    }
   },
   {
     "id": "asset_badminton-set",
-    "path": "assets/badminton-set.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Badminton Set — demonstration placeholder",
-    "alt_ar": "طقم ريشة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/badminton-set.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Badminton Set (illustrative photo)",
+    "alt_ar": "طقم ريشة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Rachetă de badminton şi fluturaş.jpg",
+      "creator": "Vladimir Maftei",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Rachet%C4%83_de_badminton_%C5%9Fi_flutura%C5%9F.jpg"
+    }
   },
   {
     "id": "asset_football",
-    "path": "assets/football.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Football — demonstration placeholder",
-    "alt_ar": "كرة قدم — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/football.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Football (illustrative photo)",
+    "alt_ar": "كرة قدم (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC0); cropped or framed to 4:3 and resized. No credit required; credited anyway.",
+    "credit": {
+      "title": "Adidas soccer ball on a grass pitch (Unsplash).jpg",
+      "creator": "Peter Glaser baraida",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Adidas_soccer_ball_on_a_grass_pitch_(Unsplash).jpg"
+    }
   },
   {
     "id": "asset_dumbbells",
-    "path": "assets/dumbbells.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Adjustable Dumbbell Pair — demonstration placeholder",
-    "alt_ar": "زوج دمبل قابل للتعديل — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/dumbbells.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Adjustable Dumbbell Pair (illustrative photo)",
+    "alt_ar": "زوج دمبل قابل للتعديل (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC0); cropped or framed to 4:3 and resized. No credit required; credited anyway.",
+    "credit": {
+      "title": "Kurzhanteln 2 x 15 kg 2v2.jpg",
+      "creator": "Singlespeedfahrer",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Kurzhanteln_2_x_15_kg_2v2.jpg"
+    }
   },
   {
     "id": "asset_table-tennis-set",
-    "path": "assets/table-tennis-set.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Table Tennis Set — demonstration placeholder",
-    "alt_ar": "طقم تنس طاولة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/table-tennis-set.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Table Tennis Set (illustrative photo)",
+    "alt_ar": "طقم تنس طاولة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Fort Tryon Park td (2019-04-27) - Subway Terrace 29.jpg",
+      "creator": "Tdorante10",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fort_Tryon_Park_td_(2019-04-27)_-_Subway_Terrace_29.jpg"
+    }
   },
   {
     "id": "asset_bicycle-pump",
-    "path": "assets/bicycle-pump.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Bicycle Pump — demonstration placeholder",
-    "alt_ar": "مضخة دراجة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/bicycle-pump.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Bicycle Pump (illustrative photo)",
+    "alt_ar": "مضخة دراجة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Increasing tyre pressure on bicycle.jpg",
+      "creator": "Alextredz",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Increasing_tyre_pressure_on_bicycle.jpg"
+    }
   },
   {
     "id": "asset_hand-trolley",
-    "path": "assets/hand-trolley.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Folding Hand Trolley — demonstration placeholder",
-    "alt_ar": "عربة نقل يدوية قابلة للطي — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/hand-trolley.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Folding Hand Trolley (illustrative photo)",
+    "alt_ar": "عربة نقل يدوية قابلة للطي (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Dolly helping someone move.jpg",
+      "creator": "Crcjfly",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Dolly_helping_someone_move.jpg"
+    }
   },
   {
     "id": "asset_moving-crates",
-    "path": "assets/moving-crates.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Set of Four Moving Crates — demonstration placeholder",
-    "alt_ar": "أربعة صناديق نقل — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/moving-crates.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Set of Four Moving Crates (illustrative photo)",
+    "alt_ar": "أربعة صناديق نقل (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Fisklådor i Katthammarsvik Gotland.jpg",
+      "creator": "En-cas-de-soleil",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Fiskl%C3%A5dor_i_Katthammarsvik_Gotland.jpg"
+    }
   },
   {
     "id": "asset_furniture-dolly",
-    "path": "assets/furniture-dolly.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Furniture Dolly — demonstration placeholder",
-    "alt_ar": "قاعدة بعجلات لنقل الأثاث — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/furniture-dolly.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Furniture Dolly (illustrative photo)",
+    "alt_ar": "قاعدة بعجلات لنقل الأثاث (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY 2.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "A Grey Wooden Furniture Dolly (46138039674).jpg",
+      "creator": "HireAHelper",
+      "license": "CC BY 2.0",
+      "license_url": "https://creativecommons.org/licenses/by/2.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:A_Grey_Wooden_Furniture_Dolly_(46138039674).jpg"
+    }
   },
   {
     "id": "asset_moving-blankets",
-    "path": "assets/moving-blankets.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Pair of Moving Blankets — demonstration placeholder",
-    "alt_ar": "بطانيتان لحماية الأثاث — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/moving-blankets.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Pair of Moving Blankets (illustrative photo)",
+    "alt_ar": "بطانيتان لحماية الأثاث (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Moving Blanket - Blue.jpg",
+      "creator": "DustinMoving",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Moving_Blanket_-_Blue.jpg"
+    }
   },
   {
     "id": "asset_sewing-machine",
-    "path": "assets/sewing-machine.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Portable Sewing Machine — demonstration placeholder",
-    "alt_ar": "ماكينة خياطة محمولة — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/sewing-machine.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Portable Sewing Machine (illustrative photo)",
+    "alt_ar": "ماكينة خياطة محمولة (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC BY-SA 4.0); cropped or framed to 4:3 and resized. Credit required (see credit).",
+    "credit": {
+      "title": "Electric sewing machine for dual purpose like zigzag, button holes, etc.jpg",
+      "creator": "Haddybellz",
+      "license": "CC BY-SA 4.0",
+      "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source_url": "https://commons.wikimedia.org/wiki/File:Electric_sewing_machine_for_dual_purpose_like_zigzag,_button_holes,_etc.jpg"
+    }
   },
   {
     "id": "asset_garment-steamer",
-    "path": "assets/garment-steamer.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Garment Steamer — demonstration placeholder",
-    "alt_ar": "جهاز بخار للملابس — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/garment-steamer.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Garment Steamer (illustrative photo)",
+    "alt_ar": "جهاز بخار للملابس (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Openly licensed photo (CC0); cropped or framed to 4:3 and resized. No credit required; credited anyway.",
+    "credit": {
+      "title": "VAG200.jpg",
+      "creator": "Dakakeka",
+      "license": "CC0",
+      "license_url": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+      "source_url": "https://commons.wikimedia.org/wiki/File:VAG200.jpg"
+    }
   }
 ]

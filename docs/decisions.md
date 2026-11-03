@@ -354,3 +354,13 @@ deployed to Google Cloud, replacing the earlier Render preparation.
   Default Credentials; no key file in production.
 - Optional secrets (Gemini key, sweep secret) in Secret Manager.
 - API limited to one instance so the in-memory rate limits stay consistent.
+
+## D-33: Openly licensed demo photos
+
+46 of the 48 demonstration listings use real, openly licensed photos from
+Wikimedia Commons and Flickr (CC0, public domain, CC BY, CC BY-SA), cropped or
+framed to 4:3 at 1600x1200 with metadata removed (`seed-data/assets/photos/`).
+Each credit is stored in `seed-data/collections/assets.json`, saved on the media
+document by the seed, and shown on the item page ("Photo: author, licence");
+`seed-data/PHOTO_CREDITS.md` lists all. Presentation Clicker and Backdrop Stand
+keep a text placeholder. Photo media ids are `media_photo_<listingId>`.

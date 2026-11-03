@@ -113,6 +113,18 @@ async function rasterizeSvg(svgPath: string): Promise<Buffer> {
   return sharp(svgBuffer).resize(800, 600, { fit: "inside", withoutEnlargement: true }).png().toBuffer();
 }
 
+/** Reads an openly licensed photo (JPEG or PNG) from the assets directory. */
+async function readPhoto(photoPath: string): Promise<Buffer> {
+  const resolved = resolve(photoPath);
+  const rel = relative(ASSETS_DIR, resolved);
+  if (rel.startsWith("..") || rel.startsWith(sep)) {
+    throw new Error(`Source path outside assets directory: ${photoPath}`);
+  }
+  const sharp = (await import("sharp")).default;
+  // Normalise orientation and strip metadata before the usual main/thumbnail processing.
+  return sharp(readFileSync(resolved)).rotate().png().toBuffer();
+}
+
 async function processToBase64(pngBuffer: Buffer) {
   const sharp = (await import("sharp")).default;
   const mainBuf = await sharp(pngBuffer).resize(1600, 1200, { fit: "inside", withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer();
@@ -245,20 +257,27 @@ async function main() {
       const asset = assetMap.get(primaryAssetId)!;
       const assetPath = asset["path"] as string;
       const filename = assetPath.replace(/^assets\//, "");
-      const svgPath = join(ASSETS_DIR, filename);
+      const sourcePath = join(ASSETS_DIR, filename);
+      const isPhoto = /\.(jpe?g|png)$/i.test(filename);
 
-      if (existsSync(svgPath)) {
+      if (existsSync(sourcePath)) {
         try {
-          const pngBuf = await rasterizeSvg(svgPath);
+          const pngBuf = isPhoto ? await readPhoto(sourcePath) : await rasterizeSvg(sourcePath);
           const processed = await processToBase64(pngBuf);
-          const mediaId = `media_${listingId}`;
+          // Photos use a new id so the web app shows them (media_itm_* ids are
+          // treated as text placeholders and hidden).
+          const mediaId = isPhoto ? `media_photo_${listingId}` : `media_${listingId}`;
           const checksum = createHash("sha256").update(pngBuf).digest("hex");
+          const credit = isPhoto ? (asset["credit"] as Record<string, unknown> | undefined) : undefined;
 
           await writeDoc("media", mediaId, {
             id: mediaId,
             ownerUid: mappedOwnerId,
             listingId,
             uploadState: "attached",
+            purpose: "listing",
+            parentType: "listing",
+            parentId: listingId,
             mimeType: processed.mimeType,
             widthPx: processed.widthPx,
             heightPx: processed.heightPx,
@@ -271,12 +290,25 @@ async function main() {
             createdAt: new Date().toISOString(),
             expiresAt: null,
             isDemo: true,
+            ...(credit
+              ? {
+                  credit: {
+                    creator: credit["creator"] ?? "Unknown",
+                    license: credit["license"] ?? "",
+                    licenseUrl: credit["license_url"] ?? null,
+                    sourceUrl: credit["source_url"] ?? null,
+                    title: credit["title"] ?? null,
+                  },
+                }
+              : {}),
           });
           mediaCount++;
 
           listingData["primaryMediaId"] = mediaId;
           listingData["mediaIds"] = [mediaId];
           await writeDoc("listings", listingId, listingData);
+          // Remove the replaced text placeholder, if an earlier seed created it.
+          if (isPhoto) await db.collection("media").doc(`media_${listingId}`).delete();
         } catch (err) {
           console.error(`  [media] Failed: ${filename}: ${(err as Error).message}`);
         }

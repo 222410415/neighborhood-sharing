@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600" role="img" aria-label="Air Fryer demo placeholder">
-  <rect width="800" height="600" rx="24" fill="#F1F5F4"/>
-  <rect x="48" y="48" width="704" height="504" rx="16" fill="none" stroke="#A7BEB6" stroke-width="2"/>
-  <text x="400" y="242" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" fill="#173A32">Air Fryer</text>
-  <text x="400" y="300" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" fill="#173A32" direction="rtl">قلاية هوائية</text>
-  <text x="400" y="382" text-anchor="middle" font-family="Arial,sans-serif" font-size="19" fill="#536C64">DEMO PLACEHOLDER · NOT AN ITEM PHOTO</text>
-</svg>

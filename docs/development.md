@@ -82,7 +82,7 @@ Demo accounts (fictional personas, password from `SEED_USER_PASSWORD`, default b
 | regions / cities / neighborhoods / categories | 13 / 17 / 12 / 8 | Saudi reference data, Riyadh neighborhoods |
 | users | 3 | Hanadi, Leen, Jawharah |
 | listings | 48 | 44 published, 2 draft, 2 paused |
-| media | 48 | Base64 JPEG, separate documents |
+| media | 48 | 46 openly licensed photos (credits: `seed-data/PHOTO_CREDITS.md`) and 2 text placeholders; Base64 JPEG in separate documents |
 | policies / policyChunks | 12 / 24 | Demonstration drafts until approved |
 
 ## Checks
