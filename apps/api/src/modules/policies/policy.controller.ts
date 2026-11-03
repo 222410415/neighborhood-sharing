@@ -10,7 +10,7 @@ import { AuthGuard, type VerifiedUser } from "../../common/guards/auth.guard.js"
 import { CurrentUser } from "../../common/guards/current-user.decorator.js";
 import { ZodValidationInterceptor } from "../../common/validation/zod-validation.interceptor.js";
 import { RateLimit, RateLimitGuard } from "../../common/rate-limit/rate-limit.guard.js";
-import { testScenarioFrom } from "../ai/gemini.client.js";
+import { testScenarioFrom } from "../ai/ai.client.js";
 import { PolicyService } from "./policy.service.js";
 import { AssistantService } from "./assistant.service.js";
 

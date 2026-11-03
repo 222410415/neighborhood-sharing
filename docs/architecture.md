@@ -139,7 +139,7 @@ docs/                     documentation
 - Media access follows current listing visibility
 - `Cache-Control: no-store` on all media responses
 - Security headers: nosniff, DENY frame, referrer-policy, permissions-policy
-- No Gemini endpoints; payments and deposits are simulated records only (`mode: "simulated"`)
+- Payments and deposits are simulated records only (`mode: "simulated"`)
 - Booking, conversation and condition-photo routes return 404 to non-participants
 - Pickup/return details, messages and condition photos are participant-only;
   public availability shows busy intervals only (no reasons, notes or members)
@@ -202,7 +202,7 @@ payments) buffered → guard rewritten → commit.
   read-only. Other hosts: `FIREBASE_SERVICE_ACCOUNT_BASE64`.
 - Web on Cloud Run: forwards `/api/*` to the API URL fixed at build time; the
   browser uses the public web config in `apps/web/src/lib/firebase-client.ts`.
-- Secrets (optional Gemini key, sweep secret) live in Secret Manager.
+- Secrets (optional OpenAI key, sweep secret) live in Secret Manager.
 - `firestore.rules` deny all browser access; the API is the only path to data.
 
 ## Trust, community and AI modules
@@ -217,7 +217,7 @@ apps/api/src/modules/
   admin/          AdminController: reviewer workspace (all routes behind RolesGuard)
   verification/   VerificationService (email from Firebase, demonstration checks)
   community/      FavoriteService (+ availability alerts), RequestService (requests, offers)
-  ai/             GeminiClient (fetch, schema, timeout, retry), SuggestionService, pure prompt builder
+  ai/             AiClient (OpenAI Chat Completions via fetch, strict schema, timeout, retry), SuggestionService, pure prompt builder
   policies/       PolicyService (versions, publish), AssistantService, pure retrieval and prompt
 common/rate-limit/  RateLimitGuard (in-memory, per member or client address)
 ```

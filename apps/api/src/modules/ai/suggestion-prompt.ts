@@ -27,6 +27,8 @@ export interface SuggestionCandidate {
 export interface ModelRequest {
   system: string;
   user: string;
+  /** Name of the answer schema, as Structured Outputs requires. */
+  schemaName: string;
   schema: Record<string, unknown>;
 }
 
@@ -39,18 +41,20 @@ export const SUGGESTION_SYSTEM_PROMPT = [
 ].join(" ");
 
 export const SUGGESTION_SCHEMA: Record<string, unknown> = {
-  type: "OBJECT",
+  type: "object",
   properties: {
     suggestions: {
-      type: "ARRAY",
+      type: "array",
       items: {
-        type: "OBJECT",
-        properties: { id: { type: "STRING" }, reason: { type: "STRING" } },
+        type: "object",
+        properties: { id: { type: "string" }, reason: { type: "string" } },
         required: ["id", "reason"],
+        additionalProperties: false,
       },
     },
   },
   required: ["suggestions"],
+  additionalProperties: false,
 };
 
 export function buildSuggestionRequest(source: SuggestionSource, candidates: SuggestionCandidate[]): ModelRequest {
@@ -73,6 +77,7 @@ export function buildSuggestionRequest(source: SuggestionSource, candidates: Sug
   return {
     system: SUGGESTION_SYSTEM_PROMPT,
     user: `Item data (JSON):\n${JSON.stringify(payload)}`,
+    schemaName: "item_suggestions",
     schema: SUGGESTION_SCHEMA,
   };
 }

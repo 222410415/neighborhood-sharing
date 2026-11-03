@@ -14,13 +14,14 @@ export interface PromptPassage extends RetrievedChunk {
 }
 
 export const POLICY_SCHEMA: Record<string, unknown> = {
-  type: "OBJECT",
+  type: "object",
   properties: {
-    canAnswer: { type: "BOOLEAN" },
-    answer: { type: "STRING" },
-    citedPolicyIds: { type: "ARRAY", items: { type: "STRING" } },
+    canAnswer: { type: "boolean" },
+    answer: { type: "string" },
+    citedPolicyIds: { type: "array", items: { type: "string" } },
   },
   required: ["canAnswer", "answer", "citedPolicyIds"],
+  additionalProperties: false,
 };
 
 export function buildPolicyRequest(
@@ -52,5 +53,5 @@ export function buildPolicyRequest(
       text: p.text,
     })),
   };
-  return { system, user: `Data (JSON):\n${JSON.stringify(payload)}`, schema: POLICY_SCHEMA };
+  return { system, user: `Data (JSON):\n${JSON.stringify(payload)}`, schemaName: "policy_answer", schema: POLICY_SCHEMA };
 }

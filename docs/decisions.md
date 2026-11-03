@@ -352,7 +352,7 @@ deployed to Google Cloud, replacing the earlier Render preparation.
 - The API runs as its own service account with least privilege
   (`roles/datastore.user`, `roles/firebaseauth.viewer`) and uses Application
   Default Credentials; no key file in production.
-- Optional secrets (Gemini key, sweep secret) in Secret Manager.
+- Optional secrets (OpenAI key, sweep secret) in Secret Manager.
 - API limited to one instance so the in-memory rate limits stay consistent.
 
 ## D-33: Openly licensed demo photos
@@ -375,3 +375,14 @@ published through the admin policy page or `scripts/admin/publish-policies.mjs`
 (same changes as the publish endpoint, audited). The policy assistant shows a
 draft notice only when a cited policy is still a draft, and the evaluation
 script checks for it only in that case.
+
+## D-35: AI provider is OpenAI
+
+Earlier entries mention Gemini, the provider used during development. The
+product uses OpenAI: `AiClient` (`apps/api/src/modules/ai/ai.client.ts`) calls
+Chat Completions with `fetch`, and the pure `openai-format.ts` builds the
+request and reads the answer. Settings: `OPENAI_API_KEY` (Secret Manager
+`openai-api-key` on Google Cloud), `OPENAI_MODEL` (default `gpt-6-luna`),
+`OPENAI_BASE_URL`. Answers use Structured Outputs with `strict: true`,
+`reasoning_effort: "none"` to stay inside the 8-second timeout, and
+`max_completion_tokens`. Without a key or credit, the fallbacks run.

@@ -73,7 +73,7 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
   server). When the scan budget is reached the list ends with "Keep searching" rather
   than claiming there are no more items.
 - **Related items** on the item page: "You might also need" with an AI note and icon when
-  Gemini answered, otherwise "Similar items" from the same category, without any AI
+  the AI model answered, otherwise "Similar items" from the same category, without any AI
   label. Nothing is shown when there are no candidates.
 - **Policies** (`/policies`, `/policies/[key]`): every policy shows "Draft vX" or
   "Approved vX"; a warning explains that drafts await the team's approval. The assistant
@@ -88,5 +88,5 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
 
 Not available, and therefore not shown as buttons: distance filters, real payments,
 real identity verification (only email verification and simulated demo checks), push
-or email notifications, and AI features without a Gemini key (the fallbacks run and
+or email notifications, and AI features without an OpenAI key (the fallbacks run and
 are labelled as such).

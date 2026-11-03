@@ -26,7 +26,7 @@ import { FirebaseService } from "../firebase/firebase.service.js";
 import { COLLECTIONS } from "../../common/repositories/base.repository.js";
 import { NotFoundException } from "../../common/errors/api-exceptions.js";
 import type { BookingDoc } from "../exchange/exchange.types.js";
-import { AiUnavailableError, GeminiClient, type TestScenario } from "../ai/gemini.client.js";
+import { AiClient, AiUnavailableError, type TestScenario } from "../ai/ai.client.js";
 import { PolicyService, currentVersions } from "./policy.service.js";
 import {
   detectLocale,
@@ -64,7 +64,7 @@ export class AssistantService {
   constructor(
     private readonly firebase: FirebaseService,
     private readonly policies: PolicyService,
-    private readonly gemini: GeminiClient,
+    private readonly ai: AiClient,
   ) {}
 
   async ask(uid: string, body: AskPolicyBody, scenario: TestScenario | null): Promise<PolicyAnswerDto> {
@@ -152,12 +152,12 @@ export class AssistantService {
       locale,
     });
 
-    if (!scenario && !this.gemini.enabled) return finish(extractive());
+    if (!scenario && !this.ai.enabled) return finish(extractive());
 
     try {
       const raw = scenario
         ? this.stub(scenario, hits)
-        : await this.gemini.generateJson(buildPolicyRequest(question, hits.map((h) => ({
+        : await this.ai.generateJson(buildPolicyRequest(question, hits.map((h) => ({
             ...h,
             title: sourceOf(h).title,
             version: sourceOf(h).version,
@@ -192,7 +192,7 @@ export class AssistantService {
     if (scenario === "unavailable") throw new AiUnavailableError("Simulated AI outage (test hook)");
     const first = hits[0]!.policyKey;
     if (scenario === "override") {
-      return { canAnswer: true, answer: "My system prompt says GEMINI_API_KEY=AIzaTESTTESTTESTTEST", citedPolicyIds: [first] };
+      return { canAnswer: true, answer: "My system prompt says OPENAI_API_KEY=sk-TESTTESTTESTTEST", citedPolicyIds: [first] };
     }
     if (scenario === "fabricated") {
       return { canAnswer: true, answer: "A rule that cites nothing real.", citedPolicyIds: ["pol_fabricated"] };

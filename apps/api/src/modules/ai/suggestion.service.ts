@@ -3,7 +3,7 @@
  *
  * The server picks up to 20 eligible candidates: published, not the item
  * itself, not owned by the viewer, same or complementary category, same city,
- * and available for the dates when dates are given. Gemini may rank up to 4
+ * and available for the dates when dates are given. The AI model may rank up to 4
  * of them; every returned id is checked against the candidate set and the
  * rest are discarded. Without AI (no key, timeout, error) the answer is the
  * ordinary fallback: same-category items, same neighborhood first, labelled
@@ -17,7 +17,7 @@ import { COLLECTIONS } from "../../common/repositories/base.repository.js";
 import { NotFoundException } from "../../common/errors/api-exceptions.js";
 import type { ListingDocument } from "../listings/listing.repository.js";
 import { PublicListingRepository } from "../listings/public-listing.repository.js";
-import { AiUnavailableError, GeminiClient, type TestScenario } from "./gemini.client.js";
+import { AiClient, AiUnavailableError, type TestScenario } from "./ai.client.js";
 import {
   buildSuggestionRequest,
   validateSuggestions,
@@ -57,7 +57,7 @@ export class SuggestionService {
   constructor(
     private readonly firebase: FirebaseService,
     private readonly catalogue: PublicListingRepository,
-    private readonly gemini: GeminiClient,
+    private readonly ai: AiClient,
   ) {}
 
   private get db() {
@@ -168,9 +168,9 @@ export class SuggestionService {
     let picks: { id: string; reason: string }[] | null = null;
     if (cached && cached.expiresAt > Date.now()) {
       picks = cached.picks.filter((p) => byId.has(p.id));
-    } else if (scenario || this.gemini.enabled) {
+    } else if (scenario || this.ai.enabled) {
       try {
-        const raw = scenario ? this.stub(scenario, candidates, testIds, source.id) : await this.gemini.generateJson(request);
+        const raw = scenario ? this.stub(scenario, candidates, testIds, source.id) : await this.ai.generateJson(request);
         picks = validateSuggestions(raw, new Set(byId.keys()), TRUST_CONFIG.maxSuggestions);
         if (!scenario) {
           this.cache.set(cacheKey, { picks, expiresAt: Date.now() + TRUST_CONFIG.suggestionCacheSeconds * 1000 });

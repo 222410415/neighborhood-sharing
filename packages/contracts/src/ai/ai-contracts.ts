@@ -31,7 +31,7 @@ export interface SuggestionItemDto {
 
 export interface SuggestionsDto {
   listingId: string;
-  /** "ai" when Gemini ranked the candidates; "category" for the ordinary fallback. */
+  /** "ai" when the AI model ranked the candidates; "category" for the ordinary fallback. */
   source: "ai" | "category";
   label: string;
   items: SuggestionItemDto[];

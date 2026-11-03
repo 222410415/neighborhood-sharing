@@ -19,8 +19,8 @@ locally, including the scripted checks, writes real data; clean test data with
 | --- | --- |
 | `FIREBASE_PROJECT_ID` | `neighborhood-sharing` (must match the key and the web config) |
 | `FIREBASE_KEY_FILE` | absolute path to the key JSON; Docker mounts it read-only into the api and tools containers |
-| `GEMINI_API_KEY` | optional; without it the AI fallbacks run |
-| `GEMINI_MODEL` | `gemini-2.5-flash` |
+| `OPENAI_API_KEY` | optional; without it the AI fallbacks run |
+| `OPENAI_MODEL` | `gpt-6-luna` |
 
 The browser signs in with the project's public web config, the default in
 `apps/web/src/lib/firebase-client.ts`.
@@ -131,7 +131,7 @@ every functional check run and before recording or presenting.
 
 ## AI (optional)
 
-Without a key everything works with the fallbacks. With `GEMINI_API_KEY` set in
+Without a key everything works with the fallbacks. With `OPENAI_API_KEY` set in
 `.env`, restart the API: `docker compose up -d api`. The local stack sets
 `AI_TEST_HOOKS=true` so the functional checks can select an AI stub per request
 (header `x-ai-test-scenario`); the API refuses these hooks when

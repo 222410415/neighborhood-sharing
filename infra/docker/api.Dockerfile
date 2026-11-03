@@ -2,8 +2,8 @@
 # Build from the repository root:
 #   docker build -f infra/docker/api.Dockerfile -t neighborhood-api .
 # Runtime configuration comes from environment variables, never from the image:
-#   FIREBASE_PROJECT_ID, PORT (set by Cloud Run), GEMINI_API_KEY (secret, optional),
-#   GEMINI_MODEL, CORS_ALLOWED_ORIGINS (optional), SWEEP_SECRET (secret, optional).
+#   FIREBASE_PROJECT_ID, PORT (set by Cloud Run), OPENAI_API_KEY (secret, optional),
+#   OPENAI_MODEL, CORS_ALLOWED_ORIGINS (optional), SWEEP_SECRET (secret, optional).
 # On Cloud Run the API uses the service's own identity (Application Default
 # Credentials); no key file is needed. Elsewhere set FIREBASE_SERVICE_ACCOUNT_BASE64.
 

@@ -2,7 +2,10 @@
  * Unit tests for the AI suggestion prompt and output validation (pure, no I/O).
  */
 
+import { MAX_OUTPUT_TOKENS, buildChatBody, parseChatResponse } from "../../src/modules/ai/openai-format";
+import { POLICY_SCHEMA } from "../../src/modules/policies/policy-prompt";
 import {
+  SUGGESTION_SCHEMA,
   buildSuggestionRequest,
   validateSuggestions,
 } from "../../src/modules/ai/suggestion-prompt";
@@ -86,5 +89,40 @@ describe("suggestion output validation", () => {
       1,
     );
     expect(out).toHaveLength(1);
+  });
+});
+
+describe("OpenAI request format", () => {
+  /** Strict Structured Outputs: every object closes its properties and requires them all. */
+  function assertStrict(node: Record<string, any>): void {
+    if (node["type"] === "object") {
+      expect(node["additionalProperties"]).toBe(false);
+      expect([...node["required"]].sort()).toEqual(Object.keys(node["properties"]).sort());
+      Object.values(node["properties"]).forEach((p) => assertStrict(p as Record<string, any>));
+    }
+    if (node["type"] === "array") assertStrict(node["items"]);
+  }
+
+  it("uses schemas that strict mode accepts", () => {
+    assertStrict(SUGGESTION_SCHEMA as Record<string, any>);
+    assertStrict(POLICY_SCHEMA as Record<string, any>);
+  });
+
+  it("builds a Chat Completions body with a strict schema and no reasoning", () => {
+    const request = buildSuggestionRequest(source, candidates);
+    const body = buildChatBody(request, "test-model") as Record<string, any>;
+    expect(body["model"]).toBe("test-model");
+    expect(body["messages"].map((m: { role: string }) => m.role)).toEqual(["system", "user"]);
+    expect(body["response_format"].type).toBe("json_schema");
+    expect(body["response_format"].json_schema).toEqual({ name: "item_suggestions", strict: true, schema: SUGGESTION_SCHEMA });
+    expect(body["reasoning_effort"]).toBe("none");
+    expect(body["max_completion_tokens"]).toBe(MAX_OUTPUT_TOKENS);
+    expect(body).not.toHaveProperty("max_tokens");
+  });
+
+  it("reads the JSON answer and refuses an empty one", () => {
+    expect(parseChatResponse({ choices: [{ message: { content: '{"suggestions":[]}' } }] })).toEqual({ suggestions: [] });
+    expect(() => parseChatResponse({ choices: [{ message: { content: null } }] })).toThrow();
+    expect(() => parseChatResponse({})).toThrow();
   });
 });

@@ -149,5 +149,5 @@ export function retrieve(
 
 /** Reject generated text that tries to expose configuration. */
 export function leaksConfiguration(text: string): boolean {
-  return /api[\s_-]?key|system prompt|gemini_|AIza[0-9A-Za-z_-]{10,}|process\.env/i.test(text);
+  return /api[\s_-]?key|system prompt|openai_|\bsk-[0-9A-Za-z_-]{10,}|process\.env/i.test(text);
 }

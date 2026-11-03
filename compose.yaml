@@ -31,9 +31,9 @@ services:
       - PORT=3001
       - FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID:-neighborhood-sharing}
       - GOOGLE_APPLICATION_CREDENTIALS=/run/secrets/firebase-key.json
-      # AI is off unless GEMINI_API_KEY is set in .env (entered by the team).
-      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
-      - GEMINI_MODEL=${GEMINI_MODEL:-}
+      # AI is off unless OPENAI_API_KEY is set in .env (entered by the team).
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-}
       # Local stack only: lets the functional checks select an AI stub per request.
       - AI_TEST_HOOKS=true
       # Rate limits (count/seconds). Policy questions stay at the default so F-69 can see a 429.

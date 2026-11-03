@@ -9,7 +9,7 @@ substitutions:
   _REPO: neighborhood
   _API_SERVICE: neighborhood-api
   _WEB_SERVICE: neighborhood-web
-  _GEMINI_MODEL: gemini-2.5-flash
+  _OPENAI_MODEL: gpt-6-luna
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -46,7 +46,7 @@ steps:
       - --min-instances=0
       # One instance keeps the in-memory rate limits consistent.
       - --max-instances=1
-      - --set-env-vars=NODE_ENV=production,FIREBASE_PROJECT_ID=${PROJECT_ID},GEMINI_MODEL=${_GEMINI_MODEL}
+      - --set-env-vars=NODE_ENV=production,FIREBASE_PROJECT_ID=${PROJECT_ID},OPENAI_MODEL=${_OPENAI_MODEL}
 
   # Optional secrets: attached only when they exist in Secret Manager.
   - id: api-secrets
@@ -57,7 +57,7 @@ steps:
       - |
         set -e
         SECRETS=""
-        if gcloud secrets describe gemini-api-key >/dev/null 2>&1; then SECRETS="GEMINI_API_KEY=gemini-api-key:latest"; fi
+        if gcloud secrets describe openai-api-key >/dev/null 2>&1; then SECRETS="OPENAI_API_KEY=openai-api-key:latest"; fi
         if gcloud secrets describe sweep-secret >/dev/null 2>&1; then SECRETS="$${SECRETS:+$$SECRETS,}SWEEP_SECRET=sweep-secret:latest"; fi
         if [ -n "$$SECRETS" ]; then
           gcloud run services update ${_API_SERVICE} --region=${_REGION} --update-secrets="$$SECRETS"

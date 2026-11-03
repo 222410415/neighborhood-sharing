@@ -11,7 +11,7 @@ requests, simulated payment, pickup and return arrangements, condition records,
 messaging, in-app notifications, reviews and public profiles, content reports,
 dispute cases with a reviewer workspace and audit trail, saved items with
 availability alerts, community requests and offers, related-item suggestions
-(AI-assisted with Gemini when configured) and a policy assistant that cites its
+(AI-assisted with OpenAI when configured) and a policy assistant that cites its
 sources.
 
 ## Stack

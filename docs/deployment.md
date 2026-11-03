@@ -49,8 +49,8 @@ and three service accounts:
 ### Optional secrets (enter the values yourself)
 
 ```sh
-# Gemini API key for AI suggestions and the policy assistant (without it, fallbacks run)
-gcloud secrets create gemini-api-key --replication-policy=automatic --data-file=-   # paste the key, then Ctrl-D
+# OpenAI API key for AI suggestions and the policy assistant (without it, fallbacks run)
+gcloud secrets create openai-api-key --replication-policy=automatic --data-file=-   # paste the key, then Ctrl-D
 # Secret for the bulk expiry endpoint (POST /v1/internal/sweep)
 openssl rand -hex 24 | gcloud secrets create sweep-secret --replication-policy=automatic --data-file=-
 ```

@@ -11,7 +11,7 @@ import { CurrentUser } from "../../common/guards/current-user.decorator.js";
 import { parseOrThrow } from "../../common/validation/parse.js";
 import { RateLimit, RateLimitGuard } from "../../common/rate-limit/rate-limit.guard.js";
 import { SuggestionService } from "./suggestion.service.js";
-import { testScenarioFrom } from "./gemini.client.js";
+import { testScenarioFrom } from "./ai.client.js";
 
 @Controller("listings")
 export class AiController {

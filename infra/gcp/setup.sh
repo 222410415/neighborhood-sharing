@@ -62,7 +62,7 @@ for SA in "$API_SA" "$WEB_SA"; do
 done
 
 echo "== Optional secrets (values are entered by you, never by this script)"
-for SECRET in gemini-api-key sweep-secret; do
+for SECRET in openai-api-key sweep-secret; do
   if gcloud secrets describe "$SECRET" >/dev/null 2>&1; then
     gcloud secrets add-iam-policy-binding "$SECRET" --member="serviceAccount:$API_SA" \
       --role=roles/secretmanager.secretAccessor >/dev/null
