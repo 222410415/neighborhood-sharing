@@ -97,7 +97,8 @@ export FIREBASE_PROJECT_ID=<project-id>
 pnpm install --frozen-lockfile --ignore-scripts
 pnpm seed:demo          # reference data, demo members, listings, images
 pnpm seed:bookings      # booking settings on demo listings
-pnpm seed:policies      # policies as drafts (publish after approval)
+pnpm seed:policies      # policies as drafts
+node scripts/admin/publish-policies.mjs --all            # dry run; add --apply once approved
 node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role reviewer
 ```
 
