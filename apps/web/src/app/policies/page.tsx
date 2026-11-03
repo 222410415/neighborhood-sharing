@@ -57,15 +57,11 @@ export default function PoliciesPage() {
                         {p.titleAr}
                       </span>
                     </span>
-                    <span
-                      className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold ${
-                        p.isDemoDraft
-                          ? "bg-[var(--nsr-warning-background)] text-[var(--nsr-warning)]"
-                          : "bg-[var(--nsr-success-background)] text-[var(--nsr-success)]"
-                      }`}
-                    >
-                      {p.isDemoDraft ? `Draft ${p.version}` : `Approved ${p.version}`}
-                    </span>
+                    {p.isDemoDraft && (
+                      <span className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold bg-[var(--nsr-warning-background)] text-[var(--nsr-warning)]">
+                        Draft {p.version}
+                      </span>
+                    )}
                   </Link>
                 </li>
               ))}

@@ -75,8 +75,9 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
 - **Related items** on the item page: "You might also need" with an AI note and icon when
   the AI model answered, otherwise "Similar items" from the same category, without any AI
   label. Nothing is shown when there are no candidates.
-- **Policies** (`/policies`, `/policies/[key]`): every policy shows "Draft vX" or
-  "Approved vX"; a warning explains that drafts await the team's approval. The assistant
+- **Policies** (`/policies`, `/policies/[key]`): a draft policy shows a "Draft vX" tag
+  and a warning that it awaits the team's approval; approved policies have no tag in the
+  list, and their page shows the version and approval date. The assistant
   panel shows the answer, the cited policies as links, whether it was AI-generated or an
   extract, and a limitation message when it cannot answer.
 - **Condition corrections** create a new version; the page lists earlier versions as
