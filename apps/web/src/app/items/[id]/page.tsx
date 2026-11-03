@@ -101,27 +101,6 @@ export default function ItemDetailsPage({
               </div>
             )}
           </div>
-          {listing.primaryMediaCredit && (
-            <p className="mt-2 text-[12px] text-[var(--nsr-text-secondary)]">
-              Photo:{" "}
-              {listing.primaryMediaCredit.sourceUrl ? (
-                <a href={listing.primaryMediaCredit.sourceUrl} target="_blank" rel="noopener noreferrer" className="underline">
-                  {listing.primaryMediaCredit.creator}
-                </a>
-              ) : (
-                listing.primaryMediaCredit.creator
-              )}
-              ,{" "}
-              {listing.primaryMediaCredit.licenseUrl ? (
-                <a href={listing.primaryMediaCredit.licenseUrl} target="_blank" rel="noopener noreferrer" className="underline">
-                  {listing.primaryMediaCredit.license}
-                </a>
-              ) : (
-                listing.primaryMediaCredit.license
-              )}
-              . Illustrative photo of this kind of item.
-            </p>
-          )}
           <p className="detail-kicker">
             {listing.category?.nameEn ?? "SHARED LOCALLY"}
           </p>

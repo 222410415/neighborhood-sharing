@@ -4,7 +4,9 @@ The demonstration listing photos are openly licensed images from Wikimedia Commo
 and Flickr (found through Openverse). Each was cropped or framed to 4:3 and resized;
 nothing else was changed. They show the kind of item, not the exact item a member lends.
 Licences: CC0 and public domain need no credit; CC BY and CC BY-SA need the credit
-below (shown on each item page). Two listings (Presentation Clicker, Backdrop Stand)
+below. The website does not show these credits (removed on 4 November 2026 at the
+user's request), so 40 photos currently lack the visible credit their licence asks
+for. Before public use, show this list on a page or replace those photos. Two listings (Presentation Clicker, Backdrop Stand)
 keep the text placeholder because no suitable open photo was found.
 
 | Listing | Original file | Author | Licence |

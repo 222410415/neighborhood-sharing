@@ -42,13 +42,6 @@ export interface PublicListingDetail {
   maximumBillableDays: number;
   fulfillment: string;
   primaryMediaId: string | null;
-  /** Attribution for an openly licensed photo; null for member uploads. */
-  primaryMediaCredit: {
-    creator: string;
-    license: string;
-    licenseUrl: string | null;
-    sourceUrl: string | null;
-  } | null;
   mediaIds: string[];
   createdAt: string;
   owner: { displayName: string; neighborhoodId: string | null };

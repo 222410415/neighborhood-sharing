@@ -28,14 +28,6 @@ interface CategoryLabel {
   slug: string;
 }
 
-/** Attribution of an openly licensed photo (seeded demo photos only). */
-export interface PhotoCredit {
-  creator: string;
-  license: string;
-  licenseUrl: string | null;
-  sourceUrl: string | null;
-}
-
 export interface PublicListingDetail {
   id: string;
   slug: string;
@@ -60,8 +52,6 @@ export interface PublicListingDetail {
   maximumBillableDays: number;
   fulfillment: string;
   primaryMediaId: string | null;
-  /** Credit for the primary photo when it is an openly licensed photo. */
-  primaryMediaCredit: PhotoCredit | null;
   mediaIds: string[];
   createdAt: string;
   owner: OwnerSummary;
@@ -90,20 +80,6 @@ export class PublicListingService {
     private readonly publicRepo: PublicListingRepository,
     private readonly firebase: FirebaseService,
   ) {}
-
-  /** Safe credit fields of a media document, or null (member uploads have none). */
-  private async getPhotoCredit(mediaId: string | null): Promise<PhotoCredit | null> {
-    if (!mediaId) return null;
-    const snap = await this.firebase.firestore.collection(COLLECTIONS.media).doc(mediaId).get();
-    const credit = snap.data()?.["credit"] as Partial<PhotoCredit> | undefined;
-    if (!credit?.creator || !credit.license) return null;
-    return {
-      creator: String(credit.creator),
-      license: String(credit.license),
-      licenseUrl: credit.licenseUrl ? String(credit.licenseUrl) : null,
-      sourceUrl: credit.sourceUrl ? String(credit.sourceUrl) : null,
-    };
-  }
 
   private async getOwnerSummaries(
     ownerUids: string[],
@@ -224,12 +200,11 @@ export class PublicListingService {
     const listing = await this.publicRepo.getPublishedById(id);
     if (!listing) return null;
 
-    // Join owner, neighborhood, category and the primary photo's credit
-    const [ownerMap, neighborhoodMap, categoryMap, primaryMediaCredit] = await Promise.all([
+    // Join owner, neighborhood, category
+    const [ownerMap, neighborhoodMap, categoryMap] = await Promise.all([
       this.getOwnerSummaries([listing.ownerUid]),
       this.getLocationLabels([listing.neighborhoodId]),
       this.getCategoryLabels([listing.categoryId]),
-      this.getPhotoCredit(listing.primaryMediaId),
     ]);
 
     return {
@@ -254,7 +229,6 @@ export class PublicListingService {
       maximumBillableDays: listing.maximumBillableDays,
       fulfillment: listing.fulfillment,
       primaryMediaId: listing.primaryMediaId,
-      primaryMediaCredit,
       mediaIds: listing.mediaIds ?? [],
       createdAt: listing.createdAt,
       owner: ownerMap.get(listing.ownerUid) ?? { displayName: "User", neighborhoodId: null },

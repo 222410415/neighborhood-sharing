@@ -361,7 +361,7 @@ deployed to Google Cloud, replacing the earlier Render preparation.
 Wikimedia Commons and Flickr (CC0, public domain, CC BY, CC BY-SA), cropped or
 framed to 4:3 at 1600x1200 with metadata removed (`seed-data/assets/photos/`).
 Each credit is stored in `seed-data/collections/assets.json`, saved on the media
-document by the seed, and shown on the item page ("Photo: author, licence");
+document by the seed,;
 `seed-data/PHOTO_CREDITS.md` lists all. Presentation Clicker and Backdrop Stand
 keep a text placeholder. Photo media ids are `media_photo_<listingId>`.
 
@@ -386,3 +386,11 @@ request and reads the answer. Settings: `OPENAI_API_KEY` (Secret Manager
 `OPENAI_BASE_URL`. Answers use Structured Outputs with `strict: true`,
 `reasoning_effort: "none"` to stay inside the 8-second timeout, and
 `max_completion_tokens`. Without a key or credit, the fallbacks run.
+
+## D-36: Photo credit line removed from the website (4 November 2026)
+
+At the user's request the "Photo: author, licence" line was removed from the item
+page, with the API field that fed it. Credits stay in `assets.json`, on the media
+documents and in `PHOTO_CREDITS.md`. Known consequence: 40 of the 46 photos are CC BY
+or CC BY-SA and need visible attribution, so public use needs a credits page or
+replacement photos (the 6 CC0 and public domain photos do not).
