@@ -90,7 +90,7 @@ export default function ItemDetailsPage({
             {listing.primaryMediaId &&
             !isDemoPlaceholderMedia(listing.primaryMediaId) ? (
               <ImageFrame
-                src={getPublicMediaUrl(listing.primaryMediaId)}
+                src={getPublicMediaUrl(listing.primaryMediaId, "main")}
                 alt={listing.titleEn}
                 aspectRatio="video"
                 className="!rounded-[25px]"
