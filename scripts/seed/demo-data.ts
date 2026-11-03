@@ -127,7 +127,12 @@ async function readPhoto(photoPath: string): Promise<Buffer> {
 
 async function processToBase64(pngBuffer: Buffer) {
   const sharp = (await import("sharp")).default;
-  const mainBuf = await sharp(pngBuffer).resize(1600, 1200, { fit: "inside", withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer();
+  // Step the quality down until the Base64 copy fits comfortably in a Firestore document.
+  let mainBuf = Buffer.alloc(0);
+  for (const quality of [80, 72, 64, 56]) {
+    mainBuf = await sharp(pngBuffer).resize(1600, 1200, { fit: "inside", withoutEnlargement: true }).jpeg({ quality }).toBuffer();
+    if ((mainBuf.length * 4) / 3 < 700_000) break;
+  }
   const thumbBuf = await sharp(pngBuffer).resize(480, 360, { fit: "inside", withoutEnlargement: true }).jpeg({ quality: 75 }).toBuffer();
   const meta = await sharp(mainBuf).metadata();
   return {
