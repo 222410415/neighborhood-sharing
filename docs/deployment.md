@@ -57,7 +57,7 @@ and three service accounts:
 | --- | --- | --- |
 | `neighborhood-api` | `roles/datastore.user`, `roles/firebaseauth.viewer` | API at runtime |
 | `neighborhood-web` | none | web at runtime |
-| `neighborhood-deployer` | `run.admin`, `artifactregistry.writer`, `logging.logWriter`, `secretmanager.viewer`, act as the two runtime accounts | Cloud Build |
+| `neighborhood-deployer` | `run.admin`, `artifactregistry.writer`, `logging.logWriter`, `secretmanager.viewer`, read access to the build source bucket, act as the two runtime accounts | Cloud Build |
 
 ### Optional secrets (enter the values yourself)
 

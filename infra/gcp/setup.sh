@@ -69,6 +69,14 @@ for SA in "$API_SA" "$WEB_SA"; do
   echo "   roles/iam.serviceAccountUser on $SA -> $DEPLOY_SA"
 done
 
+echo "== Build source bucket"
+SOURCE_BUCKET="gs://${PROJECT_ID}_cloudbuild"
+gcloud storage buckets describe "$SOURCE_BUCKET" >/dev/null 2>&1 || \
+  gcloud storage buckets create "$SOURCE_BUCKET" --location="$REGION" --uniform-bucket-level-access
+gcloud storage buckets add-iam-policy-binding "$SOURCE_BUCKET" \
+  --member="serviceAccount:$DEPLOY_SA" --role=roles/storage.objectViewer >/dev/null
+echo "   roles/storage.objectViewer on $SOURCE_BUCKET -> $DEPLOY_SA"
+
 echo "== Optional secrets (values are entered by you, never by this script)"
 for SECRET in openai-api-key sweep-secret; do
   if gcloud secrets describe "$SECRET" >/dev/null 2>&1; then
