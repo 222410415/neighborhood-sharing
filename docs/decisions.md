@@ -421,3 +421,12 @@ pick) and dates carry from search to the item page. `/activity` gathers what nee
 member, messages and updates from existing APIs, with Accept and Decline on the card.
 Phones use a tab bar and a fixed booking bar. An Arabic interface and language switch are
 future work; Arabic item text sits behind "Read in Arabic".
+
+## D-39: Team-supplied images for the last two listings (4 November 2026)
+
+Presentation Clicker and Backdrop Stand had no suitable open photo, so the user supplied
+two images and asked to use them. They replace the text placeholders in the real project
+and the seed data. Their source and licence are not recorded, so `credit` says "Not
+recorded" rather than inventing one. Known consequence: the rights must be confirmed, or
+the images replaced, before public use. `replace-demo-photos.mjs` gained `--only` so that
+the other listings are not rewritten.

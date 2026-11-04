@@ -10,7 +10,8 @@
  *   - deletes the placeholder media/media_<listingId>
  * Member-uploaded photos on a listing are kept. Idempotent.
  *
- * DRY RUN BY DEFAULT. Apply with --apply.
+ * DRY RUN BY DEFAULT. Apply with --apply. Limit to some listings with
+ * --only=itm_a,itm_b (the others are left untouched).
  *   Docker: docker compose run --rm tools node scripts/admin/replace-demo-photos.mjs [--apply]
  *   Mac:    GOOGLE_APPLICATION_CREDENTIALS=/path/key.json node scripts/admin/replace-demo-photos.mjs [--apply]
  */
@@ -24,6 +25,7 @@ const { getFirestore } = require("firebase-admin/firestore");
 const sharp = createRequire(new URL("../../package.json", import.meta.url))("sharp");
 
 const APPLY = process.argv.includes("--apply");
+const ONLY = process.argv.find((a) => a.startsWith("--only="))?.slice(7).split(",") ?? null;
 const DATA = new URL("../../seed-data/", import.meta.url);
 const MAX_DOC_BYTES = 900_000; // Firestore limit is 1 MiB per document
 
@@ -37,6 +39,7 @@ const assets = new Map(JSON.parse(readFileSync(new URL("collections/assets.json"
 console.log(`=== Replace demo photos (${APPLY ? "APPLY" : "dry run"}) - project ${projectId} ===`);
 let done = 0, skipped = 0;
 for (const l of listings) {
+  if (ONLY && !ONLY.includes(l.id)) continue;
   const asset = assets.get(l.primary_asset_id);
   if (!asset?.credit || !/\.jpe?g$/i.test(asset.path)) { console.log(`  keep placeholder  ${l.id} (no photo)`); skipped++; continue; }
   const file = new URL(asset.path, DATA);

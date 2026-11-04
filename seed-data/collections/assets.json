@@ -129,12 +129,19 @@
   },
   {
     "id": "asset_presentation-clicker",
-    "path": "assets/presentation-clicker.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Presentation Clicker — demonstration placeholder",
-    "alt_ar": "جهاز تحكم بالعروض — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/presentation-clicker.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Presentation Clicker (illustrative photo)",
+    "alt_ar": "جهاز تحكم بالعروض (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Image supplied by the project team on 4 November 2026; source and licence not recorded. Cropped or framed to 4:3 and resized. Confirm rights before public use.",
+    "credit": {
+      "title": null,
+      "creator": "Not recorded (supplied by the project team)",
+      "license": "Not recorded",
+      "license_url": null,
+      "source_url": null
+    }
   },
   {
     "id": "asset_usb-microphone",
@@ -522,12 +529,19 @@
   },
   {
     "id": "asset_backdrop-stand",
-    "path": "assets/backdrop-stand.svg",
-    "mime_type": "image/svg+xml",
-    "alt_en": "Backdrop Stand — demonstration placeholder",
-    "alt_ar": "حامل خلفية تصوير — صورة تجريبية",
-    "is_placeholder": true,
-    "rights": "Original text-only placeholder; no vendor image copied."
+    "path": "assets/photos/backdrop-stand.jpg",
+    "mime_type": "image/jpeg",
+    "alt_en": "Backdrop Stand (illustrative photo)",
+    "alt_ar": "حامل خلفية تصوير (صورة توضيحية)",
+    "is_placeholder": false,
+    "rights": "Image supplied by the project team on 4 November 2026; source and licence not recorded. Cropped or framed to 4:3 and resized. Confirm rights before public use.",
+    "credit": {
+      "title": null,
+      "creator": "Not recorded (supplied by the project team)",
+      "license": "Not recorded",
+      "license_url": null,
+      "source_url": null
+    }
   },
   {
     "id": "asset_string-lights",

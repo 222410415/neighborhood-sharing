@@ -6,8 +6,13 @@ nothing else was changed. They show the kind of item, not the exact item a membe
 Licences: CC0 and public domain need no credit; CC BY and CC BY-SA need the credit
 below. The website does not show these credits (removed on 4 November 2026 at the
 user's request), so 40 photos currently lack the visible credit their licence asks
-for. Before public use, show this list on a page or replace those photos. Two listings (Presentation Clicker, Backdrop Stand)
-keep the text placeholder because no suitable open photo was found.
+for. Before public use, show this list on a page or replace those photos.
+
+Presentation Clicker and Backdrop Stand use images the project team supplied on 4 November
+2026. They are not openly licensed as far as is known: their source and licence are not
+recorded, and the clicker shows the Logitech name. Confirm the rights or replace them before
+public use. The clicker was cropped to 4:3, which also removed a corner logo from a seller;
+the stand was framed whole on a blurred copy of itself.
 
 | Listing | Original file | Author | Licence |
 | --- | --- | --- | --- |
