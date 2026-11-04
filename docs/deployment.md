@@ -102,6 +102,20 @@ both URLs. Run it again for every release.
 Then, in the Firebase console: Authentication -> Settings -> Authorized domains
 -> add the web host (`neighborhood-web-....run.app`, or your own domain).
 
+### Public address
+
+Cloud Run's address cannot be renamed. Firebase Hosting gives the site the project's free
+address, `https://<project-id>.web.app`, and forwards visitors to the web service:
+
+```sh
+PROJECT_ID=<project-id> REGION=me-central1 bash infra/gcp/hosting.sh
+```
+
+Run it once. After that, `deploy.sh` publishes a new Hosting release on every deploy,
+which clears Firebase's page cache. A custom domain is added in the Firebase console
+(Hosting -> Add custom domain), because Cloud Run's own domain mapping does not cover
+`me-central1`.
+
 ## 5. Seed data (first deployment only)
 
 Skip this section when the project already holds the data. The seeds are safe to

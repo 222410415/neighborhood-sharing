@@ -23,6 +23,11 @@ gcloud builds submit "$ROOT" \
   --service-account="projects/$PROJECT_ID/serviceAccounts/neighborhood-deployer@$PROJECT_ID.iam.gserviceaccount.com" \
   --substitutions="_REGION=$REGION"
 
+# Firebase Hosting caches pages, so a new release clears its cache after each deploy.
+if gcloud services list --enabled --project="$PROJECT_ID" --format='value(config.name)' | grep -q '^firebasehosting.googleapis.com$'; then
+  echo yes | PROJECT_ID="$PROJECT_ID" REGION="$REGION" bash "$ROOT/infra/gcp/hosting.sh"
+fi
+
 echo
 echo "API: $(gcloud run services describe neighborhood-api --project="$PROJECT_ID" --region="$REGION" --format='value(status.url)')"
 echo "Web: $(gcloud run services describe neighborhood-web --project="$PROJECT_ID" --region="$REGION" --format='value(status.url)')"

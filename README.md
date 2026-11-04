@@ -45,7 +45,7 @@ docs/               architecture, deployment, development, design system, decisi
 
 ## Deploy to Google Cloud
 
-`PROJECT_ID=<id> bash infra/gcp/setup.sh`, then `PROJECT_ID=<id> bash infra/gcp/deploy.sh`.
+`PROJECT_ID=<id> bash infra/gcp/setup.sh`, `PROJECT_ID=<id> bash infra/gcp/deploy.sh`, then `PROJECT_ID=<id> bash infra/gcp/hosting.sh` for the `.web.app` address.
 Full guide: `docs/deployment.md`.
 
 ## Checks
