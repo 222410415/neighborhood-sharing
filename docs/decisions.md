@@ -395,6 +395,9 @@ documents and in `PHOTO_CREDITS.md`. Known consequence: 40 of the 46 photos are 
 or CC BY-SA and need visible attribution, so public use needs a credits page or
 replacement photos (the 6 CC0 and public domain photos do not).
 
+Decision on 4 November 2026: the user chose not to add a credits page. The site goes
+online without visible credits for those 40 photos, with that licence risk accepted.
+
 ## D-37: Browser caching for public listing photos (4 November 2026)
 
 Public listing photos were `no-store`, so every return to Explore downloaded them
