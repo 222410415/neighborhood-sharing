@@ -36,6 +36,16 @@ Browser ──> neighborhood-web (Cloud Run) ──/api/*──> neighborhood-ap
 
 ## 1. One-time setup
 
+If this machine also uses gcloud for other work, keep this project in its own profile
+and set it in the terminal you deploy from:
+
+```sh
+gcloud config configurations create neighborhood --no-activate
+export CLOUDSDK_ACTIVE_CONFIG_NAME=neighborhood
+gcloud config set project <project-id>
+gcloud auth login <owner-account>
+```
+
 ```sh
 PROJECT_ID=<project-id> REGION=me-central1 bash infra/gcp/setup.sh
 ```
