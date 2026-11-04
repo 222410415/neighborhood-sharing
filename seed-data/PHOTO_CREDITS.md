@@ -5,12 +5,12 @@ and Flickr (found through Openverse). Each was cropped or framed to 4:3 and resi
 nothing else was changed. They show the kind of item, not the exact item a member lends.
 Licences: CC0 and public domain need no credit; CC BY and CC BY-SA need the credit
 below. The website does not show these credits (removed on 4 November 2026 at the
-user's request), so 38 photos currently lack the visible credit their licence asks
+user's request), so 37 photos currently lack the visible credit their licence asks
 for. Before public use, show this list on a page or replace those photos.
 
-Presentation Clicker, Backdrop Stand, Air Fryer and Camera Tripod use images the project team supplied on 4 November
+Presentation Clicker, Backdrop Stand, Air Fryer, Camera Tripod and Cleaning Brush Kit use images the project team supplied on 4 November
 2026. They are not openly licensed as far as is known: their source and licence are not
-recorded, the clicker shows the Logitech name and the air fryer the Topzee name and the tripod the Freewell name. Confirm the rights or replace them before
+recorded, the clicker shows the Logitech name and the air fryer the Topzee name, the tripod the Freewell name and the brush kit the Holikme name. Confirm the rights or replace them before
 public use. The clicker was cropped to 4:3, which also removed a corner logo from a seller;
 the stand was made smaller in the frame and the room extended from its own edges.
 
@@ -37,7 +37,6 @@ the stand was made smaller in the frame and the room extended from its own edges
 | Steam Mop | [Polti steam mop or portable.jpg](https://commons.wikimedia.org/wiki/File:Polti_steam_mop_or_portable.jpg) | Cjp24 | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Wet and Dry Vacuum | [Craftsman 16 Gallon Wet-Dry Vac.jpg](https://commons.wikimedia.org/wiki/File:Craftsman_16_Gallon_Wet-Dry_Vac.jpg) | Nynexman4464 | [CC BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5) |
 | Window Vacuum | [Dornbirn-Kaercher KW1 Plus-Electric Window Vac Set-Vac downside (Window cleaning)-01ASD.jpg](https://commons.wikimedia.org/wiki/File:Dornbirn-Kaercher_KW1_Plus-Electric_Window_Vac_Set-Vac_downside_(Window_cleaning)-01ASD.jpg) | Asurnipal | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
-| Cleaning Brush Kit | [A DISH SCRUBBER.jpg](https://commons.wikimedia.org/wiki/File:A_DISH_SCRUBBER.jpg) | Samuel Harper Muldoon | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Stand Mixer | [Sunbeam Heritage Mixmaster Stand Mixer.jpg](https://commons.wikimedia.org/wiki/File:Sunbeam_Heritage_Mixmaster_Stand_Mixer.jpg) | Shenderson1 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
 | Coffee and Tea Urn | [Al Dallah, Bait al Zubair Museum, Oman.jpg](https://commons.wikimedia.org/wiki/File:Al_Dallah,_Bait_al_Zubair_Museum,_Oman.jpg) | Reda Kerbush | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Waffle Maker | [Cast Iron Waffle Maker Blackhawk Museum.jpg](https://commons.wikimedia.org/wiki/File:Cast_Iron_Waffle_Maker_Blackhawk_Museum.jpg) | TaurusEmerald | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
