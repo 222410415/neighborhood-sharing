@@ -12,7 +12,7 @@ Presentation Clicker and Backdrop Stand use images the project team supplied on 
 2026. They are not openly licensed as far as is known: their source and licence are not
 recorded, and the clicker shows the Logitech name. Confirm the rights or replace them before
 public use. The clicker was cropped to 4:3, which also removed a corner logo from a seller;
-the stand was framed whole on a blurred copy of itself.
+the stand was made smaller in the frame and the room extended from its own edges.
 
 | Listing | Original file | Author | Licence |
 | --- | --- | --- | --- |
