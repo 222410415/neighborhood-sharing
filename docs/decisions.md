@@ -431,4 +431,4 @@ recorded" rather than inventing one. Known consequence: the rights must be confi
 the images replaced, before public use. `replace-demo-photos.mjs` gained `--only` so that
 the other listings are not rewritten.
 
-The same day the user also replaced the Air Fryer photo with a supplied image, on the same terms.
+The same day the user also replaced the Air Fryer and Camera Tripod photos with supplied images, on the same terms. That leaves 44 openly licensed photos, of which 38 need a visible credit (D-36 said 40 of 46).

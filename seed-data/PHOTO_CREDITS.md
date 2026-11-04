@@ -5,12 +5,12 @@ and Flickr (found through Openverse). Each was cropped or framed to 4:3 and resi
 nothing else was changed. They show the kind of item, not the exact item a member lends.
 Licences: CC0 and public domain need no credit; CC BY and CC BY-SA need the credit
 below. The website does not show these credits (removed on 4 November 2026 at the
-user's request), so 40 photos currently lack the visible credit their licence asks
+user's request), so 38 photos currently lack the visible credit their licence asks
 for. Before public use, show this list on a page or replace those photos.
 
-Presentation Clicker, Backdrop Stand and Air Fryer use images the project team supplied on 4 November
+Presentation Clicker, Backdrop Stand, Air Fryer and Camera Tripod use images the project team supplied on 4 November
 2026. They are not openly licensed as far as is known: their source and licence are not
-recorded, the clicker shows the Logitech name and the air fryer the Topzee name. Confirm the rights or replace them before
+recorded, the clicker shows the Logitech name and the air fryer the Topzee name and the tripod the Freewell name. Confirm the rights or replace them before
 public use. The clicker was cropped to 4:3, which also removed a corner logo from a seller;
 the stand was made smaller in the frame and the room extended from its own edges.
 
@@ -25,7 +25,6 @@ the stand was made smaller in the frame and the room extended from its own edges
 | Portable Projector | [EPSON CH-TW5400 LCD PROJECTOR.jpg](https://commons.wikimedia.org/wiki/File:EPSON_CH-TW5400_LCD_PROJECTOR.jpg) | Dinkun Chen | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Portable Projection Screen | [Projection-screen-home.jpg](https://commons.wikimedia.org/wiki/File:Projection-screen-home.jpg) | Unknown | Public domain |
 | USB Microphone | [Samson Go Mic Clip-On USB Mikrofon 02.jpg](https://commons.wikimedia.org/wiki/File:Samson_Go_Mic_Clip-On_USB_Mikrofon_02.jpg) | Rillke | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
-| Camera Tripod | [( a bit of Photography equipment Tripods Photo Camera Tripod) camera tripod.jpg](https://commons.wikimedia.org/wiki/File:(_a_bit_of_Photography_equipment_Tripods_Photo_Camera_Tripod)_camera_tripod.jpg) | David Adam Kess | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | LED Video Light | [Digitek Video Light - LED D132 ML RGB.jpg](https://commons.wikimedia.org/wiki/File:Digitek_Video_Light_-_LED_D132_ML_RGB.jpg) | Sumitsurai | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Camping Tent for Four | [Dome tent.JPG](https://commons.wikimedia.org/wiki/File:Dome_tent.JPG) | Paste | [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0) |
 | Pair of Camping Chairs | [SAKURAKO - Director's chair. (4629352335).jpg](https://commons.wikimedia.org/wiki/File:SAKURAKO_-_Director%27s_chair._(4629352335).jpg) | MIKI Yoshihito | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0) |
