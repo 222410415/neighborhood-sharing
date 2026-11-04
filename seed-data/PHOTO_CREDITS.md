@@ -8,9 +8,9 @@ below. The website does not show these credits (removed on 4 November 2026 at th
 user's request), so 40 photos currently lack the visible credit their licence asks
 for. Before public use, show this list on a page or replace those photos.
 
-Presentation Clicker and Backdrop Stand use images the project team supplied on 4 November
+Presentation Clicker, Backdrop Stand and Air Fryer use images the project team supplied on 4 November
 2026. They are not openly licensed as far as is known: their source and licence are not
-recorded, and the clicker shows the Logitech name. Confirm the rights or replace them before
+recorded, the clicker shows the Logitech name and the air fryer the Topzee name. Confirm the rights or replace them before
 public use. The clicker was cropped to 4:3, which also removed a corner logo from a seller;
 the stand was made smaller in the frame and the room extended from its own edges.
 
@@ -40,7 +40,6 @@ the stand was made smaller in the frame and the room extended from its own edges
 | Window Vacuum | [Dornbirn-Kaercher KW1 Plus-Electric Window Vac Set-Vac downside (Window cleaning)-01ASD.jpg](https://commons.wikimedia.org/wiki/File:Dornbirn-Kaercher_KW1_Plus-Electric_Window_Vac_Set-Vac_downside_(Window_cleaning)-01ASD.jpg) | Asurnipal | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Cleaning Brush Kit | [A DISH SCRUBBER.jpg](https://commons.wikimedia.org/wiki/File:A_DISH_SCRUBBER.jpg) | Samuel Harper Muldoon | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Stand Mixer | [Sunbeam Heritage Mixmaster Stand Mixer.jpg](https://commons.wikimedia.org/wiki/File:Sunbeam_Heritage_Mixmaster_Stand_Mixer.jpg) | Shenderson1 | [CC0](http://creativecommons.org/publicdomain/zero/1.0/deed.en) |
-| Air Fryer | [Air Fryer 5458.jpg](https://commons.wikimedia.org/wiki/File:Air_Fryer_5458.jpg) | Ashley Pomeroy | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0) |
 | Coffee and Tea Urn | [Al Dallah, Bait al Zubair Museum, Oman.jpg](https://commons.wikimedia.org/wiki/File:Al_Dallah,_Bait_al_Zubair_Museum,_Oman.jpg) | Reda Kerbush | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Waffle Maker | [Cast Iron Waffle Maker Blackhawk Museum.jpg](https://commons.wikimedia.org/wiki/File:Cast_Iron_Waffle_Maker_Blackhawk_Museum.jpg) | TaurusEmerald | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0) |
 | Food Processor | [Hamilton Beach Food Processor.jpg](https://commons.wikimedia.org/wiki/File:Hamilton_Beach_Food_Processor.jpg) | Warren Layton | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) |
