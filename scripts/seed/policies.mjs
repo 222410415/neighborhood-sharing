@@ -51,7 +51,9 @@ let published = 0;
 for (const p of policies) {
   const id = `${p.id}_${p.version}`;
   const ref = db.collection("policies").doc(id);
-  if ((await ref.get()).exists) {
+  // A key that already has a published version is never published a second time.
+  const live = await db.collection("policies").where("policyKey", "==", p.id).where("status", "==", "published").get();
+  if ((await ref.get()).exists || !live.empty) {
     kept++;
     continue;
   }

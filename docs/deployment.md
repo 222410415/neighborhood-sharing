@@ -26,8 +26,11 @@ Browser ──> neighborhood-web (Cloud Run) ──/api/*──> neighborhood-ap
   tiers, but check current pricing for your region).
 - Firebase added to the same project: Authentication with **Email/Password**
   enabled, Firestore database created (Native mode).
-- On the deploying machine: `gcloud` CLI (`gcloud auth login`), Node.js 24 and
-  pnpm 12 for the seed scripts, optionally the Firebase CLI (`npx firebase-tools`).
+- On the deploying machine: `gcloud` CLI, Node.js 24 and pnpm 12 for the seed scripts,
+  optionally the Firebase CLI (`npx firebase-tools`). Sign in with the Google account
+  that owns the project: `gcloud auth login`. Check it with `gcloud auth list`. The
+  scripts show the account and project and ask you to type yes. They never change
+  the machine's default gcloud project.
 - Region: the scripts default to `me-central1`. Choose a region close to your
   users where Cloud Run is available, ideally the same as Firestore.
 
@@ -50,9 +53,9 @@ and three service accounts:
 
 ```sh
 # OpenAI API key for AI suggestions and the policy assistant (without it, fallbacks run)
-gcloud secrets create openai-api-key --replication-policy=automatic --data-file=-   # paste the key, then Ctrl-D
+gcloud secrets create openai-api-key --project <project-id> --replication-policy=automatic --data-file=-   # paste the key, then Ctrl-D
 # Secret for the bulk expiry endpoint (POST /v1/internal/sweep)
-openssl rand -hex 24 | gcloud secrets create sweep-secret --replication-policy=automatic --data-file=-
+openssl rand -hex 24 | gcloud secrets create sweep-secret --project <project-id> --replication-policy=automatic --data-file=-
 ```
 
 Run `infra/gcp/setup.sh` again afterwards so the API may read them.
@@ -88,6 +91,9 @@ Then, in the Firebase console: Authentication -> Settings -> Authorized domains
 -> add the web host (`neighborhood-web-....run.app`, or your own domain).
 
 ## 5. Seed data (first deployment only)
+
+Skip this section when the project already holds the data. The seeds are safe to
+repeat, and a policy that already has a published version is left alone.
 
 Using your own Google login (no key file):
 

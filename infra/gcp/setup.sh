@@ -13,7 +13,15 @@ PROJECT_ID="${PROJECT_ID:?Set PROJECT_ID}"
 REGION="${REGION:-me-central1}"
 REPO="${REPO:-neighborhood}"
 
-gcloud config set project "$PROJECT_ID" >/dev/null
+# Applies to this script only: the machine's default gcloud project stays as it is.
+export CLOUDSDK_CORE_PROJECT="$PROJECT_ID"
+
+echo "Google account: $(gcloud config get-value account 2>/dev/null)"
+echo "Project:        $PROJECT_ID"
+echo "Region:         $REGION"
+read -r -p "Is this the right account and project? Type yes to continue: " ANSWER
+[ "$ANSWER" = "yes" ] || { echo "Stopped. Nothing was changed."; exit 1; }
+
 PROJECT_NUMBER="$(gcloud projects describe "$PROJECT_ID" --format='value(projectNumber)')"
 
 echo "== Enabling APIs"

@@ -10,6 +10,12 @@ PROJECT_ID="${PROJECT_ID:?Set PROJECT_ID}"
 REGION="${REGION:-me-central1}"
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 
+echo "Google account: $(gcloud config get-value account 2>/dev/null)"
+echo "Project:        $PROJECT_ID"
+echo "Region:         $REGION"
+read -r -p "Deploy to this project? Type yes to continue: " ANSWER
+[ "$ANSWER" = "yes" ] || { echo "Stopped. Nothing was deployed."; exit 1; }
+
 gcloud builds submit "$ROOT" \
   --project="$PROJECT_ID" \
   --region="$REGION" \
