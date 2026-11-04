@@ -86,3 +86,37 @@ export function newClientId(prefix: string): string {
       : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   return `${prefix}-${random}`;
 }
+
+/** Today's date in Riyadh as "2026-11-04". */
+export function riyadhToday(): string {
+  return isoToRiyadhDate(new Date().toISOString());
+}
+
+/** Calendar arithmetic on "2026-11-04" dates. */
+export function addDayCount(day: string, count: number): string {
+  return new Date(Date.parse(`${day}T00:00:00Z`) + count * DAY_MS).toISOString().slice(0, 10);
+}
+
+function dayParts(day: string): { weekday: string; date: number; month: string } {
+  const utc = new Date(`${day}T00:00:00Z`);
+  return {
+    weekday: new Intl.DateTimeFormat("en-GB", { timeZone: "UTC", weekday: "short" }).format(utc),
+    date: utc.getUTCDate(),
+    month: new Intl.DateTimeFormat("en-GB", { timeZone: "UTC", month: "short" }).format(utc),
+  };
+}
+
+/** "Thu 12 Nov" */
+export function formatDayShort(day: string): string {
+  const { weekday, date, month } = dayParts(day);
+  return `${weekday} ${date} ${month}`;
+}
+
+/** "Thu 12 to Sat 14 Nov", or "Mon 30 Nov to Tue 1 Dec" across months. */
+export function formatDayRange(start: string, end: string): string {
+  if (start === end) return formatDayShort(start);
+  const a = dayParts(start);
+  const b = dayParts(end);
+  const first = a.month === b.month ? `${a.weekday} ${a.date}` : formatDayShort(start);
+  return `${first} to ${b.weekday} ${b.date} ${b.month}`;
+}

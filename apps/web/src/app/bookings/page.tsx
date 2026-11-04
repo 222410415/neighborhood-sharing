@@ -133,7 +133,7 @@ function BookingsContent() {
                 : "Find something nearby on Explore, pick your dates and send a request."
             }
             action={
-              <Link href={view === "lending" ? "/my-listings" : "/"} className="header-cta">
+              <Link href={view === "lending" ? "/my-listings" : "/"} className="primary-link">
                 {view === "lending" ? "Go to My listings" : "Explore items"}
               </Link>
             }
@@ -147,9 +147,9 @@ function BookingsContent() {
               <li key={booking.id}>
                 <Link
                   href={`/bookings/${booking.id}`}
-                  className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                  className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-4 transition-colors duration-200 hover:border-[var(--nsr-primary)]"
                 >
-                  <span className="hidden sm:grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-[#edf5ec] text-[#2b765a]">
+                  <span className="hidden sm:grid h-12 w-12 shrink-0 place-items-center rounded-[14px] bg-[var(--nsr-selected-background)] text-[var(--nsr-primary)]">
                     <CalendarClock size={22} strokeWidth={1.6} />
                   </span>
                   <div className="flex-1 min-w-0">
@@ -157,7 +157,7 @@ function BookingsContent() {
                       <h3 className="text-[15px] font-semibold truncate">{booking.termsSnapshot.titleEn}</h3>
                       <BookingStatusBadge status={booking.status} />
                       {needsYou && (
-                        <span className="text-[11px] font-bold uppercase tracking-wide text-[var(--nsr-primary)]">
+                        <span className="text-[12px] font-bold uppercase tracking-wide text-[var(--nsr-primary)]">
                           Your turn
                         </span>
                       )}
@@ -172,7 +172,7 @@ function BookingsContent() {
                   </div>
                   <div className="hidden sm:block text-right shrink-0">
                     <p className="text-[14px] font-semibold">{formatSar(booking.termsSnapshot.totalHalalas)}</p>
-                    <p className="text-[11px] text-[var(--nsr-text-secondary)]">simulated total</p>
+                    <p className="text-[12px] text-[var(--nsr-text-secondary)]">simulated total</p>
                   </div>
                   <ArrowRight size={18} className="shrink-0 text-[var(--nsr-text-secondary)]" />
                 </Link>

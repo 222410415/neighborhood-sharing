@@ -49,7 +49,7 @@ export default function PoliciesPage() {
                 <li key={p.id}>
                   <Link
                     href={`/policies/${p.policyKey}`}
-                    className="flex items-center justify-between gap-3 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-3 hover:shadow-md transition-shadow"
+                    className="flex items-center justify-between gap-3 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-3 transition-shadow"
                   >
                     <span>
                       <span className="block text-[15px] font-semibold">{p.titleEn}</span>
@@ -58,7 +58,7 @@ export default function PoliciesPage() {
                       </span>
                     </span>
                     {p.isDemoDraft && (
-                      <span className="shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold bg-[var(--nsr-warning-background)] text-[var(--nsr-warning)]">
+                      <span className="shrink-0 rounded-full px-2.5 py-1 text-[12px] font-bold bg-[var(--nsr-warning-background)] text-[var(--nsr-warning)]">
                         Draft {p.version}
                       </span>
                     )}

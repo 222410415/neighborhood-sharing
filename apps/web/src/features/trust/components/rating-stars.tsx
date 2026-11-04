@@ -10,7 +10,7 @@ export function RatingStars({ rating, size = 15 }: { rating: number; size?: numb
           key={n}
           size={size}
           aria-hidden="true"
-          className={n <= rounded ? "fill-[#e0a526] text-[#e0a526]" : "text-[#c9d2cb]"}
+          className={n <= rounded ? "fill-[#e0a526] text-[#e0a526]" : "text-[var(--nsr-control-outline)]"}
         />
       ))}
     </span>

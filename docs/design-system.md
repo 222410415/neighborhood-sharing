@@ -1,6 +1,6 @@
 # Interface guide
 
-Neighborhood is a local item sharing marketplace. The interface should feel warm, clear, and trustworthy. Discovery follows the patterns common to item marketplaces: a strong first image, search and location up front, visible price, and a compact item detail panel. The page uses an original editorial image, generous spacing, a green accent, and serif display headings.
+Neighborhood is a local item sharing marketplace. The look is "Calm Tech": quiet, uncluttered and slightly futuristic, built to get more done in fewer clicks. Items come first, each screen has one main action, and secondary actions stay out of the way. Headings use Sora, body text DM Sans, on a cool near-white ground with one teal accent.
 
 ## Sources of truth
 
@@ -11,26 +11,22 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
 
 ## Interaction
 
-- Search and category choices update the URL, so filtered results can be shared.
-- Filters stay collapsed until needed; active selections remain visible through selected category styling.
-- Listing cards show category, location, and daily price or free lending without requiring a click.
-- Buttons, cards, and image loading use short transitions. The opening hero has one subtle entrance animation.
-- `prefers-reduced-motion: reduce` removes nonessential animation and smooth scrolling.
-- Focus rings, associated labels, and semantic buttons and links remain visible for keyboard use.
+- Search, category and date choices update the URL, so filtered results can be shared.
+- One search bar asks what, where and when. Dates carry through to the item page.
+- Listing cards show only the photo, name, price and neighborhood.
+- Frosted glass is used only on the navigation layer (top bar, phone tab bar, booking bar), never on content. A soft teal glow marks primary actions.
+- Motion is short and subtle. `prefers-reduced-motion: reduce` removes nonessential animation.
+- Focus rings, labels, semantic buttons and links stay visible for keyboard use. Touch targets are at least 44px. Status never relies on colour alone: booked days are crossed out and partly booked days carry a dot.
 
 ## Responsive layout
 
-- Desktop: eight category shortcuts, four listing columns, two column item details.
-- Tablet: four category shortcuts, three listing columns.
-- Mobile: compact navigation, stacked search controls, two listing columns, stacked item details.
+- Desktop: four listing columns, item page with a sticky booking panel.
+- Tablet: three listing columns.
+- Phone: search collapses to one summary bar, two listing columns, a four-item tab bar (Explore, Activity, List, Profile) instead of a menu, and on item pages a fixed price and Request bar replaces the tab bar.
 
 ## Exchange workflow patterns
 
-- **Booking panel** (item page, inside the terms card): availability strip of the next
-  three weeks (free / partly booked / booked / not bookable, with text labels, not
-  colour alone), Riyadh-time pickers, live server quote with rental fee and refundable
-  deposit on separate lines, and a visible **Simulated** tag. Owners see Manage
-  availability instead. "Ask the owner" opens a listing conversation.
+- **Booking panel** (item page): one `RangeCalendar` picks pickup and return days, with default times that can be changed. The server quote shows the rental fee and refundable deposit on separate lines with a visible **Simulated** tag. "Add a message" and "Ask the owner" stay collapsed until wanted. Save and the "..." menu (similar items, availability alert, report) sit on the photo. Owners see Manage availability instead.
 - **Workspace cards** (`.workspace-card`) group booking detail sections: next step,
   arrangements, condition records, timeline, Payments, agreed terms.
 - **Next step** shows only the actions the API reports as available for the viewer
@@ -41,15 +37,14 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
 - **Timeline** (`.timeline`) lists events with time (Riyadh) and actor.
 - **Messages** use bubbles (`.bubble--mine`, `.bubble--theirs`), a composer that sends on
   Enter, and per-message retry when sending fails.
-- **Notification bell** in the top bar shows an unread count (polled every 30 seconds
-  while the tab is visible).
+- **Activity** (`/activity`) brings together what needs you, messages and updates. Accept and Decline work on the card, and Decline asks for confirmation. The Activity link shows the unread count (polled every 30 seconds while the tab is visible). `/bookings`, `/messages` and `/notifications` hold the full lists.
 - Condition forms require an explicit OK or Problem per checklist line, and the
   borrower's acknowledgement has no default choice.
 
 ## Trust, community and AI patterns
 
-- **Account menu** adds Saved items, Community requests, Notifications, Your reports and
-  Policies; "Review workspace" appears only for members with the reviewer or admin role
+- **Account menu** (avatar) holds Profile, My listings, Saved items, Community requests, Your reports and
+  Policies, and on phones the same links are on the Profile page; "Review workspace" appears only for members with the reviewer or admin role
   (the API checks the role again on every admin route).
 - **Rating stars** (`RatingStars`) carry a text label ("4 out of 5"); the profile shows
   the average as a number next to the stars, and the review form uses real radio
@@ -65,12 +60,12 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
   a conflict-of-interest notice replaces the actions when the reviewer took part in the
   booking; the resolution form shows a live balance check ("Balanced" or the
   difference) before submit.
-- **Save button** on item pages toggles with `aria-pressed`; Saved items lets a member
+- **Save** is a heart on the photo (cards and item page) and toggles with `aria-pressed`; Saved items lets a member
   set alert dates. Saving never reserves the item, and the page says so.
 - **Community requests** show the request, the offers and "Choose offer"; choosing leads
   to the item page with the dates filled in. No reservation is made by choosing.
-- **Explore filters** add a date range and a price range (SAR, converted to halalas on the
-  server). When the scan budget is reached the list ends with "Keep searching" rather
+- **Explore filters**: category chips, with free items and a price range (SAR, converted to halalas on
+  the server) under Filters. When the scan budget is reached the list ends with "Keep searching" rather
   than claiming there are no more items.
 - **Related items** on the item page: "You might also need" with an AI note and icon when
   the AI model answered, otherwise "Similar items" from the same category, without any AI
@@ -87,7 +82,7 @@ Neighborhood is a local item sharing marketplace. The interface should feel warm
 
 ## Scope
 
-Not available, and therefore not shown as buttons: distance filters, real payments,
+Not available, and therefore not shown as buttons: an Arabic interface and language switch, distance filters, real payments,
 real identity verification (only email verification and simulated demo checks), push
 or email notifications, and AI features without an OpenAI key (the fallbacks run and
 are labelled as such).

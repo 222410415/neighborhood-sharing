@@ -113,7 +113,7 @@ export default function ReviewPage({ params }: { params: Promise<{ id: string }>
                     <Star
                       size={30}
                       aria-hidden="true"
-                      className={n <= rating ? "fill-[#e0a526] text-[#e0a526]" : "text-[#c9d2cb]"}
+                      className={n <= rating ? "fill-[#e0a526] text-[#e0a526]" : "text-[var(--nsr-control-outline)]"}
                     />
                   </label>
                 ))}

@@ -171,7 +171,7 @@ export function ImageUpload({
               >
                 <ChevronLeft className="h-3.5 w-3.5" />
               </button>
-              <span className="text-[11px] text-[var(--nsr-text-secondary)]">
+              <span className="text-[12px] text-[var(--nsr-text-secondary)]">
                 {index + 1}
               </span>
               <button

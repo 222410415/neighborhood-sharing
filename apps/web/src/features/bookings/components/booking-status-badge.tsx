@@ -28,7 +28,7 @@ export function BookingStatusBadge({ status, className }: { status: BookingStatu
 /** Visible label required on every simulated money figure. */
 export function SimulatedTag() {
   return (
-    <span className="inline-flex items-center rounded-full bg-[var(--nsr-warning-background)] px-2 py-0.5 text-[11px] font-bold uppercase tracking-wide text-[var(--nsr-warning)]">
+    <span className="inline-flex items-center rounded-full bg-[var(--nsr-warning-background)] px-2 py-0.5 text-[12px] font-bold uppercase tracking-wide text-[var(--nsr-warning)]">
       Simulated
     </span>
   );

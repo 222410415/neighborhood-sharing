@@ -2,9 +2,11 @@
 
 import { useEffect, useState, use } from "react";
 import Link from "next/link";
-import { ArrowLeft, Flag, MapPin, PackageCheck, ShieldCheck } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { ArrowLeft, Ellipsis, PackageCheck } from "lucide-react";
 import { AvatarInitials } from "@/components/ui/avatar-initials";
 import { ImageFrame } from "@/components/ui/image-frame";
+import { Menu } from "@/components/ui/menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookingPanel } from "@/features/bookings/components/booking-panel";
 import { SaveButton } from "@/features/community/components/save-button";
@@ -27,6 +29,7 @@ export default function ItemDetailsPage({
   searchParams: Promise<{ from?: string; to?: string; offer?: string }>;
 }) {
   const { id } = use(params);
+  const router = useRouter();
   // Prefilled dates from a chosen community-request offer or an availability alert.
   const query = use(searchParams);
   const { user, loading: authLoading } = useAuth();
@@ -53,8 +56,8 @@ export default function ItemDetailsPage({
       <div className="detail-shell">
         <Skeleton className="h-4 w-24 mb-6" />
         <div className="detail-grid">
-          <Skeleton className="aspect-video w-full !rounded-[25px]" />
-          <Skeleton className="h-80 w-full !rounded-[23px]" />
+          <Skeleton className="aspect-[16/10] w-full !rounded-[20px]" />
+          <Skeleton className="h-96 w-full !rounded-[22px]" />
         </div>
       </div>
     );
@@ -70,7 +73,7 @@ export default function ItemDetailsPage({
             It may have been removed or shared already. Explore what else is
             nearby.
           </p>
-          <Link href="/" className="header-cta">
+          <Link href="/" className="primary-link">
             Explore items
           </Link>
         </div>
@@ -79,135 +82,107 @@ export default function ItemDetailsPage({
 
   const isOwner = listing.isOwner;
   const location = listing.neighborhood?.nameEn ?? "Riyadh";
+  const condition = listing.condition.charAt(0).toUpperCase() + listing.condition.slice(1);
+  const moreOptions = [
+    { label: "Browse similar items", onClick: () => router.push(`/?category=${listing.categoryId}`) },
+    ...(user && !isOwner
+      ? [
+          { label: "Set an availability alert", onClick: () => router.push("/favorites") },
+          { label: "Report this listing", onClick: () => router.push(`/reports/new?type=listing&id=${listing.id}`) },
+        ]
+      : []),
+  ];
   return (
-    <div className="detail-shell reveal">
+    <div className="detail-shell">
       <Link href="/" className="back-link">
-        <ArrowLeft size={15} /> Back to explore
+        <ArrowLeft size={15} aria-hidden="true" /> Back to explore
       </Link>
       <div className="detail-grid">
-        <article>
+        <article className="detail-main">
           <div className="detail-media">
-            {listing.primaryMediaId &&
-            !isDemoPlaceholderMedia(listing.primaryMediaId) ? (
+            {listing.primaryMediaId && !isDemoPlaceholderMedia(listing.primaryMediaId) ? (
               <ImageFrame
                 src={getPublicMediaUrl(listing.primaryMediaId, "main")}
                 alt={listing.titleEn}
                 aspectRatio="video"
-                className="!rounded-[25px]"
+                className="!rounded-none !aspect-auto h-full"
               />
             ) : (
-              <div className="aspect-video grid place-items-center text-[#6a8a73]">
-                <PackageCheck size={70} strokeWidth={1.2} />
+              <div className="detail-fallback">
+                <PackageCheck size={64} strokeWidth={1.2} aria-hidden="true" />
               </div>
             )}
+            <Link href="/" className="detail-media-back" aria-label="Back to explore">
+              <span className="photo-action">
+                <ArrowLeft size={20} aria-hidden="true" />
+              </span>
+            </Link>
+            <div className="detail-media-actions">
+              {user && !isOwner && <SaveButton listingId={listing.id} />}
+              <Menu
+                label="More options"
+                triggerClassName="photo-action"
+                trigger={<Ellipsis size={20} aria-hidden="true" />}
+                items={moreOptions}
+              />
+            </div>
           </div>
-          <p className="detail-kicker">
-            {listing.category?.nameEn ?? "SHARED LOCALLY"}
-          </p>
-          <h1 className="detail-title">{listing.titleEn}</h1>
-          <div className="detail-location">
-            <MapPin size={16} /> {location}, Riyadh
-          </div>
-          {listing.titleAr && (
-            <p className="text-[#65746e] mt-3" dir="rtl">
-              {listing.titleAr}
+          <div className="detail-head">
+            <h1 className="detail-title">{listing.titleEn}</h1>
+            <p className="detail-sub">
+              {location}, Riyadh. {condition} condition.
             </p>
-          )}
-          <section className="detail-section">
-            <h2>About this item</h2>
-            <p>{listing.descriptionEn}</p>
-            {listing.descriptionAr && (
-              <p dir="rtl" className="mt-3">
-                {listing.descriptionAr}
-              </p>
-            )}
-          </section>
-          {listing.includedAccessories.length > 0 && (
-            <section className="detail-section">
-              <h2>What’s included</h2>
-              <div>
-                {listing.includedAccessories.map((item) => (
-                  <span className="detail-tag" key={item}>
-                    {item}
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
-          <RelatedItems listingId={listing.id} viewerKey={user?.uid ?? "visitor"} />
-          <section className="detail-section">
-            <h2>Shared by your neighbor</h2>
-            <div className="owner-row">
-              <AvatarInitials name={listing.owner.displayName} size="md" />
-              <div>
-                <Link href={`/members/${listing.ownerId}`} className="hover:underline">
-                  <strong>{listing.owner.displayName}</strong>
-                </Link>
-                <span>{location}</span>
-              </div>
+          </div>
+          <Link href={`/members/${listing.ownerId}`} className="owner-row">
+            <AvatarInitials name={listing.owner.displayName} size="md" />
+            <div>
+              <strong>{listing.owner.displayName}</strong>
+              <span>Shared by your neighbor</span>
             </div>
-          </section>
+          </Link>
+          <p className="detail-copy">
+            {listing.descriptionEn}
+            {listing.includedAccessories.length > 0 && ` Includes: ${listing.includedAccessories.join(", ")}.`}
+          </p>
+          {(listing.titleAr || listing.descriptionAr) && (
+            <details className="detail-translation">
+              <summary>Read in Arabic</summary>
+              <div dir="rtl" lang="ar">
+                {listing.titleAr && <p className="font-medium">{listing.titleAr}</p>}
+                {listing.descriptionAr && <p>{listing.descriptionAr}</p>}
+              </div>
+            </details>
+          )}
         </article>
-        <aside className="term-card term-card--static">
-          <p className="term-kicker">At a glance</p>
-          <div className="term-price">
-            {listing.lendingMode === "free" ? (
-              "Free"
-            ) : (
-              <>
-                SAR {(listing.dailyRateHalalas / 100).toFixed(0)}{" "}
-                <small>/ day</small>
-              </>
-            )}
-          </div>
-          <div className="term-divider" />
-          <div className="term-line">
-            <span>Condition</span>
-            <strong className="capitalize">{listing.condition}</strong>
-          </div>
-          <div className="term-line">
-            <span>Neighborhood</span>
-            <strong>{location}</strong>
-          </div>
-          {listing.depositHalalas > 0 && (
-            <div className="term-line">
-              <span>Refundable deposit</span>
-              <strong>SAR {(listing.depositHalalas / 100).toFixed(0)}</strong>
+        <aside className="term-card" aria-label="Book this item">
+          <div className="term-price-row">
+            <div className="term-price">
+              {listing.lendingMode === "free" ? (
+                "Free"
+              ) : (
+                <>
+                  SAR {(listing.dailyRateHalalas / 100).toFixed(0)} <small>/ day</small>
+                </>
+              )}
             </div>
-          )}
-          <div className="term-divider" />
-          <div className="flex items-start gap-2 text-[12px] text-[#6b816f]">
-            <ShieldCheck size={17} className="shrink-0" />
-            <span>See the item and its terms before you make plans.</span>
           </div>
-          <div className="term-divider" />
           <BookingPanel
             listingId={listing.id}
             listingTitle={listing.titleEn}
+            ownerName={listing.owner.displayName.split(" ")[0] ?? "the owner"}
             signedIn={!!user}
             isOwner={isOwner}
+            lendingMode={listing.lendingMode}
+            dailyRateHalalas={listing.dailyRateHalalas}
+            depositHalalas={listing.depositHalalas}
             initialFrom={typeof query.from === "string" ? query.from : undefined}
             initialTo={typeof query.to === "string" ? query.to : undefined}
             requestOfferId={typeof query.offer === "string" ? query.offer : undefined}
           />
-          {user && !isOwner && <SaveButton listingId={listing.id} />}
-          {!isOwner && (
-            <Link
-              className="term-action term-action--secondary"
-              href={`/?category=${listing.categoryId}`}
-            >
-              Browse similar items
-            </Link>
-          )}
-          {user && !isOwner && (
-            <Link
-              href={`/reports/new?type=listing&id=${listing.id}`}
-              className="mt-3 inline-flex items-center gap-1 text-[12px] text-[#7b8a7e] hover:text-[var(--nsr-error)]"
-            >
-              <Flag size={12} /> Report this listing
-            </Link>
-          )}
         </aside>
+        <div className="detail-related">
+          <RelatedItems listingId={listing.id} viewerKey={user?.uid ?? "visitor"} />
+        </div>
       </div>
     </div>
   );

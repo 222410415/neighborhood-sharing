@@ -117,7 +117,7 @@ export function ArrangementCard({
           {arrangement.instructions && (
             <p className="text-[13px] text-[var(--nsr-text-secondary)]">{arrangement.instructions}</p>
           )}
-          <p className="mt-1 text-[11px] text-[var(--nsr-text-secondary)]">
+          <p className="mt-1 text-[12px] text-[var(--nsr-text-secondary)]">
             Version {arrangement.revision}, proposed by {proposedByMe ? "you" : otherName}. Private to the two of you.
           </p>
         </div>

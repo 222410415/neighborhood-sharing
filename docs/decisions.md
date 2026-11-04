@@ -408,3 +408,13 @@ user's approval and now also requires owner media to stay `no-store`.
 Explore also keeps the first page per filter set in memory while the tab is open and
 refreshes it in the background, and `ImageFrame` skips the fade for images the
 browser already has.
+
+## D-38: Calm Tech interface
+
+The interface uses the "Calm Tech" design: Sora and DM Sans, one teal accent, frosted
+glass only on the navigation layer. One what, where, when search leads to simple cards;
+`RangeCalendar` handles booking dates (default times 17:00, or 09:00 to 17:00 for a same-day
+pick) and dates carry from search to the item page. `/activity` gathers what needs the
+member, messages and updates from existing APIs, with Accept and Decline on the card.
+Phones use a tab bar and a fixed booking bar. An Arabic interface and language switch are
+future work; Arabic item text sits behind "Read in Arabic".

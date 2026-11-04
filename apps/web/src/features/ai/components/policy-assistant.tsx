@@ -78,8 +78,8 @@ export function PolicyAssistant({ bookingId, compact = false }: { bookingId?: st
           {answer.bookingContext && (
             <p className="text-[12px] text-[var(--nsr-text-secondary)]">{answer.bookingContext.note}</p>
           )}
-          <div className="rounded-[var(--nsr-radius-md)] bg-[#f4f8f3] p-3 text-[14px] whitespace-pre-wrap">{answer.answer}</div>
-          <p className="text-[11px] text-[var(--nsr-text-secondary)]" dir="ltr">
+          <div className="rounded-[var(--nsr-radius-md)] bg-[var(--nsr-background)] p-3 text-[14px] whitespace-pre-wrap">{answer.answer}</div>
+          <p className="text-[12px] text-[var(--nsr-text-secondary)]" dir="ltr">
             {answer.generated === "ai"
               ? "AI-generated from the cited policy passages. Check the sources."
               : answer.generated === "extractive"

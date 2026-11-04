@@ -12,9 +12,12 @@ interface MenuItem {
 interface MenuProps {
   trigger: React.ReactNode;
   items: MenuItem[];
+  /** Accessible name, needed when the trigger shows only an icon or avatar. */
+  label?: string;
+  triggerClassName?: string;
 }
 
-export function Menu({ trigger, items }: MenuProps) {
+export function Menu({ trigger, items, label, triggerClassName }: MenuProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -54,9 +57,14 @@ export function Menu({ trigger, items }: MenuProps) {
       <button
         ref={triggerRef}
         onClick={() => setOpen(!open)}
+        type="button"
+        aria-label={label}
         aria-haspopup="menu"
         aria-expanded={open}
-        className="inline-flex items-center gap-1 rounded-[var(--nsr-radius-sm)] px-3 py-1.5 text-[14px] text-[var(--nsr-text)] hover:bg-[var(--nsr-selected-background)] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nsr-focus)]"
+        className={
+          triggerClassName ??
+          "inline-flex items-center gap-1 rounded-full text-[var(--nsr-text)] focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nsr-focus)]"
+        }
       >
         {trigger}
       </button>
@@ -65,10 +73,10 @@ export function Menu({ trigger, items }: MenuProps) {
           ref={menuRef}
           role="menu"
           className={cn(
-            "absolute right-0 mt-1 min-w-[160px] z-30",
+            "absolute right-0 mt-2 min-w-[200px] z-30",
             "bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-md)]",
-            "border border-[var(--nsr-divider)] shadow-md",
-            "py-1",
+            "border border-[var(--nsr-divider)] shadow-[0_18px_40px_-20px_rgba(15,30,26,0.35)]",
+            "p-1.5",
           )}
         >
           {items.map((item, i) => (
@@ -80,7 +88,7 @@ export function Menu({ trigger, items }: MenuProps) {
                 setOpen(false);
               }}
               className={cn(
-                "block w-full text-left px-4 py-2 text-[14px]",
+                "block w-full text-left px-3 py-2.5 text-[15px] rounded-[var(--nsr-radius-sm)]",
                 "transition-colors duration-[var(--nsr-transition-fast)]",
                 "hover:bg-[var(--nsr-selected-background)]",
                 "focus:outline-none focus-visible:outline-2 focus-visible:outline-[var(--nsr-focus)]",

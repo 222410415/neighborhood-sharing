@@ -104,7 +104,7 @@ export default function NotificationsPage() {
               <button
                 type="button"
                 onClick={() => open(n)}
-                className={`flex w-full items-start gap-3 rounded-[var(--nsr-radius-lg)] border px-4 py-3 text-left transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
+                className={`flex w-full items-start gap-3 rounded-[var(--nsr-radius-lg)] border px-4 py-3 text-left transition-colors duration-200 hover:border-[var(--nsr-primary)] ${
                   n.readAt
                     ? "border-[var(--nsr-divider)] bg-[var(--nsr-surface)]"
                     : "border-[#bfe0cc] bg-[var(--nsr-selected-background)]"

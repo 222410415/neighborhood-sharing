@@ -19,9 +19,9 @@ const variantClasses: Record<Variant, string> = {
 };
 
 const sizeClasses: Record<Size, string> = {
-  sm: "px-3 py-2 text-[13px] rounded-[var(--nsr-radius-sm)]",
-  md: "px-5 py-2.5 text-[14px] rounded-[var(--nsr-radius-md)]",
-  lg: "px-7 py-3 text-[15px] rounded-[var(--nsr-radius-md)]",
+  sm: "px-3 py-2 text-[14px] rounded-[var(--nsr-radius-sm)]",
+  md: "min-h-[44px] px-5 py-2.5 text-[15px] rounded-[12px]",
+  lg: "min-h-[52px] px-7 py-3 text-[16px] font-bold rounded-[var(--nsr-radius-md)]",
 };
 
 export function Button({
@@ -37,7 +37,7 @@ export function Button({
     <button
       className={cn(
         "inline-flex items-center justify-center gap-2 font-medium",
-        "transition-all duration-[var(--nsr-transition-normal)] hover:-translate-y-0.5",
+        "transition-colors duration-[var(--nsr-transition-fast)]",
         "focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--nsr-focus)]",
         "disabled:bg-[var(--nsr-disabled-background)] disabled:text-[var(--nsr-disabled-foreground)] disabled:cursor-not-allowed disabled:hover:bg-[var(--nsr-disabled-background)]",
         variantClasses[variant],

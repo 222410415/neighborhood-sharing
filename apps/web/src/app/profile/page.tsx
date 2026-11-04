@@ -14,11 +14,13 @@ import { AvatarInitials } from "@/components/ui/avatar-initials";
 import { useAuth } from "@/features/auth/auth-context";
 import { RIYADH_NEIGHBORHOODS } from "@/lib/catalogue-options";
 import { useProfile } from "@/features/profile/use-profile";
+import { useRoles } from "@/features/roles/use-roles";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, logOut } = useAuth();
   const { profile, loading: profileLoading, updateProfile } = useProfile();
+  const roles = useRoles();
 
   const [displayName, setDisplayName] = useState("");
   const [neighborhoodId, setNeighborhoodId] = useState("");
@@ -126,13 +128,44 @@ export default function ProfilePage() {
         <div className="flex items-center gap-4 mb-8">
           <AvatarInitials name={displayName || "User"} size="lg" />
           <div>
-            <h1 className="font-[Georgia] text-[39px] tracking-[-0.04em] text-[var(--nsr-text)]">
+            <h1 className="page-title">
               Your profile
             </h1>
             <p className="text-[14px] text-[var(--nsr-text-secondary)]">
               {email}
             </p>
           </div>
+        {/* On phones the tab bar leads here, so these replace the account menu. */}
+        <nav className="account-links form-section" aria-label="Your account">
+          <ul className="activity-list">
+            {[
+              { href: "/my-listings", label: "My listings" },
+              { href: "/favorites", label: "Saved items" },
+              { href: "/requests", label: "Community requests" },
+              { href: "/reports", label: "Your reports" },
+              { href: "/policies", label: "Policies" },
+              ...(roles?.isReviewer ? [{ href: "/admin", label: "Review workspace" }] : []),
+            ].map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="block py-3 font-medium text-[var(--nsr-text)] no-underline">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+            <li>
+              <button
+                type="button"
+                className="block w-full border-0 bg-transparent py-3 text-left font-medium text-[var(--nsr-error)]"
+                onClick={async () => {
+                  await logOut();
+                  router.push("/");
+                }}
+              >
+                Sign out
+              </button>
+            </li>
+          </ul>
+        </nav>
         </div>
 
         {error && (

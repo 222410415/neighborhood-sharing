@@ -83,7 +83,7 @@ export default function MemberProfilePage({ params }: { params: Promise<{ uid: s
               <AvatarInitials name={profile.displayName} size="lg" />
             )}
             <div className="flex-1 min-w-0">
-              <h1 className="font-[Georgia] text-[34px] tracking-[-0.04em] leading-tight">{profile.displayName}</h1>
+              <h1 className="page-title">{profile.displayName}</h1>
               <div className="flex flex-wrap items-center gap-3 text-[13px] text-[var(--nsr-text-secondary)]">
                 {profile.neighborhoodName && (
                   <span className="inline-flex items-center gap-1">
@@ -124,7 +124,7 @@ export default function MemberProfilePage({ params }: { params: Promise<{ uid: s
               </span>
             ))}
           </div>
-          {profile.biographyEn && <p className="mt-4 text-[14px] text-[#53665a]">{profile.biographyEn}</p>}
+          {profile.biographyEn && <p className="mt-4 text-[14px] text-[var(--nsr-text-secondary)]">{profile.biographyEn}</p>}
         </section>
 
         <section className="workspace-card" aria-labelledby="reviews-heading">

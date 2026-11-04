@@ -11,8 +11,8 @@ import {
   CookingPot,
   Drill,
   Gamepad2,
+  Heart,
   Lamp,
-  MapPin,
   Search,
   SlidersHorizontal,
   Sparkles,
@@ -21,7 +21,10 @@ import {
   WashingMachine,
 } from "lucide-react";
 import { ImageFrame } from "@/components/ui/image-frame";
+import { RangeCalendar, nextRange } from "@/components/ui/range-calendar";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useAuth } from "@/features/auth/auth-context";
+import { fetchFavorites, removeFavorite, saveFavorite } from "@/features/community/community-api";
 import {
   fetchPublishedListings,
   type PublicListingItem,
@@ -31,7 +34,8 @@ import {
   isDemoPlaceholderMedia,
 } from "@/features/media/media-api";
 import { CATEGORIES, RIYADH_NEIGHBORHOODS } from "@/lib/catalogue-options";
-import { riyadhDayEndIso, riyadhDayStartIso } from "@/lib/format";
+import { errorText } from "@/lib/api-client";
+import { formatDayRange, riyadhDayEndIso, riyadhDayStartIso } from "@/lib/format";
 
 const categoryIcons = [
   Drill,
@@ -50,59 +54,73 @@ const categories = CATEGORIES.map((category, index) => ({
 }));
 const neighborhoods = RIYADH_NEIGHBORHOODS;
 
-function ListingCard({ item }: { item: PublicListingItem }) {
+function ListingCard({
+  item,
+  dates,
+  saved,
+  onToggleSave,
+}: {
+  item: PublicListingItem;
+  /** Search dates carried to the item page, so they are not entered twice. */
+  dates: string;
+  saved: boolean | null;
+  onToggleSave: (item: PublicListingItem) => void;
+}) {
   const Icon =
     categories.find((category) => category.id === item.categoryId)?.icon ??
     Gamepad2;
   return (
-    <Link href={`/items/${item.id}`} className="item-card">
-      <div className="item-card-image">
-        {item.primaryMediaId && !isDemoPlaceholderMedia(item.primaryMediaId) ? (
-          <ImageFrame
-            src={getPublicMediaUrl(item.primaryMediaId, "thumbnail")}
-            alt={item.titleEn}
-            aspectRatio="square"
-            className="!rounded-none !aspect-auto h-full"
-            fallback={
-              <div className="item-fallback">
-                <Icon aria-hidden="true" />
-              </div>
-            }
-          />
-        ) : (
-          <div className="item-fallback">
-            <Icon aria-hidden="true" />
-          </div>
-        )}
-        <span className="item-badge">
-          {item.lendingMode === "free" ? "Free to borrow" : "Rent nearby"}
-        </span>
-      </div>
-      <div className="item-card-body">
-        <div className="item-card-category">
-          {item.categoryName || "Shared locally"}
+    <article className="item-card">
+      <Link href={`/items/${item.id}${dates}`} className="item-card-link">
+        <div className="item-card-image">
+          {item.primaryMediaId && !isDemoPlaceholderMedia(item.primaryMediaId) ? (
+            <ImageFrame
+              src={getPublicMediaUrl(item.primaryMediaId, "thumbnail")}
+              alt={item.titleEn}
+              aspectRatio="square"
+              className="!rounded-none !aspect-auto h-full"
+              fallback={
+                <div className="item-fallback">
+                  <Icon aria-hidden="true" />
+                </div>
+              }
+            />
+          ) : (
+            <div className="item-fallback">
+              <Icon aria-hidden="true" />
+            </div>
+          )}
         </div>
-        <h3 className="item-card-title">{item.titleEn}</h3>
-        <div className="item-card-location">
-          <MapPin size={13} aria-hidden="true" /> {item.neighborhoodName}
-        </div>
-        <div className="item-card-footer">
+        <div className="item-card-row">
+          <h3 className="item-card-title">{item.titleEn}</h3>
           <span className="item-card-price">
             {item.lendingMode === "free" ? (
               "Free"
             ) : (
               <>
-                SAR {(item.dailyRateHalalas / 100).toFixed(0)}{" "}
-                <small>/ day</small>
+                SAR {(item.dailyRateHalalas / 100).toFixed(0)} <small>/ day</small>
               </>
             )}
           </span>
-          <span className="item-card-arrow">
-            <ArrowRight size={15} aria-hidden="true" />
-          </span>
         </div>
-      </div>
-    </Link>
+        <div className="item-card-location">{item.neighborhoodName}</div>
+      </Link>
+      {saved !== null && (
+        <button
+          type="button"
+          className="photo-action"
+          aria-pressed={saved}
+          aria-label={saved ? `Remove ${item.titleEn} from saved items` : `Save ${item.titleEn}`}
+          onClick={() => onToggleSave(item)}
+        >
+          <Heart
+            size={19}
+            className={saved ? "fill-[var(--nsr-primary)] text-[var(--nsr-primary)]" : ""}
+            aria-hidden="true"
+          />
+        </button>
+      )}
+    </article>
   );
 }
 
@@ -138,6 +156,14 @@ function ExploreContent() {
   const [nextCursor, setNextCursor] = useState<string | null>(remembered?.nextCursor ?? null);
   const [hasMore, setHasMore] = useState(remembered?.hasMore ?? false);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [whenOpen, setWhenOpen] = useState(false);
+  const [whenStart, setWhenStart] = useState<string | null>(fromDay || null);
+  const [whenEnd, setWhenEnd] = useState<string | null>(toDay || null);
+  const [savedIds, setSavedIds] = useState<Set<string> | null>(null);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const whenRef = useRef<HTMLDivElement>(null);
+  const { user } = useAuth();
   const requestId = useRef(0);
   const hasFilters = Boolean(
     search || category || neighborhood || lendingMode || fromDay || toDay || minPrice || maxPrice,
@@ -145,6 +171,41 @@ function ExploreContent() {
   const sarToHalalas = (v: string) => (v && !Number.isNaN(Number(v)) ? Math.round(Number(v) * 100) : undefined);
 
   useEffect(() => setSearchInput(search), [search]);
+  useEffect(() => {
+    setWhenStart(fromDay || null);
+    setWhenEnd(toDay || null);
+  }, [fromDay, toDay]);
+
+  useEffect(() => {
+    if (!user) {
+      setSavedIds(null);
+      return;
+    }
+    let active = true;
+    fetchFavorites().then((res) => {
+      if (active && res.data) setSavedIds(new Set(res.data.items.map((f) => f.listingId)));
+    });
+    return () => {
+      active = false;
+    };
+  }, [user]);
+
+  useEffect(() => {
+    if (!whenOpen) return;
+    const closeOnOutside = (event: MouseEvent) => {
+      if (!whenRef.current?.contains(event.target as Node)) setWhenOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setWhenOpen(false);
+    };
+    document.addEventListener("mousedown", closeOnOutside);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("mousedown", closeOnOutside);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [whenOpen]);
+
   const load = useCallback(
     async (cursor?: string) => {
       const currentRequest = ++requestId.current;
@@ -202,50 +263,91 @@ function ExploreContent() {
     void load();
   }, [load]);
 
-  const updateFilter = (key: string, value: string) => {
+  const updateFilters = (changes: Record<string, string>) => {
     const next = new URLSearchParams(params.toString());
-    if (value) next.set(key, value);
-    else next.delete(key);
+    for (const [key, value] of Object.entries(changes)) {
+      if (value) next.set(key, value);
+      else next.delete(key);
+    }
     const query = next.toString();
     router.push(query ? `/?${query}` : "/", { scroll: false });
   };
+  const updateFilter = (key: string, value: string) => updateFilters({ [key]: value });
   const submitSearch = (event: React.FormEvent) => {
     event.preventDefault();
     updateFilter("search", searchInput.trim());
-    document.getElementById("discover")?.scrollIntoView({ behavior: "smooth" });
+    setSearchOpen(false);
   };
+  const pickDay = (day: string) => {
+    const range = nextRange({ start: whenStart, end: whenEnd }, day);
+    setWhenStart(range.start);
+    setWhenEnd(range.end);
+    if (range.end) {
+      updateFilters({ from: range.start, to: range.end });
+      setWhenOpen(false);
+    }
+  };
+  const clearDates = () => {
+    setWhenStart(null);
+    setWhenEnd(null);
+    updateFilters({ from: "", to: "" });
+    setWhenOpen(false);
+  };
+  const toggleSave = async (item: PublicListingItem) => {
+    if (!savedIds) return;
+    const wasSaved = savedIds.has(item.id);
+    setSaveError(null);
+    const res = wasSaved
+      ? await removeFavorite(item.id)
+      : await saveFavorite(item.id, { alertEnabled: false, desiredStartAt: null, desiredEndAt: null });
+    if (res.error) {
+      setSaveError(errorText(res.error, "That item could not be saved."));
+      return;
+    }
+    setSavedIds((current) => {
+      const next = new Set(current);
+      if (wasSaved) next.delete(item.id);
+      else next.add(item.id);
+      return next;
+    });
+  };
+
+  const hasDates = Boolean(fromDay && toDay);
+  const whenLabel = hasDates ? formatDayRange(fromDay, toDay) : "Any dates";
+  const whereLabel = neighborhoods.find((n) => n.id === neighborhood)?.name ?? "Anywhere in Riyadh";
+  const cardDates = hasDates ? `?from=${fromDay}&to=${toDay}` : "";
+  const moreFilters = Boolean(lendingMode || minPrice || maxPrice);
 
   return (
     <>
       <div className="explore-shell">
-        <section className="hero reveal" aria-label="Discover items near you">
-          <div className="hero-content">
-            <div className="eyebrow">
-              <span className="eyebrow-dot" /> YOUR NEIGHBORHOOD, MORE CONNECTED
-            </div>
-            <h1>
-              Good things are <em>closer</em> than you think.
-            </h1>
-            <p>
-              Borrow a little. Share a lot. Discover useful things from people
-              right around the corner.
-            </p>
-            <div className="hero-caption">
-              <span className="hero-caption-line" /> MADE FOR NEIGHBORS IN
-              RIYADH
-            </div>
-          </div>
-        </section>
-
-        <form
-          className="search-panel reveal reveal-delay"
-          onSubmit={submitSearch}
-          role="search"
-        >
-          <div className="search-field">
-            <label htmlFor="home-search">What are you looking for?</label>
-            <div className="search-field-input">
-              <Search size={18} aria-hidden="true" />
+        <section className="explore-head" aria-labelledby="explore-title">
+          <h1 id="explore-title" className="explore-title">
+            Borrow it from a neighbor.
+          </h1>
+          <button
+            type="button"
+            className="search-summary"
+            aria-expanded={searchOpen}
+            onClick={() => setSearchOpen(!searchOpen)}
+          >
+            <span className="search-summary-text">
+              <strong>{search || "Anything nearby"}</strong>
+              <span>
+                {whereLabel}, {whenLabel}
+              </span>
+            </span>
+            <span className="search-summary-icon" aria-hidden="true">
+              <Search size={20} />
+            </span>
+          </button>
+          <form
+            className={`search-panel ${searchOpen ? "search-panel--open" : ""}`}
+            onSubmit={submitSearch}
+            role="search"
+          >
+            <div className="search-field search-field--wide">
+              <label htmlFor="home-search">What</label>
               <input
                 id="home-search"
                 value={searchInput}
@@ -253,11 +355,8 @@ function ExploreContent() {
                 placeholder="A drill, projector, camping gear..."
               />
             </div>
-          </div>
-          <div className="search-field">
-            <label htmlFor="home-neighborhood">Your neighborhood</label>
-            <div className="search-field-input">
-              <MapPin size={18} aria-hidden="true" />
+            <div className="search-field">
+              <label htmlFor="home-neighborhood">Where</label>
               <select
                 id="home-neighborhood"
                 value={neighborhood}
@@ -271,130 +370,98 @@ function ExploreContent() {
                 ))}
               </select>
             </div>
-          </div>
-          <button className="search-submit" type="submit">
-            <Search size={18} aria-hidden="true" /> Search
-          </button>
-        </form>
-
-        <section
-          className="category-section reveal reveal-delay-2"
-          aria-labelledby="category-title"
-        >
-          <div className="section-topline">
-            <div>
-              <p className="section-kicker">A LITTLE BIT OF EVERYTHING</p>
-              <h2 id="category-title" className="section-title">
-                What can we help you find?
-              </h2>
-              <p className="section-desc">
-                Explore the things your neighbors are sharing.
-              </p>
+            <div className="search-field" ref={whenRef}>
+              <span className="search-field-label" id="home-when-label">
+                When
+              </span>
+              <button
+                type="button"
+                className="search-when"
+                aria-labelledby="home-when-label home-when-value"
+                aria-expanded={whenOpen}
+                onClick={() => setWhenOpen(!whenOpen)}
+              >
+                <span id="home-when-value">{whenLabel}</span>
+              </button>
+              {whenOpen && (
+                <div className="when-popover" role="group" aria-label="Choose your dates">
+                  <RangeCalendar start={whenStart} end={whenEnd} onPick={pickDay} />
+                  <div className="when-actions">
+                    <span className="text-[13px] text-[var(--nsr-text-secondary)]">
+                      {whenStart && !whenEnd ? "Now choose your return day" : "Choose your pickup day"}
+                    </span>
+                    {(whenStart || hasDates) && (
+                      <button type="button" className="text-button" onClick={clearDates}>
+                        Clear
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-          <div className="category-grid">
-            {categories.map(({ id, name, icon: Icon }) => (
+            <button className="search-submit" type="submit">
+              Search
+            </button>
+          </form>
+        </section>
+
+        <section id="discover" className="results-section" aria-labelledby="discover-title">
+          <div className="results-bar">
+            <h2 id="discover-title" className="results-title">
+              {hasDates && <span className="live-dot" aria-hidden="true" />}
+              {hasDates ? "Free on your dates" : "Near you"}
+            </h2>
+            <button
+              type="button"
+              className="filter-chip"
+              aria-pressed={!category}
+              onClick={() => updateFilter("category", "")}
+            >
+              All
+            </button>
+            {categories.map(({ id, name }) => (
               <button
                 type="button"
                 key={id}
-                className={`category-tile ${category === id ? "active" : ""}`}
+                className="filter-chip"
                 aria-pressed={category === id}
-                onClick={() =>
-                  updateFilter("category", category === id ? "" : id)
-                }
+                onClick={() => updateFilter("category", category === id ? "" : id)}
               >
-                <span className="category-icon">
-                  <Icon size={23} strokeWidth={1.8} aria-hidden="true" />
-                </span>
                 {name}
               </button>
             ))}
-          </div>
-        </section>
-
-        <section
-          id="discover"
-          className="results-section"
-          aria-labelledby="discover-title"
-        >
-          <div className="section-topline">
-            <div>
-              <p className="section-kicker">THE LOCAL COLLECTION</p>
-              <h2 id="discover-title" className="section-title">
-                Shared around you
-              </h2>
-              <p className="section-desc">
-                Find something useful, meet someone nearby.
-              </p>
-            </div>
-            <div className="results-toolbar">
-              <Link href="/requests" className="filter-button">
-                Community requests
-              </Link>
+            <div className="results-actions">
               <button
                 type="button"
                 className="filter-button"
                 aria-expanded={filtersOpen}
                 onClick={() => setFiltersOpen(!filtersOpen)}
               >
-                <SlidersHorizontal size={15} aria-hidden="true" /> Filters{" "}
+                <SlidersHorizontal size={15} aria-hidden="true" /> Filters{moreFilters ? " (on)" : ""}{" "}
                 <ChevronDown size={14} aria-hidden="true" />
               </button>
+              <Link href="/requests" className="filter-button">
+                Requests
+              </Link>
             </div>
           </div>
           {filtersOpen && (
             <div className="filter-panel">
               <button
                 type="button"
-                className={`filter-chip ${lendingMode === "free" ? "active" : ""}`}
+                className="filter-chip"
                 aria-pressed={lendingMode === "free"}
-                onClick={() =>
-                  updateFilter(
-                    "lendingMode",
-                    lendingMode === "free" ? "" : "free",
-                  )
-                }
+                onClick={() => updateFilter("lendingMode", lendingMode === "free" ? "" : "free")}
               >
                 Free to borrow
               </button>
-              <select
-                aria-label="Filter by neighborhood"
-                value={neighborhood}
-                onChange={(e) => updateFilter("neighborhood", e.target.value)}
-              >
-                <option value="">All neighborhoods</option>
-                {neighborhoods.map((n) => (
-                  <option key={n.id} value={n.id}>
-                    {n.name}
-                  </option>
-                ))}
-              </select>
-              <label className="inline-flex items-center gap-1 text-[13px]">
-                Available from
-                <input
-                  type="date"
-                  aria-label="Available from"
-                  value={fromDay}
-                  onChange={(e) => updateFilter("from", e.target.value)}
-                />
-              </label>
-              <label className="inline-flex items-center gap-1 text-[13px]">
-                to
-                <input
-                  type="date"
-                  aria-label="Available until"
-                  value={toDay}
-                  min={fromDay || undefined}
-                  onChange={(e) => updateFilter("to", e.target.value)}
-                />
-              </label>
-              <label className="inline-flex items-center gap-1 text-[13px]">
-                SAR/day
+              <label className="inline-flex items-center gap-2 text-[14px]">
+                SAR per day
                 <input
                   type="number"
                   min="0"
                   inputMode="decimal"
-                  placeholder="min"
+                  placeholder="Min"
                   aria-label="Minimum price per day in SAR"
                   className="w-20"
                   value={minPrice}
@@ -404,7 +471,7 @@ function ExploreContent() {
                   type="number"
                   min="0"
                   inputMode="decimal"
-                  placeholder="max"
+                  placeholder="Max"
                   aria-label="Maximum price per day in SAR"
                   className="w-20"
                   value={maxPrice}
@@ -417,46 +484,41 @@ function ExploreContent() {
                   className="clear-button"
                   onClick={() => router.push("/", { scroll: false })}
                 >
-                  Clear filters
+                  Clear all
                 </button>
               )}
             </div>
+          )}
+          {saveError && (
+            <p role="status" className="m-0 text-[14px] text-[var(--nsr-error)]">
+              {saveError}
+            </p>
           )}
           {loading ? (
             <div className="item-grid">
               {Array.from({ length: 8 }, (_, i) => (
                 <div className="item-card" key={i}>
-                  <Skeleton className="!rounded-none aspect-square w-full" />
-                  <div className="item-card-body">
-                    <Skeleton className="h-4 w-1/2 mb-3" />
-                    <Skeleton className="h-6 w-4/5 mb-3" />
-                    <Skeleton className="h-4 w-2/3" />
-                  </div>
+                  <Skeleton className="aspect-[4/3] w-full !rounded-[16px]" />
+                  <Skeleton className="h-5 w-4/5" />
+                  <Skeleton className="h-4 w-1/2" />
                 </div>
               ))}
             </div>
           ) : error ? (
             <div className="catalogue-state">
               <span className="catalogue-state-icon">
-                <Sparkles size={25} />
+                <Sparkles size={24} aria-hidden="true" />
               </span>
               <h3>We couldn’t load nearby items</h3>
-              <p>
-                Please try again in a moment. Your neighborhood collection will
-                appear here when the service is available.
-              </p>
-              <button
-                type="button"
-                className="filter-chip"
-                onClick={() => void load()}
-              >
+              <p>Please try again in a moment.</p>
+              <button type="button" className="filter-chip" onClick={() => void load()}>
                 Try again
               </button>
             </div>
           ) : items.length === 0 ? (
             <div className="catalogue-state">
               <span className="catalogue-state-icon">
-                <Search size={25} />
+                <Search size={24} aria-hidden="true" />
               </span>
               <h3>
                 {scanLimitReached
@@ -484,8 +546,8 @@ function ExploreContent() {
                   Clear filters
                 </button>
               ) : (
-                <Link href="/listings/new" className="header-cta">
-                  List an item <ArrowRight size={15} />
+                <Link href="/listings/new" className="primary-link">
+                  List an item
                 </Link>
               )}
             </div>
@@ -493,16 +555,22 @@ function ExploreContent() {
             <>
               <div className="item-grid">
                 {items.map((item) => (
-                  <ListingCard key={item.id} item={item} />
+                  <ListingCard
+                    key={item.id}
+                    item={item}
+                    dates={cardDates}
+                    saved={savedIds ? savedIds.has(item.id) : null}
+                    onToggleSave={toggleSave}
+                  />
                 ))}
               </div>
               {scanLimitReached && (
-                <p className="mt-6 text-center text-[13px] text-[var(--nsr-text-secondary)]">
+                <p className="m-0 text-center text-[14px] text-[var(--nsr-text-secondary)]">
                   We checked part of the collection for these filters. Keep searching to see whether more items match.
                 </p>
               )}
               {hasMore && (
-                <div className="flex justify-center mt-8">
+                <div className="flex justify-center">
                   <button
                     type="button"
                     className="filter-button"
@@ -510,46 +578,16 @@ function ExploreContent() {
                     onClick={() => nextCursor && void load(nextCursor)}
                   >
                     {loadingMore ? "Loading..." : scanLimitReached ? "Keep searching" : "Show more items"}{" "}
-                    <ArrowRight size={14} />
+                    <ArrowRight size={14} aria-hidden="true" />
                   </button>
                 </div>
               )}
             </>
           )}
         </section>
-
-        <section className="how-section" aria-labelledby="how-title">
-          <p className="section-kicker">SIMPLE BY DESIGN</p>
-          <h2 id="how-title" className="section-title">
-            Sharing starts close to home.
-          </h2>
-          <div className="how-grid">
-            <div className="how-step">
-              <span className="how-number">01</span>
-              <div>
-                <h3>Find what you need</h3>
-                <p>Browse useful items offered by people in your area.</p>
-              </div>
-            </div>
-            <div className="how-step">
-              <span className="how-number">02</span>
-              <div>
-                <h3>Discover the details</h3>
-                <p>See the item, location, and lending terms up front.</p>
-              </div>
-            </div>
-            <div className="how-step">
-              <span className="how-number">03</span>
-              <div>
-                <h3>Share something back</h3>
-                <p>Give your own rarely used items a second life.</p>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
       <footer className="site-footer">
-        Neighborhood · Good things belong together. ·{" "}
+        Neighborhood ·{" "}
         <Link href="/policies" className="underline">
           Policies
         </Link>
@@ -563,7 +601,7 @@ export default function ExplorePage() {
     <Suspense
       fallback={
         <div className="explore-shell">
-          <Skeleton className="h-[470px] w-full !rounded-[30px]" />
+          <Skeleton className="h-[320px] w-full !rounded-[20px]" />
         </div>
       }
     >

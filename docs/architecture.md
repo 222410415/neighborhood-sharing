@@ -124,7 +124,7 @@ docs/                     documentation
 | POST | /v1/me/conversations/:id/messages | Send (`clientMessageId`) |
 | POST | /v1/me/conversations/:id/read | Mark read |
 | GET | /v1/me/notifications | Own notifications, newest first |
-| GET | /v1/me/notifications/unread-count | Bell badge |
+| GET | /v1/me/notifications/unread-count | Activity badge |
 | POST | /v1/me/notifications/:id/read, /v1/me/notifications/read-all | Mark read |
 
 `POST /v1/me/media` accepts an optional `purpose` field (`listing` or `condition`).

@@ -26,7 +26,7 @@ function RequestCard({ r }: { r: RequestPost }) {
     <li>
       <Link
         href={`/requests/${r.id}`}
-        className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+        className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-4 transition-colors duration-200 hover:border-[var(--nsr-primary)]"
       >
         <div className="flex-1 min-w-0">
           <p className="text-[15px] font-semibold">{r.title}</p>
@@ -76,7 +76,7 @@ export default function RequestsPage() {
         title="Community requests"
         subtitle="Neighbors asking for something they need. Owners can offer one of their listed items; nothing is reserved until a booking is made."
         action={
-          <Link href={user ? "/requests/new" : "/sign-in?return=/requests/new"} className="header-cta">
+          <Link href={user ? "/requests/new" : "/sign-in?return=/requests/new"} className="primary-link">
             <Plus size={16} /> Ask for an item
           </Link>
         }

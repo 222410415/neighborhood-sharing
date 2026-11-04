@@ -87,7 +87,7 @@ function OnboardingContent() {
   return (
     <ContentContainer>
       <div className="max-w-lg mx-auto py-8">
-        <h1 className="font-[Georgia] text-[39px] tracking-[-0.04em] text-[var(--nsr-text)] mb-2">
+        <h1 className="page-title mb-2">
           Get to know your neighborhood.
         </h1>
         <p className="text-[14px] text-[var(--nsr-text-secondary)] mb-6">

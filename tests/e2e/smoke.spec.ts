@@ -17,8 +17,9 @@ test.describe("Visitor browse", () => {
     await page.goto("/");
     await page.locator("a[href*='/items/']").first().click();
     await expect(page.locator("h1")).toBeVisible({ timeout: 15000 });
-    // Should show owner info
-    await expect(page.getByText("At a glance")).toBeVisible();
+    // Should show the booking panel and the owner.
+    await expect(page.getByRole("complementary", { name: "Book this item" })).toBeVisible();
+    await expect(page.getByText("Shared by your neighbor")).toBeVisible();
   });
 
   test("Draft/paused items return not-found", async ({ page }) => {
@@ -89,9 +90,51 @@ test.describe("Signed-in exchange pages", () => {
     await signIn(page, "hanadi@neighborhood-demo.test");
     // Leen's laser level: never Hanadi's own item, so the borrower panel shows.
     await page.goto("/items/itm_laser-level");
-    await expect(page.getByText("Book this item")).toBeVisible({ timeout: 20000 });
-    await expect(page.getByRole("button", { name: /Ask the owner/ })).toBeVisible();
+    const panel = page.getByRole("complementary", { name: "Book this item" });
+    await expect(panel).toBeVisible({ timeout: 20000 });
+    await expect(panel.getByRole("button", { name: /Ask the owner/ })).toBeVisible();
     await expect(page.getByText("Booking requests aren’t available yet")).toHaveCount(0);
+  });
+
+  test("Picking days on the calendar shows the server quote, labelled simulated", async ({ page }) => {
+    await signIn(page, "hanadi@neighborhood-demo.test");
+    await page.goto("/items/itm_laser-level");
+    const panel = page.getByRole("complementary", { name: "Book this item" });
+    await panel.getByRole("button", { name: "Next month" }).click({ timeout: 20000 });
+    const days = panel.locator(".calendar-day:not([disabled])");
+    await days.nth(10).click();
+    await days.nth(12).click();
+    await expect(panel.getByText("Refundable deposit")).toBeVisible({ timeout: 15000 });
+    await expect(panel.getByText("Simulated", { exact: false }).first()).toBeVisible();
+    await expect(panel.getByRole("button", { name: /Request to book|Book now/ })).toBeEnabled();
+  });
+
+  test("Dates from the search carry over to the item page", async ({ page }) => {
+    await page.goto("/?from=2026-12-14&to=2026-12-16");
+    await expect(page.getByRole("heading", { name: "Free on your dates" })).toBeVisible({ timeout: 20000 });
+    const first = page.locator(".item-card-link").first();
+    await expect(first).toHaveAttribute("href", /from=2026-12-14&to=2026-12-16/);
+  });
+
+  test("Activity brings requests, messages and updates together", async ({ page }) => {
+    await signIn(page, "leen@neighborhood-demo.test");
+    await page.goto("/activity");
+    await expect(page.locator("h1")).toContainText("Activity", { timeout: 20000 });
+    await expect(page.getByRole("link", { name: /Activity/ }).first()).toBeVisible();
+  });
+
+  test("Phones use the tab bar and the booking bar", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await signIn(page, "hanadi@neighborhood-demo.test");
+    await page.goto("/");
+    const tabs = page.getByRole("navigation", { name: "Mobile navigation" });
+    await expect(tabs).toBeVisible({ timeout: 20000 });
+    await expect(tabs.getByRole("link", { name: /Explore/ })).toBeVisible();
+    await expect(tabs.getByRole("link", { name: /Profile/ })).toBeVisible();
+    await page.goto("/items/itm_laser-level");
+    await expect(page.locator(".book-bar").getByRole("button", { name: "Choose dates" })).toBeVisible({ timeout: 20000 });
+    await expect(tabs).toBeHidden();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 
   test("Bookings page renders with Borrowing and Lending views", async ({ page }) => {

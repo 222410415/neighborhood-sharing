@@ -220,7 +220,7 @@ export default function AdminDisputePage({ params }: { params: Promise<{ id: str
             </p>
             <p className="text-[13px]">Owner: {owner.displayName}</p>
             <p className="text-[13px]">Borrower: {borrower.displayName}</p>
-            <div className="mt-3 rounded-[var(--nsr-radius-md)] bg-[#f4f8f3] p-3">
+            <div className="mt-3 rounded-[var(--nsr-radius-md)] bg-[var(--nsr-background)] p-3">
               <div className="flex items-center justify-between">
                 <p className="text-[13px] font-semibold">Deposit</p>
                 <SimulatedTag />

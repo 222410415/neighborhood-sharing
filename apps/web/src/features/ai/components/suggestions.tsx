@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import { PackageCheck } from "lucide-react";
 import { fetchSuggestions, type Suggestions } from "@/features/ai/ai-api";
+import { getPublicMediaUrl, isDemoPlaceholderMedia } from "@/features/media/media-api";
 import { formatSar } from "@/lib/format";
 
 /** "You might also need": AI-assisted when available, otherwise ordinary same-category suggestions. */
@@ -25,22 +26,24 @@ export function RelatedItems({ listingId, viewerKey }: { listingId: string; view
   return (
     <section className="detail-section" aria-labelledby="related-heading">
       <h2 id="related-heading">{ai ? "You might also need" : "Similar items"}</h2>
-      <p className="!text-[12px] !leading-normal mb-3 inline-flex items-center gap-1 text-[var(--nsr-text-secondary)]">
-        {ai && <Sparkles size={13} aria-hidden="true" />} {ai ? data.label : "Other items in the same category nearby."}
-      </p>
-      <ul className="grid gap-2 sm:grid-cols-2">
+      <p className="detail-note">{ai ? data.label : "Other items in the same category nearby."}</p>
+      <ul className="related-grid">
         {data.items.map((item) => (
           <li key={item.id}>
-            <Link
-              href={`/items/${item.id}`}
-              className="block rounded-[var(--nsr-radius-md)] border border-[var(--nsr-divider)] bg-white p-3 hover:shadow-md transition-shadow"
-            >
-              <p className="text-[14px] font-semibold">{item.titleEn}</p>
-              <p className="text-[12px] text-[var(--nsr-text-secondary)]">
-                {item.categoryName} · {item.neighborhoodName} ·{" "}
-                {item.lendingMode === "free" ? "Free" : `${formatSar(item.dailyRateHalalas)}/day`}
-              </p>
-              {item.reason && <p className="mt-1 text-[12px]">{item.reason}</p>}
+            <Link href={`/items/${item.id}`} className="related-card" title={item.reason ?? undefined}>
+              <span className="related-card-image">
+                {item.primaryMediaId && !isDemoPlaceholderMedia(item.primaryMediaId) ? (
+                  <img src={getPublicMediaUrl(item.primaryMediaId, "thumbnail")} alt="" loading="lazy" />
+                ) : (
+                  <span className="detail-fallback">
+                    <PackageCheck size={24} aria-hidden="true" />
+                  </span>
+                )}
+              </span>
+              <span>
+                <strong>{item.titleEn}</strong>
+                <span>{item.lendingMode === "free" ? "Free" : `${formatSar(item.dailyRateHalalas)} / day`}</span>
+              </span>
             </Link>
           </li>
         ))}

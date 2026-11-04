@@ -30,8 +30,8 @@ export default function GlobalError({
           style={{
             padding: "8px 16px",
             borderRadius: "10px",
-            border: "1px solid #0F766E",
-            color: "#0F766E",
+            border: "1px solid var(--nsr-primary)",
+            color: "var(--nsr-primary)",
             background: "transparent",
             cursor: "pointer",
             fontSize: "15px",

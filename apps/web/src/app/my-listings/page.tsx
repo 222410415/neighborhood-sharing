@@ -185,9 +185,9 @@ export default function MyListingsPage() {
           {listings.map((listing) => (
             <div
               key={listing.id}
-              className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-4 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+              className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-4 transition-colors duration-200 hover:border-[var(--nsr-primary)]"
             >
-              <span className="hidden sm:grid h-14 w-14 shrink-0 place-items-center rounded-[14px] bg-[#edf5ec] text-[#2b765a]">
+              <span className="hidden sm:grid h-14 w-14 shrink-0 place-items-center rounded-[14px] bg-[var(--nsr-selected-background)] text-[var(--nsr-primary)]">
                 <Package size={24} strokeWidth={1.5} />
               </span>
               <div className="flex-1 min-w-0">

@@ -157,7 +157,7 @@ function AdminContent() {
                     )
                   ) : item.assignedToMe ? (
                     <Link
-                      className="header-cta"
+                      className="primary-link"
                       href={tab === "disputes" ? `/admin/disputes/${item.id}` : `/admin/reports/${item.id}`}
                     >
                       Open

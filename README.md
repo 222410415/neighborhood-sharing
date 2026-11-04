@@ -8,7 +8,7 @@ fee in SAR, with a separate refundable deposit. Payments and deposits are
 Features: accounts and profiles, listings with photos, discovery with search,
 category, neighborhood, date and price filters, availability and booking
 requests, simulated payment, pickup and return arrangements, condition records,
-messaging, in-app notifications, reviews and public profiles, content reports,
+messaging, an Activity hub with in-app notifications, reviews and public profiles, content reports,
 dispute cases with a reviewer workspace and audit trail, saved items with
 availability alerts, community requests and offers, related-item suggestions
 (AI-assisted with OpenAI when configured) and a policy assistant that cites its

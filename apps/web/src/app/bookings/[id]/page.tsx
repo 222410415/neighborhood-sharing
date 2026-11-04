@@ -203,7 +203,7 @@ export default function BookingDetailPage({ params }: { params: Promise<{ id: st
         )}
         <div className="mt-4 flex flex-wrap gap-2">
           {detail.review.canReview && (
-            <Link className="header-cta" href={`/bookings/${id}/review`}>
+            <Link className="primary-link" href={`/bookings/${id}/review`}>
               Review {otherMember.displayName}
             </Link>
           )}
@@ -229,17 +229,17 @@ export default function BookingDetailPage({ params }: { params: Promise<{ id: st
             </Button>
           )}
           {has("submit_collection_condition") && (
-            <Link className="header-cta" href={`/bookings/${id}/condition/collection`}>
+            <Link className="primary-link" href={`/bookings/${id}/condition/collection`}>
               Record collection condition
             </Link>
           )}
           {has("acknowledge_collection") && (
-            <Link className="header-cta" href={`/bookings/${id}/condition/collection`}>
+            <Link className="primary-link" href={`/bookings/${id}/condition/collection`}>
               Review the collection record
             </Link>
           )}
           {has("submit_return_condition") && (
-            <Link className="header-cta" href={`/bookings/${id}/condition/return`}>
+            <Link className="primary-link" href={`/bookings/${id}/condition/return`}>
               Return the item
             </Link>
           )}

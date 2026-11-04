@@ -193,7 +193,7 @@ export default function ConversationPage({ params }: { params: Promise<{ id: str
             return (
               <div key={m.id} className={mine ? "flex flex-col items-end" : "flex flex-col items-start"}>
                 <div className={`bubble ${mine ? "bubble--mine" : "bubble--theirs"}`}>{m.body}</div>
-                <span className="mt-0.5 text-[11px] text-[var(--nsr-text-secondary)]">
+                <span className="mt-0.5 text-[12px] text-[var(--nsr-text-secondary)]">
                   {formatDateTime(m.createdAt)}
                   {!mine && (
                     <>
@@ -211,9 +211,9 @@ export default function ConversationPage({ params }: { params: Promise<{ id: str
             <div key={o.clientMessageId} className="flex flex-col items-end">
               <div className="bubble bubble--mine opacity-70">{o.body}</div>
               {o.status === "sending" ? (
-                <span className="mt-0.5 text-[11px] text-[var(--nsr-text-secondary)]">Sending...</span>
+                <span className="mt-0.5 text-[12px] text-[var(--nsr-text-secondary)]">Sending...</span>
               ) : (
-                <span className="mt-0.5 text-[11px] text-[var(--nsr-error)]">
+                <span className="mt-0.5 text-[12px] text-[var(--nsr-error)]">
                   Not sent.{" "}
                   <button type="button" className="font-semibold underline" onClick={() => deliver(o)}>
                     Retry

@@ -158,7 +158,7 @@ export default function FavoritesPage() {
             title="Nothing saved yet"
             description="Use Save on an item page to keep it here."
             action={
-              <Link href="/" className="header-cta">
+              <Link href="/" className="primary-link">
                 <Heart size={15} /> Explore items
               </Link>
             }

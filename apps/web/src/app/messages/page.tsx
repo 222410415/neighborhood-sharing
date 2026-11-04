@@ -68,7 +68,7 @@ export default function MessagesPage() {
             title="No conversations yet"
             description="Use Ask the owner on an item page, or message the other member from a booking."
             action={
-              <Link href="/" className="header-cta">
+              <Link href="/" className="primary-link">
                 Explore items
               </Link>
             }
@@ -80,7 +80,7 @@ export default function MessagesPage() {
             <li key={c.id}>
               <Link
                 href={`/messages/${encodeURIComponent(c.id)}`}
-                className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-3 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md"
+                className="flex items-center gap-4 bg-[var(--nsr-surface)] rounded-[var(--nsr-radius-lg)] border border-[var(--nsr-divider)] px-4 py-3 transition-colors duration-200 hover:border-[var(--nsr-primary)]"
               >
                 <AvatarInitials name={c.otherMember.displayName} size="md" />
                 <div className="flex-1 min-w-0">
@@ -89,7 +89,7 @@ export default function MessagesPage() {
                       {c.otherMember.displayName}
                     </p>
                     {c.unread && (
-                      <span className="rounded-full bg-[var(--nsr-primary)] px-2 py-0.5 text-[11px] font-bold text-white">
+                      <span className="rounded-full bg-[var(--nsr-primary)] px-2 py-0.5 text-[12px] font-bold text-white">
                         New
                       </span>
                     )}

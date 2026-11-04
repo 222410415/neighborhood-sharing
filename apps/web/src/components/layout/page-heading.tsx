@@ -6,13 +6,13 @@ interface PageHeadingProps {
 
 export function PageHeading({ title, subtitle, action }: PageHeadingProps) {
   return (
-    <div className="flex items-start justify-between gap-4 mb-8">
+    <div className="flex items-start justify-between gap-4 mb-6">
       <div>
-        <h1 className="font-[Georgia] text-[34px] sm:text-[42px] font-normal tracking-[-0.04em] text-[var(--nsr-text)] leading-tight">
+        <h1 className="page-title">
           {title}
         </h1>
         {subtitle && (
-          <p className="text-[14px] text-[var(--nsr-text-secondary)] mt-2">
+          <p className="text-[15px] text-[var(--nsr-text-secondary)] mt-1.5">
             {subtitle}
           </p>
         )}

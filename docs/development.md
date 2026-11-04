@@ -160,15 +160,15 @@ curl -X POST -H "x-sweep-secret: $SWEEP_SECRET" http://127.0.0.1:3001/v1/interna
 
 ### Borrowing and lending
 
-1. Leen (`leen@neighborhood-demo.test`): My listings → Cordless Drill Kit → Availability.
+1. Leen (`leen@neighborhood-demo.test`): avatar menu → My listings → Cordless Drill Kit → Availability.
    Choose "Review each request", first and last bookable day, Save.
-2. Hanadi: open the Cordless Drill Kit, pick pickup and return (Riyadh time), see the
-   quote (rental fee and refundable deposit separate, marked Simulated), add a message,
+2. Hanadi: open the Cordless Drill Kit, pick two days on the calendar, see the quote
+   (rental fee and refundable deposit separate, marked Simulated), add a message,
    Request to book.
 3. Jawharah: request overlapping dates for the same item.
-4. Leen: bell shows new notifications; Bookings → Lending; accept Hanadi's request.
+4. Leen: the Activity link shows the unread count; accept Hanadi's request on its card.
    Accepting Jawharah's request now fails because the dates are taken.
-5. Hanadi: Bookings → the booking → Confirm and pay (simulated). Status: Confirmed.
+5. Hanadi: Activity → the booking → Confirm and pay (simulated). Status: Confirmed.
 6. Leen and Hanadi: propose and acknowledge the pickup arrangement; exchange messages.
 7. Leen: Record collection condition (checklist, optional photo). Hanadi: review and
    agree. Status: In use.

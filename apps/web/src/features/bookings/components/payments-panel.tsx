@@ -63,7 +63,7 @@ export function PaymentsPanel({
       )}
 
       {deposit && (
-        <div className="mt-4 rounded-[var(--nsr-radius-md)] bg-[#f4f8f3] p-3">
+        <div className="mt-4 rounded-[var(--nsr-radius-md)] bg-[var(--nsr-background)] p-3">
           <div className="flex items-center justify-between">
             <p className="text-[13px] font-semibold">Refundable deposit</p>
             <span className="text-[12px] font-semibold">{DEPOSIT_STATUS[deposit.status]}</span>
