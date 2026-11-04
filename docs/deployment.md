@@ -63,7 +63,9 @@ and three service accounts:
 
 ```sh
 # OpenAI API key for AI suggestions and the policy assistant (without it, fallbacks run)
-gcloud secrets create openai-api-key --project <project-id> --replication-policy=automatic --data-file=-   # paste the key, then Ctrl-D
+read -rs OPENAI_KEY   # paste the key and press Enter; nothing is shown
+printf %s "$OPENAI_KEY" | gcloud secrets create openai-api-key --project <project-id> --replication-policy=automatic --data-file=-
+unset OPENAI_KEY
 # Secret for the bulk expiry endpoint (POST /v1/internal/sweep)
 openssl rand -hex 24 | gcloud secrets create sweep-secret --project <project-id> --replication-policy=automatic --data-file=-
 ```
