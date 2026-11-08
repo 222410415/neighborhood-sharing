@@ -44,6 +44,7 @@ export default function EditListingPage({
   const [actionError, setActionError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [photoBusy, setPhotoBusy] = useState(false);
   const [dirty, setDirty] = useState(false);
 
   // Form fields
@@ -173,24 +174,36 @@ export default function EditListingPage({
     }
   };
 
+  // Buttons stay disabled while a photo is attached or removed, so Save and
+  // Publish always use the listing's current revision.
   const handleImageUploaded = async (mediaId: string) => {
     if (!listing) return;
     setActionError(null);
-    const res = await attachListingMedia(listing.id, [mediaId]);
-    if (res.error || (res.data && res.data.attached.length === 0)) {
-      setActionError(errorText(res.error, "The image could not be added to this listing"));
+    setSaving(true);
+    try {
+      const res = await attachListingMedia(listing.id, [mediaId]);
+      if (res.error || (res.data && res.data.attached.length === 0)) {
+        setActionError(errorText(res.error, "The image could not be added to this listing"));
+      }
+      await refreshListing(listing.id);
+    } finally {
+      setSaving(false);
     }
-    await refreshListing(listing.id);
   };
 
   const handleImageRemoved = async (mediaId: string) => {
     if (!listing || !listing.mediaIds.includes(mediaId)) return;
     setActionError(null);
-    const res = await detachListingMedia(listing.id, mediaId);
-    if (res.error) {
-      setActionError(errorText(res.error, "The image could not be removed"));
+    setSaving(true);
+    try {
+      const res = await detachListingMedia(listing.id, mediaId);
+      if (res.error) {
+        setActionError(errorText(res.error, "The image could not be removed"));
+      }
+      await refreshListing(listing.id);
+    } finally {
+      setSaving(false);
     }
-    await refreshListing(listing.id);
   };
 
   const handlePublish = async () => {
@@ -371,6 +384,7 @@ export default function EditListingPage({
                 clientSubmissionPrefix={`listing-${listing.id}`}
                 onUploaded={handleImageUploaded}
                 onRemoved={handleImageRemoved}
+                onBusyChange={setPhotoBusy}
               />
             </>
           )}
@@ -487,6 +501,7 @@ export default function EditListingPage({
               <Button
                 variant="secondary"
                 loading={saving}
+                disabled={photoBusy}
                 onClick={handlePause}
               >
                 Pause
@@ -496,15 +511,16 @@ export default function EditListingPage({
               <Button
                 variant="secondary"
                 loading={saving}
+                disabled={photoBusy}
                 onClick={handlePublish}
               >
                 Publish
               </Button>
             )}
-            <Button loading={saving} onClick={handleSave}>
+            <Button loading={saving} disabled={photoBusy} onClick={handleSave}>
               Save changes
             </Button>
-            <Button variant="secondary" onClick={handleArchive}>
+            <Button variant="secondary" disabled={saving || photoBusy} onClick={handleArchive}>
               Archive
             </Button>
           </div>

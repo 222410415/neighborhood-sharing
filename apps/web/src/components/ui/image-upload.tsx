@@ -29,6 +29,8 @@ interface ImageUploadProps {
   onRemoved?: (mediaId: string) => Promise<void> | void;
   /** "condition" uploads are private booking evidence, never public. */
   purpose?: "listing" | "condition" | "profile" | "report";
+  /** Told when an upload (and its onUploaded step) starts and ends. */
+  onBusyChange?: (busy: boolean) => void;
 }
 
 export function ImageUpload({
@@ -38,12 +40,17 @@ export function ImageUpload({
   onUploaded,
   onRemoved,
   purpose = "listing",
+  onBusyChange,
 }: ImageUploadProps) {
   const [uploaded, setUploaded] = useState<UploadedImage[]>([]);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const objectUrlsRef = useRef<string[]>([]);
+
+  useEffect(() => {
+    onBusyChange?.(uploading);
+  }, [uploading, onBusyChange]);
 
   const mountedRef = useRef(true);
   const requestedRef = useRef<Set<string>>(new Set());
@@ -118,8 +125,6 @@ export function ImageUpload({
       const clientSubmissionId = `${clientSubmissionPrefix}-${Date.now()}`;
       const result = await uploadImage(file, clientSubmissionId, purpose);
 
-      setUploading(false);
-
       if (result.data) {
         const newImage: UploadedImage = {
           mediaId: result.data.mediaId,
@@ -128,8 +133,12 @@ export function ImageUpload({
         };
         setUploaded((prev) => [...prev, newImage]);
         onMediaIdsChange([...mediaIds, result.data.mediaId]);
+        // Stay busy until the parent has attached the image (edit page), so
+        // nothing acts on the listing before its revision is current.
         await onUploaded?.(result.data.mediaId);
+        setUploading(false);
       } else {
+        setUploading(false);
         URL.revokeObjectURL(previewUrl);
         objectUrlsRef.current = objectUrlsRef.current.filter((u) => u !== previewUrl);
         setError(result.error?.message ?? "Upload failed. Please try again.");

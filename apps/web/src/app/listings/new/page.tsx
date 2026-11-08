@@ -47,6 +47,7 @@ export default function NewListingPage() {
   // Set once the draft exists, so a retry after a failed step reuses it.
   const [createdId, setCreatedId] = useState<string | null>(null);
   const [attachedIds, setAttachedIds] = useState<string[]>([]);
+  const [photoBusy, setPhotoBusy] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -324,6 +325,7 @@ export default function NewListingPage() {
             onMediaIdsChange={handlePhotosChange}
             clientSubmissionPrefix="new-listing"
             onRemoved={handlePhotoRemoved}
+            onBusyChange={setPhotoBusy}
           />
           {fieldErrors["photos"] && (
             <p role="alert" className="mt-2 text-[13px] text-[var(--nsr-error)]">
@@ -433,14 +435,14 @@ export default function NewListingPage() {
           <Button
             variant="secondary"
             loading={saving === "draft"}
-            disabled={saving !== null}
+            disabled={saving !== null || photoBusy}
             onClick={() => handleSubmit(false)}
           >
             Save as draft
           </Button>
           <Button
             loading={saving === "publish"}
-            disabled={saving !== null}
+            disabled={saving !== null || photoBusy}
             onClick={() => handleSubmit(true)}
           >
             Publish
