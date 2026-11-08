@@ -432,3 +432,13 @@ the images replaced, before public use. `replace-demo-photos.mjs` gained `--only
 the other listings are not rewritten.
 
 The same day the user also replaced the Air Fryer, Camera Tripod and Cleaning Brush Kit photos with supplied images, on the same terms. That leaves 43 openly licensed photos, of which 37 need a visible credit (D-36 said 40 of 46).
+
+## D-40: Photos are optional for publishing (8 November 2026)
+
+The user decided that a listing can be published without a photo. The API no
+longer refuses to publish a listing with no images; cards and the item page show
+the category illustration instead. Members can still add up to 3 photos on the
+create and edit pages. Functional check MAN-07, which expected the refusal, now
+checks that a listing without a photo publishes (on a separate listing, archived
+afterwards). This changes the earlier rule (Week 9 design baseline) that a
+listing needs a photo before it goes public.

@@ -96,8 +96,11 @@ try {
   rec("API-05", forged.status === 400 || (forged.status === 201 && forged.data?.ownerUid === hanadi.uid), `Owner is taken from the token, not the request body (status ${forged.status}, owner ${forged.data?.ownerUid === hanadi.uid ? "signed-in member" : forged.data?.ownerUid})`);
   if (forged.status === 201) await call("POST", `/me/listings/${forged.data.id}/archive`, hanadi.token, { expectedRevision: forged.data.revision });
 
-  const pubEarly = await call("POST", `/me/listings/${id}/publish`, hanadi.token, { expectedRevision: d1.data.revision });
-  rec("MAN-07", pubEarly.status === 400 || pubEarly.status === 422, `Publishing without a photograph is rejected (status ${pubEarly.status})`);
+  // Photos are optional since D-40: a separate listing with no photo publishes.
+  const noPhoto = await call("POST", "/me/listings", hanadi.token, { ...draftBody, titleEn: "No Photo Item", clientSubmissionId: `fc-nophoto-${Date.now()}` });
+  const pubNoPhoto = noPhoto.data ? await call("POST", `/me/listings/${noPhoto.data.id}/publish`, hanadi.token, { expectedRevision: noPhoto.data.revision }) : null;
+  rec("MAN-07", pubNoPhoto?.status === 201 && pubNoPhoto.data?.status === "published" && pubNoPhoto.data?.primaryMediaId === null, `Publishing without a photograph is allowed (D-40) (status ${pubNoPhoto?.status}, primary photo ${pubNoPhoto?.data?.primaryMediaId})`);
+  if (pubNoPhoto?.data) await call("POST", `/me/listings/${noPhoto.data.id}/archive`, hanadi.token, { expectedRevision: pubNoPhoto.data.revision });
 
   const svg = await upload(hanadi.token, SVG_B64, "image/svg+xml", "x.svg");
   rec("MAN-08", svg.status === 400, `SVG upload is rejected by content-based format detection (status ${svg.status})`);

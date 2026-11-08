@@ -132,10 +132,6 @@ export default function NewListingPage() {
       }
     }
 
-    if (publish && mediaIds.length === 0) {
-      errors["photos"] = "Add at least one photo to publish. You can save a draft without photos.";
-    }
-
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
@@ -241,7 +237,7 @@ export default function NewListingPage() {
       <div className="max-w-3xl mx-auto">
         <PageHeading
           title="Share something useful."
-          subtitle="Tell your neighbors what makes this item handy, add a photo and publish."
+          subtitle="Tell your neighbors what makes this item handy, then publish."
         />
 
         {/* Item information */}
@@ -319,7 +315,7 @@ export default function NewListingPage() {
 
         <section className="form-section">
           <h2>Photos</h2>
-          <p>Up to 3 photos. At least one is needed to publish.</p>
+          <p>Optional. Up to 3 photos; the first is the main one.</p>
           <ImageUpload
             mediaIds={mediaIds}
             onMediaIdsChange={handlePhotosChange}

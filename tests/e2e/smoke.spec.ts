@@ -202,20 +202,13 @@ test.describe("Sprint 3 pages", () => {
 });
 
 test.describe("Create listing", () => {
-  test("Create page takes photos and asks for one before publishing", async ({ page }) => {
+  test("Create page offers optional photos, draft and publish", async ({ page }) => {
     await signIn(page, "hanadi@neighborhood-demo.test");
     await page.goto("/listings/new");
     await expect(page.getByRole("heading", { name: "Photos" })).toBeVisible({ timeout: 20000 });
     await expect(page.getByRole("button", { name: "Upload image" })).toBeVisible();
-    await page.getByLabel(/^Title/).fill("Photo Rule Check");
-    await page.getByLabel(/^Description/).fill("Never saved: publishing stops before any request.");
-    await page.locator('select[name="categoryId"]').selectOption({ index: 1 });
-    await page.locator('select[name="condition"]').selectOption({ index: 1 });
-    await page.getByLabel("Free lending").check();
-    const hood = page.locator('select[name="neighborhoodId"]');
-    if (!(await hood.inputValue())) await hood.selectOption({ index: 1 });
-    await page.getByRole("button", { name: "Publish", exact: true }).click();
-    await expect(page.getByText("Add at least one photo to publish")).toBeVisible();
-    await expect(page).toHaveURL(/\/listings\/new$/);
+    await expect(page.getByText(/^Optional\. Up to 3 photos/)).toBeVisible();
+    await expect(page.getByRole("button", { name: "Save as draft" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Publish", exact: true })).toBeVisible();
   });
 });

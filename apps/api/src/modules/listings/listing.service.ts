@@ -147,9 +147,8 @@ function validatePublication(listing: Partial<ListingDocument>): string | null {
   if (listing.lendingMode === "paid" && (!listing.dailyRateHalalas || listing.dailyRateHalalas <= 0)) {
     return "Daily rate is required for paid rental";
   }
-  if (!listing.mediaIds || listing.mediaIds.length === 0) {
-    return "At least one image is required to publish";
-  }
+  // Photos are optional (decision D-40); listings without one show the
+  // category illustration.
   return null;
 }
 

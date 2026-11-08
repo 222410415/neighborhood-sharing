@@ -376,7 +376,7 @@ export default function EditListingPage({
           {!isArchived && (
             <>
               <p className="text-[14px] text-[var(--nsr-text-secondary)] mb-4">
-                Up to 3 images. At least one is required to publish.
+                Optional. Up to 3 images; the first is the main one.
               </p>
               <ImageUpload
                 mediaIds={mediaIds}
