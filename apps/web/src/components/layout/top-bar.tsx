@@ -61,6 +61,13 @@ export function TopBar() {
                 Sign in
               </Link>
             )}
+            <Link
+              href="/requests"
+              className="header-cta"
+              aria-current={pathname.startsWith("/requests") ? "page" : undefined}
+            >
+              Community requests
+            </Link>
             <Link href={newItemPath} className="header-cta">
               List an item
             </Link>
