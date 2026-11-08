@@ -3,7 +3,6 @@ import {
   idSchema,
   currencySchema,
   halalasSchema,
-  positiveHalalasSchema,
   MAX_TITLE_LENGTH,
   MAX_DESCRIPTION_LENGTH,
   MAX_ACCESSORY_LABEL_LENGTH,
@@ -143,7 +142,8 @@ export const createListingBodySchema = z.object({
   neighborhoodId: idSchema,
   condition: conditionSchema,
   lendingMode: lendingModeSchema,
-  dailyRateHalalas: positiveHalalasSchema.max(MAX_DAILY_RATE_HALALAS).optional(),
+  // Free items send 0; the service requires a positive rate for paid items.
+  dailyRateHalalas: halalasSchema.max(MAX_DAILY_RATE_HALALAS).optional(),
   depositHalalas: halalasSchema.max(MAX_DEPOSIT_HALALAS).optional(),
   clientSubmissionId: idSchema.optional(),
 });

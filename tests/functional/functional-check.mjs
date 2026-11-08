@@ -82,6 +82,9 @@ try {
   const zeroRate = await call("POST", "/me/listings", hanadi.token, { titleEn: "Tile Cutter", descriptionEn: "Manual tile cutter for small home jobs.", categoryId: "cat_tools", neighborhoodId: "area_al-yasmin", condition: "good", lendingMode: "paid", dailyRateHalalas: 0 });
   rec("MAN-04", zeroRate.status === 400 || zeroRate.status === 422, `Paid listing with a zero daily rate is rejected (status ${zeroRate.status})`);
 
+  const freeZero = await call("POST", "/me/listings", hanadi.token, { titleEn: "Free Zero Rate", descriptionEn: "Free item sent with a zero daily rate, as the form does.", categoryId: "cat_tools", neighborhoodId: "area_al-yasmin", condition: "good", lendingMode: "free", dailyRateHalalas: 0, depositHalalas: 1000, clientSubmissionId: `fc-free0-${Date.now()}` });
+  rec("MAN-04b", freeZero.status === 201 && freeZero.data?.dailyRateHalalas === 0, `Free listing with a zero daily rate is accepted (status ${freeZero.status}, rate ${freeZero.data?.dailyRateHalalas})`);
+
   const subId = `fc-${Date.now()}`;
   const draftBody = { titleEn: "Tile Cutter", descriptionEn: "Manual tile cutter for small home jobs.", categoryId: "cat_tools", neighborhoodId: "area_al-yasmin", condition: "good", lendingMode: "paid", dailyRateHalalas: 1500, depositHalalas: 5000, clientSubmissionId: subId };
   const d1 = await call("POST", "/me/listings", hanadi.token, draftBody);
