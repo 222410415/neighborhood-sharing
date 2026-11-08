@@ -3,14 +3,20 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import { Upload, X, ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { uploadImage, deleteMedia, type MediaMeta } from "@/features/media/media-api";
+import {
+  uploadImage,
+  deleteMedia,
+  fetchPrivateMediaUrl,
+  type MediaMeta,
+} from "@/features/media/media-api";
 
 const MAX_IMAGES = 3;
 
 interface UploadedImage {
   mediaId: string;
   previewUrl: string;
-  meta: MediaMeta;
+  /** Present for images uploaded here; absent for ones loaded from the listing. */
+  meta?: MediaMeta;
 }
 
 interface ImageUploadProps {
@@ -39,14 +45,46 @@ export function ImageUpload({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const objectUrlsRef = useRef<string[]>([]);
 
+  const mountedRef = useRef(true);
+  const requestedRef = useRef<Set<string>>(new Set());
+
   // Cleanup object URLs on unmount
   useEffect(() => {
+    mountedRef.current = true;
     return () => {
+      mountedRef.current = false;
       for (const url of objectUrlsRef.current) {
         URL.revokeObjectURL(url);
       }
     };
   }, []);
+
+  // Show photos the listing already has (edit page). Each id is loaded once;
+  // images uploaded here are already in `uploaded`.
+  useEffect(() => {
+    if (purpose !== "listing") return;
+    const missing = mediaIds.filter(
+      (id) => !requestedRef.current.has(id) && !uploaded.some((img) => img.mediaId === id),
+    );
+    for (const id of missing) {
+      requestedRef.current.add(id);
+      void fetchPrivateMediaUrl(id, "thumbnail").then((url) => {
+        if (!url) return;
+        objectUrlsRef.current.push(url);
+        if (!mountedRef.current) return;
+        setUploaded((prev) => {
+          if (prev.some((img) => img.mediaId === id)) return prev;
+          const order = (mid: string) => {
+            const i = mediaIds.indexOf(mid);
+            return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+          };
+          return [...prev, { mediaId: id, previewUrl: url }].sort(
+            (a, b) => order(a.mediaId) - order(b.mediaId),
+          );
+        });
+      });
+    }
+  }, [mediaIds, uploaded, purpose]);
 
   const canAddMore = uploaded.length < MAX_IMAGES;
 

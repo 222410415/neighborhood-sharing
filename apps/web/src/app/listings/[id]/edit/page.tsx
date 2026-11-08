@@ -28,6 +28,7 @@ import {
   detachListingMedia,
   type OwnerListing,
 } from "@/features/listings/listings-api";
+import { errorText } from "@/lib/api-client";
 
 export default function EditListingPage({
   params,
@@ -158,7 +159,7 @@ export default function EditListingPage({
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
     } else {
-      setActionError(res.error?.message ?? "Failed to save");
+      setActionError(errorText(res.error, "Failed to save"));
     }
   };
 
@@ -177,7 +178,7 @@ export default function EditListingPage({
     setActionError(null);
     const res = await attachListingMedia(listing.id, [mediaId]);
     if (res.error || (res.data && res.data.attached.length === 0)) {
-      setActionError(res.error?.message ?? "The image could not be added to this listing");
+      setActionError(errorText(res.error, "The image could not be added to this listing"));
     }
     await refreshListing(listing.id);
   };
@@ -187,7 +188,7 @@ export default function EditListingPage({
     setActionError(null);
     const res = await detachListingMedia(listing.id, mediaId);
     if (res.error) {
-      setActionError(res.error.message ?? "The image could not be removed");
+      setActionError(errorText(res.error, "The image could not be removed"));
     }
     await refreshListing(listing.id);
   };
@@ -202,7 +203,7 @@ export default function EditListingPage({
       setListing(res.data);
       setDirty(false);
     } else {
-      setActionError(res.error?.message ?? "Failed to publish");
+      setActionError(errorText(res.error, "Failed to publish"));
     }
   };
 
@@ -216,7 +217,7 @@ export default function EditListingPage({
       setListing(res.data);
       setDirty(false);
     } else {
-      setActionError(res.error?.message ?? "Failed to pause");
+      setActionError(errorText(res.error, "Failed to pause"));
     }
   };
 
@@ -232,7 +233,7 @@ export default function EditListingPage({
       setListing(res.data);
       setDirty(false);
     } else {
-      setActionError(res.error?.message ?? "Failed to archive");
+      setActionError(errorText(res.error, "Failed to archive"));
     }
   };
 
@@ -282,11 +283,6 @@ export default function EditListingPage({
           )}
         </div>
 
-        {actionError && (
-          <div className="mb-4">
-            <Alert variant="error">{actionError}</Alert>
-          </div>
-        )}
         {saved && (
           <div className="mb-4">
             <Alert variant="success" title="Changes saved">
@@ -480,6 +476,11 @@ export default function EditListingPage({
         </section>
 
         {/* Actions */}
+        {actionError && (
+          <div className="mb-4">
+            <Alert variant="error">{actionError}</Alert>
+          </div>
+        )}
         {!isArchived && (
           <div className="flex flex-wrap justify-end gap-3">
             {canPause && (

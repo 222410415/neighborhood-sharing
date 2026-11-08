@@ -15,7 +15,16 @@ import {
   CONDITIONS,
 } from "@/lib/catalogue-options";
 import { useProfile } from "@/features/profile/use-profile";
-import { createListing } from "@/features/listings/listings-api";
+import {
+  createListing,
+  updateListing,
+  fetchMyListing,
+  attachListingMedia,
+  detachListingMedia,
+  publishListing,
+} from "@/features/listings/listings-api";
+import { ImageUpload } from "@/components/ui/image-upload";
+import { errorText } from "@/lib/api-client";
 
 export default function NewListingPage() {
   const router = useRouter();
@@ -32,8 +41,12 @@ export default function NewListingPage() {
   const [deposit, setDeposit] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [saving, setSaving] = useState(false);
+  const [saving, setSaving] = useState<"draft" | "publish" | null>(null);
   const [dirty, setDirty] = useState(false);
+  const [mediaIds, setMediaIds] = useState<string[]>([]);
+  // Set once the draft exists, so a retry after a failed step reuses it.
+  const [createdId, setCreatedId] = useState<string | null>(null);
+  const [attachedIds, setAttachedIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -70,7 +83,20 @@ export default function NewListingPage() {
     markDirty();
   };
 
-  const handleSave = async () => {
+  // Photos are uploaded straight away; they are attached when the listing is saved.
+  const handlePhotosChange = (ids: string[]) => {
+    setMediaIds(ids);
+    markDirty();
+  };
+
+  const handlePhotoRemoved = async (mediaId: string) => {
+    if (createdId && attachedIds.includes(mediaId)) {
+      await detachListingMedia(createdId, mediaId);
+      setAttachedIds((prev) => prev.filter((id) => id !== mediaId));
+    }
+  };
+
+  const handleSubmit = async (publish: boolean) => {
     setError(null);
     setFieldErrors({});
 
@@ -105,15 +131,17 @@ export default function NewListingPage() {
       }
     }
 
+    if (publish && mediaIds.length === 0) {
+      errors["photos"] = "Add at least one photo to publish. You can save a draft without photos.";
+    }
+
     if (Object.keys(errors).length > 0) {
       setFieldErrors(errors);
       return;
     }
 
-    setSaving(true);
-    const clientSubmissionId = `new-${Date.now()}`;
-
-    const res = await createListing({
+    setSaving(publish ? "publish" : "draft");
+    const fields = {
       titleEn,
       descriptionEn,
       categoryId,
@@ -122,25 +150,75 @@ export default function NewListingPage() {
       lendingMode,
       dailyRateHalalas,
       depositHalalas,
-      clientSubmissionId,
-    });
+    };
+    const showFieldErrors = (fe: { field: string; message: string }[]) => {
+      const out: Record<string, string> = {};
+      for (const f of fe) out[f.field] = f.message;
+      setFieldErrors(out);
+    };
 
-    setSaving(false);
-
-    if (res.data) {
-      setDirty(false);
-      router.push(`/listings/${res.data.id}/edit`);
+    // 1. Create the draft, or update it if an earlier attempt created it.
+    let id = createdId;
+    if (!id) {
+      const res = await createListing({ ...fields, clientSubmissionId: `new-${Date.now()}` });
+      if (!res.data) {
+        setSaving(null);
+        if (res.error?.fieldErrors?.length) showFieldErrors(res.error.fieldErrors);
+        else setError(errorText(res.error, "Failed to save. Please try again."));
+        return;
+      }
+      id = res.data.id;
+      setCreatedId(id);
     } else {
-      if (res.error?.fieldErrors) {
-        const fe: Record<string, string> = {};
-        for (const f of res.error.fieldErrors) {
-          fe[f.field] = f.message;
-        }
-        setFieldErrors(fe);
-      } else {
-        setError(res.error?.message ?? "Failed to save. Please try again.");
+      const current = await fetchMyListing(id);
+      const res = current.data
+        ? await updateListing(id, { ...fields, expectedRevision: current.data.revision })
+        : null;
+      if (!res?.data) {
+        setSaving(null);
+        if (res?.error?.fieldErrors?.length) showFieldErrors(res.error.fieldErrors);
+        else setError(errorText(res?.error ?? current.error, "Failed to save. Please try again."));
+        return;
       }
     }
+
+    // 2. Attach the photos, in the order shown (the first is the main photo).
+    const toAttach = mediaIds.filter((m) => !attachedIds.includes(m));
+    if (toAttach.length > 0) {
+      const res = await attachListingMedia(id, toAttach);
+      const attached = res.data?.attached ?? [];
+      setAttachedIds((prev) => [...prev, ...attached]);
+      if (!res.data || attached.length < toAttach.length) {
+        setSaving(null);
+        setError(
+          `Your listing was saved as a draft, but a photo could not be added (${errorText(
+            res.error,
+            res.data?.rejected[0]?.reason ?? "unknown reason",
+          )}). Remove that photo or try again.`,
+        );
+        return;
+      }
+    }
+
+    // 3. Publish, using the revision after the photos were attached.
+    if (publish) {
+      const current = await fetchMyListing(id);
+      const res = current.data ? await publishListing(id, current.data.revision) : null;
+      if (!res?.data) {
+        setSaving(null);
+        setError(
+          `Your listing was saved as a draft but not published: ${errorText(
+            res?.error ?? current.error,
+            "please try again",
+          )}`,
+        );
+        return;
+      }
+    }
+
+    setSaving(null);
+    setDirty(false);
+    router.push(publish ? `/items/${id}` : "/my-listings");
   };
 
   if (authLoading) {
@@ -162,14 +240,8 @@ export default function NewListingPage() {
       <div className="max-w-3xl mx-auto">
         <PageHeading
           title="Share something useful."
-          subtitle="Tell your neighbors what makes this item handy. You can add photos next."
+          subtitle="Tell your neighbors what makes this item handy, add a photo and publish."
         />
-
-        {error && (
-          <div className="mb-4">
-            <Alert variant="error">{error}</Alert>
-          </div>
-        )}
 
         {/* Item information */}
         <section className="form-section">
@@ -242,6 +314,22 @@ export default function NewListingPage() {
               ))}
             </Select>
           </div>
+        </section>
+
+        <section className="form-section">
+          <h2>Photos</h2>
+          <p>Up to 3 photos. At least one is needed to publish.</p>
+          <ImageUpload
+            mediaIds={mediaIds}
+            onMediaIdsChange={handlePhotosChange}
+            clientSubmissionPrefix="new-listing"
+            onRemoved={handlePhotoRemoved}
+          />
+          {fieldErrors["photos"] && (
+            <p role="alert" className="mt-2 text-[13px] text-[var(--nsr-error)]">
+              {fieldErrors["photos"]}
+            </p>
+          )}
         </section>
 
         <section className="form-section">
@@ -331,9 +419,31 @@ export default function NewListingPage() {
           </Select>
         </section>
 
-        <div className="flex justify-end gap-3 mt-6">
-          <Button loading={saving} onClick={handleSave}>
-            Save and add photos
+        {error && (
+          <div className="mt-6">
+            <Alert variant="error">{error}</Alert>
+          </div>
+        )}
+        {!error && Object.keys(fieldErrors).length > 0 && (
+          <p role="alert" className="mt-6 text-[14px] text-[var(--nsr-error)]">
+            Please fix the highlighted fields above.
+          </p>
+        )}
+        <div className="flex flex-wrap justify-end gap-3 mt-6">
+          <Button
+            variant="secondary"
+            loading={saving === "draft"}
+            disabled={saving !== null}
+            onClick={() => handleSubmit(false)}
+          >
+            Save as draft
+          </Button>
+          <Button
+            loading={saving === "publish"}
+            disabled={saving !== null}
+            onClick={() => handleSubmit(true)}
+          >
+            Publish
           </Button>
         </div>
       </div>
