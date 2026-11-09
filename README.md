@@ -9,7 +9,7 @@ Features: accounts and profiles, listings with photos, discovery with search,
 category, neighborhood, date and price filters, availability and booking
 requests, simulated payment, pickup and return arrangements, condition records,
 messaging, an Activity hub with in-app notifications, reviews and public profiles, content reports,
-dispute cases with a reviewer workspace and audit trail, saved items with
+dispute cases and report moderation (warn, take down, suspend) in an admin workspace with an audit trail, saved items with
 availability alerts, community requests and offers, related-item suggestions
 (AI-assisted with OpenAI when configured) and a policy assistant that cites its
 sources.
@@ -35,13 +35,43 @@ tests/              functional API checks, Playwright browser checks
 docs/               architecture, deployment, development, design system, decisions
 ```
 
-## Quick start (local)
+## Run with Docker
 
-1. Copy `.env.example` to `.env`; set `FIREBASE_KEY_FILE` to a service-account
-   key kept outside this folder.
-2. `docker compose up -d --build --wait`
-3. Seed once: see `docs/development.md`.
-4. Open http://127.0.0.1:3000
+Needs Docker Desktop (or Docker Engine with Compose v2) and an internet
+connection. The first build downloads dependencies and takes several minutes.
+The app uses a real Firebase project (Authentication and Firestore); there is
+no offline database.
+
+1. Get a Firebase service-account key (JSON) for the project from the team, or
+   from Firebase console -> Project settings -> Service accounts. Keep it
+   outside this folder and never share or commit it.
+2. Create the settings file and point it at the key:
+   ```sh
+   cp .env.example .env
+   # edit .env: FIREBASE_KEY_FILE=/absolute/path/to/key.json
+   ```
+3. Start the API (port 3001) and the website (port 3000):
+   ```sh
+   docker compose up -d --build --wait
+   ```
+4. Open http://127.0.0.1:3000 and sign in with a demo account, for example
+   `hanadi@neighborhood-demo.test` / `DemoPass123!` (also `leen@...` and
+   `jawharah@...`; Jawharah is the admin).
+5. Stop it with `docker compose down`.
+
+The project `neighborhood-sharing` is already seeded. For a new, empty Firebase
+project, set `FIREBASE_PROJECT_ID` in `.env`, put that project's web config in
+`apps/web/src/lib/firebase-client.ts`, then seed it once (see
+`docs/development.md`, "Seed the real project"):
+```sh
+docker compose run --rm tools npx tsx scripts/seed/demo-data.ts
+docker compose run --rm tools node scripts/seed/booking-settings.mjs
+docker compose run --rm tools node scripts/seed/policies.mjs
+docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
+```
+
+AI features are optional: add `OPENAI_API_KEY` to `.env` to turn them on.
+Without it, suggestions and the policy assistant use built-in fallbacks.
 
 ## Deploy to Google Cloud
 

@@ -64,8 +64,6 @@ docker compose run --rm tools node scripts/seed/booking-settings.mjs
 docker compose run --rm tools node scripts/seed/policies.mjs
 # Admin role for the Jawharah demo persona (demo accounts only)
 docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
-# Admin role (needed to publish approved policies)
-docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
 ```
 
 Run `seed/booking-settings.mjs` again after `seed/demo-data.ts`, which rewrites the demo
