@@ -12,6 +12,12 @@ export class SecurityHeadersMiddleware implements NestMiddleware {
       "permissions-policy",
       "camera=(), microphone=(), geolocation=()",
     );
+    // API answers are dynamic. Without this, Firebase Hosting gives responses
+    // that carry no Cache-Control (notably 404s) max-age=600 and serves them
+    // from its CDN, so a restored listing or reinstated member stays "not
+    // found" for up to 10 minutes. Routes that may be cached (listing photos)
+    // set their own header later and override this default.
+    res.setHeader("cache-control", "no-store");
     next();
   }
 }

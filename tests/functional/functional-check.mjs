@@ -70,7 +70,9 @@ try {
   const n3 = await fetch(API + "/me", { headers: { Authorization: "Basic abc" } });
   rec("API-03", n1.status === 401 && n2.status === 401 && n3.status === 401, `Protected route rejects missing (${n1.status}), invalid (${n2.status}) and non-Bearer (${n3.status}) credentials`);
   const h = n1.headers;
-  rec("API-04", h.get("x-content-type-options") === "nosniff" && h.get("x-frame-options") === "DENY" && !!h.get("x-request-id"), "Responses carry security headers and a request ID, including errors");
+  // A 404 must say no-store, or Firebase Hosting caches it for 10 minutes (ADM-BUG-01).
+  const missing = await fetch(API + `/listings/fc-missing-${Date.now()}`);
+  rec("API-04", h.get("x-content-type-options") === "nosniff" && h.get("x-frame-options") === "DENY" && !!h.get("x-request-id") && h.get("cache-control") === "no-store" && missing.status === 404 && missing.headers.get("cache-control") === "no-store", `Responses carry security headers, a request ID and cache-control no-store, including errors (401 ${h.get("cache-control")}, 404 ${missing.headers.get("cache-control")})`);
   const hanadi = await signIn("hanadi@neighborhood-demo.test");
   const leen = await signIn("leen@neighborhood-demo.test");
   rec("MAN-01", !!hanadi.token && !!leen.token, "Demo members sign in through Firebase Auth and receive ID tokens");
