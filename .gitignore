@@ -19,7 +19,7 @@ out/
 *firebase-adminsdk*.json
 
 # Generated reports (evaluation, performance)
-reports/
+/reports/
 
 # Test artifacts
 coverage/
