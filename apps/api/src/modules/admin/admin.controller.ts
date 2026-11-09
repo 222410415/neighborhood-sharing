@@ -1,5 +1,5 @@
 /**
- * Reviewer workspace. Every route requires the reviewer (or admin) role,
+ * Admin workspace. Every route requires the admin role (D-43),
  * checked on the server by RolesGuard; every write and every evidence read is
  * audited by the services.
  *
@@ -10,10 +10,10 @@
  * GET  /v1/admin/disputes/:id/media/:mediaId
  * POST /v1/admin/reviews/:id/hide
  * POST /v1/admin/verification/:id/decide
- * POST /v1/admin/policies/:id/publish        (admin role only)
- * GET  /v1/admin/moderation                  (admin role only) suspended members, removed listings
- * POST /v1/admin/listings/:id/restore        (admin role only)
- * POST /v1/admin/members/:uid/reinstate      (admin role only)
+ * POST /v1/admin/policies/:id/publish
+ * GET  /v1/admin/moderation                  suspended members, removed listings
+ * POST /v1/admin/listings/:id/restore
+ * POST /v1/admin/members/:uid/reinstate
  * GET  /v1/admin/audit?entityType&entityId
  */
 
@@ -81,7 +81,7 @@ function sendMedia(res: Response, media: MediaDocument, variant: string) {
 
 @Controller("admin")
 @UseGuards(AuthGuard, RolesGuard)
-@RequireRoles("reviewer", "admin")
+@RequireRoles("admin")
 export class AdminController {
   constructor(
     private readonly reports: ReportService,
@@ -139,16 +139,14 @@ export class AdminController {
     return this.moderation.decide(user.uid, id, body, requestId);
   }
 
-  // ─── Moderation follow-up (admin only) ───
+  // ─── Moderation follow-up ───
 
   @Get("moderation")
-  @RequireRoles("admin")
   async moderationOverview() {
     return this.moderation.overview();
   }
 
   @Post("listings/:id/restore")
-  @RequireRoles("admin")
   @UseInterceptors(new ZodValidationInterceptor(moderationReasonBodySchema))
   @HttpCode(HttpStatus.OK)
   async restoreListing(
@@ -161,7 +159,6 @@ export class AdminController {
   }
 
   @Post("members/:uid/reinstate")
-  @RequireRoles("admin")
   @UseInterceptors(new ZodValidationInterceptor(moderationReasonBodySchema))
   @HttpCode(HttpStatus.OK)
   async reinstateMember(
@@ -249,7 +246,6 @@ export class AdminController {
   }
 
   @Post("policies/:id/publish")
-  @RequireRoles("admin")
   @HttpCode(HttpStatus.OK)
   async publishPolicy(@CurrentUser() user: VerifiedUser, @Param("id") id: string, @RequestId() requestId: string | null) {
     return this.policies.publish(user.uid, id, requestId);

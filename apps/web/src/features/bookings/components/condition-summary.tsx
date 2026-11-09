@@ -16,7 +16,7 @@ export function ConditionSummary({
   report: ConditionReport;
   submitterName: string;
   acknowledgerName?: string;
-  /** Override the photo route (the reviewer workspace uses its own audited route). */
+  /** Override the photo route (the admin workspace uses its own audited route). */
   photoPath?: (mediaId: string, variant: "main" | "thumbnail") => string;
 }) {
   return (

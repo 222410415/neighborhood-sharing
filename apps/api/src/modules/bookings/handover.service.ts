@@ -541,8 +541,8 @@ export class HandoverService {
           title: "Issue reported",
           body: `${actorName} reported an issue with the exchange of ${booking.termsSnapshot.titleEn}. ${
             deposit && deposit.heldHalalas > 0
-              ? "The simulated deposit stays on hold until a reviewer decides."
-              : "An authorised reviewer will look at the case."
+              ? "The simulated deposit stays on hold until an admin decides."
+              : "An admin will look at the case."
           }`,
         });
         return dispute;
@@ -601,7 +601,7 @@ export class HandoverService {
         recipientUid: writer.otherParticipant(uid),
         type: "dispute_opened",
         title: "Complaint about a completed exchange",
-        body: `${actorName} raised a complaint about the exchange of ${booking.termsSnapshot.titleEn}. A reviewer will look at it; the completed booking and its payments are not changed.`,
+        body: `${actorName} raised a complaint about the exchange of ${booking.termsSnapshot.titleEn}. An admin will look at it; the completed booking and its payments are not changed.`,
       });
       writer.writeTo(buffer, db);
       buffer.flush(tx);

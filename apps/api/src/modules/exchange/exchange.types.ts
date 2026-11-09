@@ -107,7 +107,7 @@ export interface ConversationDoc {
   updatedAt: string;
 }
 
-/** A message a reviewer removed keeps its record; participants see a placeholder. */
+/** A message an admin removed keeps its record; participants see a placeholder. */
 export type MessageDoc = MessageDto & { moderationStatus?: "removed"; moderatedAt?: string };
 
 export const SYSTEM_ACTOR = "system";

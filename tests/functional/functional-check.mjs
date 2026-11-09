@@ -2,7 +2,7 @@
 // Sprint 1 (Weeks 10-11): 26 checks of the signed-in listing and media flows (unchanged).
 // Sprint 2: F-27..F-48 plus TX-01, ZT-01 and API-06 for the exchange workflow.
 // Sprint 3: F-49..F-72 (trust, community, AI, policies, hardening); needs the
-// Sprint 3 seed and the reviewer role (see docs/development.md).
+// Sprint 3 seed and the admin role for Jawharah (see docs/development.md).
 // 9 Nov 2026: F-73 pickup and return reminders; F-74..F-77 moderation decisions
 // (F-77 needs the admin role for Jawharah and briefly suspends Leen).
 // Runs inside the tools container against the running API and the real Firebase project.
@@ -485,7 +485,7 @@ rec("F-48", sprint1Count === 27 && sprint1Passed === 27, `All 27 Sprint 1 checks
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Sprint 3 checks (F-49 .. F-72).
-// Preconditions: policies seeded (scripts/seed/policies.mjs) and the reviewer
+// Preconditions: policies seeded (scripts/seed/policies.mjs) and the admin
 // role granted to the Jawharah demo persona (scripts/admin/grant-role.mjs).
 // AI checks F-63..F-65 need the development test hooks (AI_TEST_HOOKS=true);
 // without them they are reported as SKIP, never as passed.
@@ -524,8 +524,8 @@ try {
   const memberAssign = await call("POST", "/admin/disputes/x/assign", hanadi.token);
   const memberAudit = await call("GET", "/admin/audit?entityType=review&entityId=x", hanadi.token);
   const reviewerQueue = await call("GET", "/admin/queue?type=disputes", jawharah.token);
-  rec("F-49", roles.data?.isReviewer === true && [memberQueue, memberAssign, memberAudit].every((r) => r.status === 403) && reviewerQueue.status === 200,
-    `Member gets 403 on admin routes (${memberQueue.status}, ${memberAssign.status}, ${memberAudit.status}); reviewer gets ${reviewerQueue.status}${roles.data?.isReviewer ? "" : " (precondition: grant the reviewer role to Jawharah)"}`);
+  rec("F-49", roles.data?.isAdmin === true && [memberQueue, memberAssign, memberAudit].every((r) => r.status === 403) && reviewerQueue.status === 200,
+    `Member gets 403 on admin routes (${memberQueue.status}, ${memberAssign.status}, ${memberAudit.status}); admin gets ${reviewerQueue.status}${roles.data?.isAdmin ? "" : " (precondition: grant the admin role to Jawharah)"}`);
 
   // Reviews: one completed exchange (F-52, F-53).
   const lA = await L("Review Drill", { lendingMode: "paid", rate: 1000, deposit: 5000, bookingMode: "instant" });
@@ -785,7 +785,7 @@ try {
 }
 // F-74..F-77 (9 Nov 2026, D-42): moderation decisions on reports.
 // F-77 suspends Leen briefly and lifts it again; it needs the admin role for
-// Jawharah and is skipped without it. A safety net lifts the suspension if
+// Jawharah (D-43; a stored "reviewer" counts) and is skipped without it. A safety net lifts the suspension if
 // anything fails part way.
 let seq4 = 0;
 const rid4 = (tag) => `fc3-${RUN}-mod-${tag}-${++seq4}`;
@@ -851,7 +851,7 @@ try {
   const rU = await fileReport(hanadi, { targetType: "listing", targetId: lW.id, category: "other" });
   const dU = await assignAndRead(rU.data?.id);
   await decide(rU.data?.id, "invalid", "FC3 nothing to do.");
-  let restoreText = "restore not tried (Jawharah is not an admin)";
+  let restoreText = "restore not tried";
   let restoreOk = true;
   if (isAdmin) {
     const overview = await call("GET", "/admin/moderation", jawharah.token);
@@ -862,7 +862,7 @@ try {
   } else {
     const denied = await call("POST", `/admin/listings/${lT.id}/restore`, jawharah.token, { reason: "FC3" });
     restoreOk = denied.status === 403;
-    restoreText = `restore refused for a reviewer without the admin role (${denied.status})`;
+    restoreText = `restore refused without the admin role (${denied.status})`;
   }
   rec("F-75", bTc.data?.status === "confirmed" && dT.data?.suggestedSeverity === "high" && removed.status === 200 && removed.data?.severity === "medium" &&
       ownerView.data?.status === "archived" && ownerView.data?.moderationStatus === "removed" && publicView.status === 404 && republish.status >= 400 &&
@@ -881,12 +881,12 @@ try {
   const shownL = (threadL.data?.items ?? []).find((m) => m.id === msg.data?.id);
   const senderNotes = (await notificationsOf(hanadi)).filter((n) => n.type === "content_removed" && n.entityId === rM.data?.id);
   rec("F-76", msg.status === 201 && dM.data?.suggestedSeverity === "medium" && dM.data?.subject?.uid === hanadi.uid && hid.status === 200 &&
-      shownL?.body === "This message was removed by a reviewer." && !JSON.stringify(threadL.data).includes("rude message") && !JSON.stringify(threadH.data).includes("rude message") && senderNotes.length === 1,
+      shownL?.body === "This message was removed by an admin." && !JSON.stringify(threadL.data).includes("rude message") && !JSON.stringify(threadH.data).includes("rude message") && senderNotes.length === 1,
     `Message removed (${hid.status}); both participants see the placeholder; sender told (${senderNotes.length})`);
 
   // F-77: suspension blocks sign-in and the API, hides the profile and listings, cancels upcoming bookings; lifting restores access.
   if (!isAdmin) {
-    rec("F-77", null, "SKIP: lifting a suspension needs the admin role for Jawharah (scripts/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin)");
+    rec("F-77", null, "SKIP: needs the admin role for Jawharah (scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin)");
   } else {
     const lS = await ML("Moderation Tent", { lendingMode: "free", deposit: 0, bookingMode: "instant" });
     const lH = await makeListing(hanadi, { title: "FC3 Moderation Cooler", lendingMode: "free", deposit: 0, bookingMode: "instant" });

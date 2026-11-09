@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 /**
- * Grant or revoke a privileged role (reviewer or admin) for a demo persona.
+ * Grant or revoke the admin role for a demo persona (D-43: one privileged role;
+ * an older stored "reviewer" is read as admin and replaced on the next grant).
  *
  * Refuses any email that is not a fictional demo address (@neighborhood-demo.test),
  * so a real person's account is never given administrative power by script.
  * Writes roleAssignments/{uid} and an audit event.
  *
  * Docker (tools container, real project; key from FIREBASE_KEY_FILE in .env):
- *   docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role reviewer
+ *   docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
  * Revoke:  ... --revoke
  * Without Docker: GOOGLE_APPLICATION_CREDENTIALS=/path/key.json node scripts/admin/grant-role.mjs ...
  */
@@ -26,15 +27,15 @@ const arg = (name) => {
   return i >= 0 ? args[i + 1] : undefined;
 };
 const email = (arg("email") ?? "").trim().toLowerCase();
-const role = arg("role") ?? "reviewer";
+const role = arg("role") ?? "admin";
 const revoke = args.includes("--revoke");
 
 if (!/^[a-z0-9._-]+@neighborhood-demo\.test$/.test(email)) {
   console.error("Refusing: only fictional demo accounts (@neighborhood-demo.test) can be given roles by script.");
   process.exit(1);
 }
-if (!["reviewer", "admin"].includes(role)) {
-  console.error("--role must be reviewer or admin");
+if (role !== "admin") {
+  console.error("--role must be admin (the reviewer role was merged into admin, D-43)");
   process.exit(1);
 }
 
@@ -53,6 +54,7 @@ const now = new Date().toISOString();
 const ref = db.collection("roleAssignments").doc(user.uid);
 const current = (await ref.get()).data();
 const roles = new Set((current && !current.revokedAt ? current.roles : []) ?? []);
+roles.delete("reviewer"); // pre-D-43 name of the same role
 if (revoke) roles.delete(role);
 else roles.add(role);
 

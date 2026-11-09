@@ -1,7 +1,7 @@
 /**
  * Moderation decisions on reports (D-42).
  *
- * The assigned reviewer judges the report and picks one decision:
+ * The assigned admin judges the report and picks one decision:
  *   invalid   - close with a note to the reporter; nothing else changes
  *   warn      - low severity: the reported member is told what to fix
  *   take_down - medium: the listing is removed (archived, admin restore only),
@@ -11,9 +11,9 @@
  *               are cancelled (simulated payments refunded)
  *
  * Effects run first and are safe to repeat; the report is closed last, so a
- * failure part way leaves the report open for the reviewer to try again.
+ * failure part way leaves the report open for the admin to try again.
  * Bookings already handed over stay open; the other member can report an
- * issue and a reviewer settles it. Admins can restore a removed listing and
+ * issue and an admin settles it. Admins can restore a removed listing and
  * lift a suspension. Every step is audited.
  */
 
@@ -49,7 +49,7 @@ import { RolesService } from "../roles/roles.service.js";
 import { OUTCOME_LABELS, ReportService, toDto, type ReportTargetSummary } from "./report.service.js";
 
 const OPEN_STATUSES = new Set(["pending", "accepted", "confirmed"]);
-const REMOVED_PREVIEW = "Message removed by a reviewer";
+const REMOVED_PREVIEW = "Message removed by an admin";
 
 interface SuspensionRecord {
   at: string;
@@ -118,16 +118,16 @@ export class ModerationService {
     }
     const subjectUid = target?.responsibleUid ?? null;
     if (subjectUid === reviewerUid) {
-      throw new ConflictException("You are involved in this report, so another reviewer must handle it.", {
+      throw new ConflictException("You are involved in this report, so another admin must handle it.", {
         reason: "conflict_of_interest",
       });
     }
 
     if (body.decision === "suspend") {
       const roles = await this.roles.rolesOf(subjectUid!);
-      if (roles.includes("reviewer") || roles.includes("admin")) {
+      if (roles.includes("admin")) {
         throw new ConflictException(
-          "This member is a reviewer or admin. An admin must remove the role before the account can be suspended.",
+          "This member is an admin. Remove the admin role (scripts/grant-role.mjs --revoke) before suspending the account.",
           { reason: "privileged_member" },
         );
       }
@@ -179,7 +179,7 @@ export class ModerationService {
         title: "Your report was reviewed",
         body:
           body.decision === "invalid"
-            ? `A reviewer found nothing that needs action. Reviewer's note: ${body.note}`
+            ? `An admin found nothing that needs action. Admin's note: ${body.note}`
             : `Outcome: ${OUTCOME_LABELS[outcome]}. Thank you for helping keep the neighborhood safe.`,
         actionPath: "/reports",
         createdAt: now,
@@ -227,10 +227,10 @@ export class ModerationService {
         type: "moderation_warning",
         entityType: isListing ? "listing" : "report",
         entityId: isListing ? report.targetId : report.id,
-        title: isListing ? "Your listing was reported" : "A reviewer sent you a warning",
+        title: isListing ? "Your listing was reported" : "An admin sent you a warning",
         body: isListing
-          ? `A reviewer checked a report about "${target.title}" and asks you to fix it: ${body.note}`
-          : `A reviewer checked a report about ${THING[report.targetType]}: ${body.note}`,
+          ? `An admin checked a report about "${target.title}" and asks you to fix it: ${body.note}`
+          : `An admin checked a report about ${THING[report.targetType]}: ${body.note}`,
         actionPath: isListing ? `/listings/${report.targetId}/edit` : "/notifications",
       };
     }
@@ -246,8 +246,8 @@ export class ModerationService {
             ? "A message you sent was removed"
             : "A review you wrote was hidden",
         body: isListing
-          ? `A reviewer removed "${target.title}" after a report: ${body.note} Its upcoming bookings were cancelled.`
-          : `A reviewer acted on a report about ${THING[report.targetType]}: ${body.note}`,
+          ? `An admin removed "${target.title}" after a report: ${body.note} Its upcoming bookings were cancelled.`
+          : `An admin acted on a report about ${THING[report.targetType]}: ${body.note}`,
         actionPath: isListing ? "/my-listings" : "/notifications",
       };
     }
@@ -257,7 +257,7 @@ export class ModerationService {
       entityType: "report",
       entityId: report.id,
       title: "Your account was suspended",
-      body: `A reviewer suspended your account after a report: ${body.note}`,
+      body: `An admin suspended your account after a report: ${body.note}`,
       actionPath: "/notifications",
     };
   }
@@ -502,7 +502,7 @@ export class ModerationService {
       const listing = (await tx.get(ref)).data() as ListingDocument | undefined;
       if (!listing) throw new NotFoundException("Listing not found");
       if (listing.moderationStatus !== "removed") {
-        throw new ConflictException("This listing was not removed by a reviewer.", { reason: "not_removed" });
+        throw new ConflictException("This listing was not removed by an admin.", { reason: "not_removed" });
       }
       const updated: ListingDocument = {
         ...listing,
@@ -606,8 +606,8 @@ export class ModerationService {
         const deposit = before === "confirmed" ? await readDeposit(scope, booking.id) : null;
         const note =
           why === "listing_removed"
-            ? "A reviewer removed this listing, so the booking was cancelled."
-            : "A reviewer suspended a member of this booking, so it was cancelled.";
+            ? "An admin removed this listing, so the booking was cancelled."
+            : "An admin suspended a member of this booking, so it was cancelled.";
         const seq = writer.transition("cancelled", SYSTEM_ACTOR, "cancelled_by_moderation", note);
         writer.set({ cancelledAt: scope.now, cancelledByUid: SYSTEM_ACTOR, expiresAt: null });
         if (before === "accepted" || before === "confirmed") scope.releaseReservation(booking.id);

@@ -11,7 +11,7 @@ const statusConfig: Record<Status, { label: string; bg: string; text: string }> 
   published: { label: "Published", bg: "var(--nsr-success-background)", text: "var(--nsr-success)" },
   paused: { label: "Paused", bg: "var(--nsr-info-background)", text: "var(--nsr-info)" },
   archived: { label: "Archived", bg: "var(--nsr-disabled-background)", text: "var(--nsr-text-secondary)" },
-  removed: { label: "Removed by a reviewer", bg: "var(--nsr-error-background)", text: "var(--nsr-error)" },
+  removed: { label: "Removed by an admin", bg: "var(--nsr-error-background)", text: "var(--nsr-error)" },
 };
 
 export function StatusBadge({ status }: StatusBadgeProps) {

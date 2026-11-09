@@ -144,7 +144,7 @@ export default function ProfilePage() {
               { href: "/requests", label: "Community requests" },
               { href: "/reports", label: "Your reports" },
               { href: "/policies", label: "Policies" },
-              ...(roles?.isReviewer ? [{ href: "/admin", label: "Review workspace" }] : []),
+              ...(roles?.isAdmin ? [{ href: "/admin", label: "Admin workspace" }] : []),
             ].map((link) => (
               <li key={link.href}>
                 <Link href={link.href} className="block py-3 font-medium text-[var(--nsr-text)] no-underline">

@@ -494,3 +494,18 @@ by it are published again). Consequence: no appeal flow and no email to the
 member; there is no admin account until the team grants the admin role with
 `scripts/grant-role.mjs --role admin`. Functional checks F-74..F-77 (F-77 needs
 the admin role and is skipped without it).
+
+## D-43: One privileged role, "admin" (9 November 2026)
+
+The team decided that two privileged roles (reviewer and admin) add nothing for
+this project, since admin only added restoring listings, lifting suspensions and
+publishing policies. There is now one role, `admin`, which does everything the
+reviewer did plus those actions. All user-facing wording says "admin" (Admin
+workspace, "removed by an admin"). For existing data: a stored role assignment
+of `"reviewer"` is read as admin (Jawharah needs no data change), and
+`scripts/grant-role.mjs` writes only `admin` and drops the old value. Stored
+field names are unchanged (`assignedReviewerUid`, dispute statements with
+`byRole: "reviewer"`) to avoid migrating saved data; they are displayed as
+"Admin". Conflict-of-interest rules are unchanged: an admin involved in a
+report or case cannot handle it. An admin cannot be suspended until the role is
+revoked.

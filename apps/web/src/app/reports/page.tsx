@@ -13,7 +13,7 @@ import { errorText } from "@/lib/api-client";
 import { formatDateTime } from "@/lib/format";
 
 const STATUS: Record<Report["status"], string> = {
-  open: "Waiting for a reviewer",
+  open: "Waiting for an admin",
   in_review: "Being reviewed",
   closed: "Closed",
 };
@@ -40,7 +40,7 @@ export default function MyReportsPage() {
 
   return (
     <ContentContainer>
-      <PageHeading title="Your reports" subtitle="Only you and the reviewer handling a report can see it." />
+      <PageHeading title="Your reports" subtitle="Only you and the admin handling a report can see it." />
       {error && <Alert variant="error">{error}</Alert>}
       {!items && !error ? (
         <Skeleton className="h-24 w-full" />

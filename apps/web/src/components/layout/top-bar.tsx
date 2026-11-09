@@ -85,8 +85,8 @@ export function TopBar() {
                     { label: "Community requests", onClick: () => router.push("/requests") },
                     { label: "Your reports", onClick: () => router.push("/reports") },
                     { label: "Policies", onClick: () => router.push("/policies") },
-                    ...(roles?.isReviewer
-                      ? [{ label: "Review workspace", onClick: () => router.push("/admin") }]
+                    ...(roles?.isAdmin
+                      ? [{ label: "Admin workspace", onClick: () => router.push("/admin") }]
                       : []),
                     { label: "Sign out", onClick: handleSignOut, danger: true },
                   ]}

@@ -27,8 +27,8 @@ import { errorText } from "@/lib/api-client";
 import { formatDateTime, formatSar } from "@/lib/format";
 
 const STATUS_TEXT: Record<Dispute["status"], string> = {
-  open: "Waiting for a reviewer",
-  in_review: "A reviewer is looking at the case",
+  open: "Waiting for an admin",
+  in_review: "An admin is looking at the case",
   resolved: "Resolved",
 };
 
@@ -142,7 +142,7 @@ export default function DisputePage({ params }: { params: Promise<{ id: string }
             <p className="text-[14px] mb-3">
               {detail.booking.status === "completed"
                 ? "The exchange is completed, so this is recorded as a complaint. The booking and its payments do not change."
-                : "The booking moves to review, new bookings of the item pause, and the simulated deposit stays on hold until a reviewer decides."}
+                : "The booking moves to review, new bookings of the item pause, and the simulated deposit stays on hold until an admin decides."}
             </p>
             <label className="booking-field mb-3">
               <span>What is the issue?</span>
@@ -160,7 +160,7 @@ export default function DisputePage({ params }: { params: Promise<{ id: string }
               <textarea rows={5} maxLength={1000} value={description} onChange={(e) => setDescription(e.target.value)} />
             </label>
             <p className="text-[12px] text-[var(--nsr-text-secondary)] mb-3">
-              Your description is shared with {detail.otherMember.displayName} and the reviewer. The condition records
+              Your description is shared with {detail.otherMember.displayName} and the admin. The condition records
               of this booking are attached automatically.
             </p>
             {error && (
@@ -216,7 +216,7 @@ export default function DisputePage({ params }: { params: Promise<{ id: string }
                 <p className="mt-2 text-[14px] whitespace-pre-wrap">{dispute.resolution.rationale}</p>
                 {dispute.resolvedAt && (
                   <p className="mt-2 text-[12px] text-[var(--nsr-text-secondary)]">
-                    Decided by an authorised reviewer on {formatDateTime(dispute.resolvedAt)}
+                    Decided by an admin on {formatDateTime(dispute.resolvedAt)}
                   </p>
                 )}
               </section>
@@ -231,7 +231,7 @@ export default function DisputePage({ params }: { params: Promise<{ id: string }
                   {dispute.statements.map((s, i) => (
                     <li key={i} className="rounded-[var(--nsr-radius-md)] border border-[var(--nsr-divider)] p-3">
                       <p className="text-[12px] text-[var(--nsr-text-secondary)]">
-                        {s.byRole === "reviewer" ? "Reviewer" : nameOf(s.byUid)} · {formatDateTime(s.at)}
+                        {s.byRole === "reviewer" ? "Admin" : nameOf(s.byUid)} · {formatDateTime(s.at)}
                       </p>
                       <p className="text-[14px] whitespace-pre-wrap">{s.text}</p>
                     </li>
@@ -241,7 +241,7 @@ export default function DisputePage({ params }: { params: Promise<{ id: string }
               {dispute.status !== "resolved" && (
                 <div className="mt-4">
                   <label className="booking-field">
-                    <span>Add a statement (shared with the other member and the reviewer)</span>
+                    <span>Add a statement (shared with the other member and the admin)</span>
                     <textarea rows={3} maxLength={1000} value={statement} onChange={(e) => setStatement(e.target.value)} />
                   </label>
                   {error && (

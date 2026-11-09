@@ -1,7 +1,7 @@
 /**
  * Roles — read from roleAssignments/{uid} on every privileged request.
- * Every member has "member"; "reviewer" and "admin" are granted by script or
- * an admin only, never by the member.
+ * Every member has "member"; "admin" is granted by script only, never by the
+ * member. A stored "reviewer" (before D-43) counts as "admin".
  */
 
 import { Injectable } from "@nestjs/common";
@@ -11,14 +11,16 @@ import { COLLECTIONS } from "../../common/repositories/base.repository.js";
 
 export interface RoleAssignmentDoc {
   uid: string;
-  roles: Role[];
+  /** May still hold the pre-D-43 value "reviewer". */
+  roles: string[];
   grantedByUid: string;
   grantedAt: string;
   revokedAt: string | null;
   revision: number;
 }
 
-const PRIVILEGED: readonly Role[] = ["reviewer", "admin"];
+/** Stored values that grant the admin role ("reviewer" is the pre-D-43 name). */
+const ADMIN_VALUES: readonly string[] = ["admin", "reviewer"];
 
 @Injectable()
 export class RolesService {
@@ -27,12 +29,11 @@ export class RolesService {
   async rolesOf(uid: string): Promise<Role[]> {
     const snap = await this.firebase.firestore.collection(COLLECTIONS.roleAssignments).doc(uid).get();
     const doc = snap.exists ? (snap.data() as RoleAssignmentDoc) : null;
-    const granted = doc && !doc.revokedAt ? doc.roles.filter((r) => PRIVILEGED.includes(r)) : [];
-    return ["member", ...new Set(granted)];
+    const isAdmin = !!doc && !doc.revokedAt && doc.roles.some((r) => ADMIN_VALUES.includes(r));
+    return isAdmin ? ["member", "admin"] : ["member"];
   }
 
-  async isReviewer(uid: string): Promise<boolean> {
-    const roles = await this.rolesOf(uid);
-    return roles.includes("reviewer") || roles.includes("admin");
+  async isAdmin(uid: string): Promise<boolean> {
+    return (await this.rolesOf(uid)).includes("admin");
   }
 }

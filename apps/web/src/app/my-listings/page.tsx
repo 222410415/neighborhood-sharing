@@ -205,7 +205,7 @@ export default function MyListingsPage() {
                     ` · Deposit SAR ${(listing.depositHalalas / 100).toFixed(0)}`}
                 </p>
                 {listing.moderationStatus === "removed" && listing.moderationReason && (
-                  <p className="mt-1 text-[13px] text-[var(--nsr-error)]">Reviewer&apos;s reason: {listing.moderationReason}</p>
+                  <p className="mt-1 text-[13px] text-[var(--nsr-error)]">Admin&apos;s reason: {listing.moderationReason}</p>
                 )}
               </div>
               {listing.status !== "archived" && (

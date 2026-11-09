@@ -183,7 +183,7 @@ export default function BookingDetailPage({ params }: { params: Promise<{ id: st
         {booking.status === "disputed" && (
           <div className="mt-3">
             <Alert variant="warning" title="Under review">
-              An authorised reviewer will decide the case. The booking and the simulated deposit stay on hold until then.{" "}
+              An admin will decide the case. The booking and the simulated deposit stay on hold until then.{" "}
               <Link href={`/bookings/${id}/dispute`} className="underline font-semibold">
                 Follow the case
               </Link>
@@ -359,7 +359,7 @@ export default function BookingDetailPage({ params }: { params: Promise<{ id: st
                   <p className="text-[12px] text-[var(--nsr-text-secondary)]">
                     {formatDateTime(event.occurredAt)} ·{" "}
                     {event.eventType === "dispute_resolved"
-                      ? "authorised reviewer"
+                      ? "admin"
                       : event.actorRole === "system"
                         ? "automatic"
                         : nameOf(event.actorUid)}

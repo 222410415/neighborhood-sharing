@@ -3,8 +3,8 @@
  *
  * A member can only report something they can see; anything else is 404 so
  * reports cannot be used to probe private data. A report never changes its
- * target. Reviewers assign, read and close reports; a reviewer who is part of
- * the reported matter is refused (conflict of interest). Every reviewer action
+ * target. Admins assign, read and close reports; an admin who is part of
+ * the reported matter is refused (conflict of interest). Every admin action
  * is audited, including reading a reported private message.
  */
 
@@ -39,7 +39,7 @@ import type { ReviewDoc } from "../reviews/review.service.js";
 export interface ReportTargetSummary {
   targetType: ReportDto["targetType"];
   title: string;
-  /** Members connected to the target; a reviewer among them has a conflict. */
+  /** Members connected to the target; an admin among them has a conflict. */
   involvedUids: string[];
   /** The member a moderation decision is about (owner, sender, author or the member). */
   responsibleUid: string;
@@ -93,7 +93,7 @@ export class ReportService {
 
   /**
    * What the target is and who is involved, if `viewerUid` may see it
-   * (pass null for a reviewer's case-scoped read). Null when not visible.
+   * (pass null for an admin's case-scoped read). Null when not visible.
    */
   async resolveTarget(
     targetType: ReportDto["targetType"],
@@ -262,7 +262,7 @@ export class ReportService {
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
-  // ─── Reviewer actions ───
+  // ─── Admin actions ───
 
   async get(id: string): Promise<ReportDoc> {
     const doc = (await this.ref(id).get()).data() as ReportDoc | undefined;
@@ -305,7 +305,7 @@ export class ReportService {
     const before = await this.get(id);
     if (await this.isConflicted(reviewerUid, before)) {
       throw new ConflictException(
-        "You are involved in this report, so another reviewer must handle it. It stays in the queue.",
+        "You are involved in this report, so another admin must handle it. It stays in the queue.",
         { reason: "conflict_of_interest" },
       );
     }
@@ -314,7 +314,7 @@ export class ReportService {
       const report = (await tx.get(this.ref(id))).data() as ReportDoc;
       if (report.status === "closed") throw new ConflictException("This report is already closed.");
       if (report.assignedReviewerUid && report.assignedReviewerUid !== reviewerUid) {
-        throw new ConflictException("Another reviewer is already handling this report.");
+        throw new ConflictException("Another admin is already handling this report.");
       }
       const updated: ReportDoc = { ...report, status: "in_review", assignedReviewerUid: reviewerUid, updatedAt: now };
       const buffer = new WriteBuffer();
@@ -340,7 +340,7 @@ export class ReportService {
     }
   }
 
-  /** Case-scoped view for the assigned reviewer; reading a private message is audited. */
+  /** Case-scoped view for the assigned admin; reading a private message is audited. */
   async detailForReviewer(reviewerUid: string, id: string, requestId: string | null) {
     const report = await this.get(id);
     this.assertAssigned(report, reviewerUid);
@@ -385,7 +385,7 @@ export class ReportService {
     };
   }
 
-  /** Earlier reports about this member that a reviewer upheld (warn, take down, suspend). */
+  /** Earlier reports about this member that an admin upheld (warn, take down, suspend). */
   async upheldCount(subjectUid: string, excludeReportId?: string): Promise<number> {
     const snap = await this.db.collection(COLLECTIONS.reports).where("subjectUid", "==", subjectUid).get();
     return snap.docs
@@ -437,7 +437,7 @@ export class ReportService {
     return toDto(doc);
   }
 
-  /** Evidence photo of a report, for its assigned reviewer (audited). */
+  /** Evidence photo of a report, for its assigned admin (audited). */
   async evidencePhoto(reviewerUid: string, id: string, mediaId: string, requestId: string | null) {
     const report = await this.get(id);
     this.assertAssigned(report, reviewerUid);

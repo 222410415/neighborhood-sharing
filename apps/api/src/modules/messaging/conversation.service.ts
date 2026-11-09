@@ -53,7 +53,7 @@ function isAfterCursor(m: MessageDoc, cursor: string): boolean {
   return t > 0 || (t === 0 && m.id.localeCompare(id) > 0);
 }
 
-export const MESSAGE_REMOVED_TEXT = "This message was removed by a reviewer.";
+export const MESSAGE_REMOVED_TEXT = "This message was removed by an admin.";
 
 function toMessageDto(m: MessageDoc): MessageDto {
   return {

@@ -182,7 +182,7 @@ export class ReviewService {
       if (!review) throw new NotFoundException("Review not found");
       if (review.authorUid === reviewerUid || review.recipientUid === reviewerUid) {
         throw new ConflictException(
-          "You are part of this review, so another reviewer must moderate it.",
+          "You are part of this review, so another admin must moderate it.",
           { reason: "conflict_of_interest" },
         );
       }

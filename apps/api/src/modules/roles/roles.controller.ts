@@ -16,7 +16,6 @@ export class RolesController {
     const roles = await this.roles.rolesOf(user.uid);
     return {
       roles,
-      isReviewer: roles.includes("reviewer") || roles.includes("admin"),
       isAdmin: roles.includes("admin"),
     };
   }

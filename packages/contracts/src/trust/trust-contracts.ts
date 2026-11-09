@@ -10,12 +10,16 @@ import { clientRequestIdSchema, expectedRevisionSchema } from "../booking/bookin
 
 // ─── Roles and audit ───
 
-export const roleSchema = z.enum(["member", "reviewer", "admin"]);
+/**
+ * One privileged role (D-43): "admin" handles reports, disputes and
+ * verification and can restore listings and lift suspensions. Assignments
+ * stored before 9 Nov 2026 as "reviewer" are read as "admin".
+ */
+export const roleSchema = z.enum(["member", "admin"]);
 export type Role = z.infer<typeof roleSchema>;
 
 export interface RolesDto {
   roles: Role[];
-  isReviewer: boolean;
   isAdmin: boolean;
 }
 
@@ -115,7 +119,7 @@ export const closeReportBodySchema = z.object({
   note: z.string().trim().min(1, "Record the reasoning").max(1000),
 });
 
-// Moderation decisions (added 9 Nov 2026, D-42). The reviewer, not the
+// Moderation decisions (added 9 Nov 2026, D-42). The admin, not the
 // reporter, judges severity; each decision maps to one severity level.
 export const reportSeveritySchema = z.enum(["low", "medium", "high"]);
 export const reportDecisionSchema = z.enum(["invalid", "warn", "take_down", "suspend"]);
@@ -142,7 +146,7 @@ export const DECISION_SEVERITY: Record<ReportDecision, ReportSeverity | null> = 
   suspend: "high",
 };
 
-/** Starting point shown to the reviewer; the reviewer decides. */
+/** Starting point shown to the admin; the admin decides. */
 export const SUGGESTED_SEVERITY: Record<z.infer<typeof reportCategorySchema>, ReportSeverity> = {
   unsafe: "high",
   fraud: "high",
@@ -247,6 +251,7 @@ export type ResolveDisputeBody = z.infer<typeof resolveDisputeBodySchema>;
 
 export interface DisputeStatementDto {
   byUid: string;
+  /** "reviewer" is the stored value for an admin's statement (kept for existing data). */
   byRole: "owner" | "borrower" | "reviewer";
   text: string;
   at: string;

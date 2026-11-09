@@ -4,7 +4,7 @@
  * - Email: read from Firebase Authentication (emailVerified) and recorded as
  *   a real, non-simulated check. It is the only check shown as verified.
  * - Phone and identity: demonstration checks only, always isSimulated, decided
- *   by a reviewer, and shown publicly as "Demo check (simulated)". No identity
+ *   by an admin, and shown publicly as "Demo check (simulated)". No identity
  *   documents are collected.
  */
 
@@ -105,7 +105,7 @@ export class VerificationService {
     });
   }
 
-  // ─── Reviewers ───
+  // ─── Admins ───
 
   async queue(reviewerUid: string) {
     const snap = await this.db.collection(COLLECTIONS.verificationChecks).where("status", "==", "pending").get();

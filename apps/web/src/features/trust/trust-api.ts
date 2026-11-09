@@ -1,6 +1,6 @@
 /**
  * Trust and safety API client (Sprint 3): roles, reviews, public profiles,
- * reports, disputes, verification and the reviewer workspace.
+ * reports, disputes, verification and the admin workspace.
  */
 
 import { apiFetch } from "@/lib/api-client";
@@ -8,8 +8,7 @@ import { apiFetch } from "@/lib/api-client";
 // ─── Types (mirror packages/contracts) ───
 
 export interface Roles {
-  roles: ("member" | "reviewer" | "admin")[];
-  isReviewer: boolean;
+  roles: ("member" | "admin")[];
   isAdmin: boolean;
 }
 
@@ -211,7 +210,7 @@ export const syncEmailVerification = () =>
 export const requestDemoCheck = (type: "phone_demo" | "identity_demo") =>
   apiFetch<VerificationCheck>("/me/verification/demo-check", { method: "POST", body: { type } });
 
-// ─── Reviewer workspace ───
+// ─── Admin workspace ───
 
 export interface QueueItem {
   id: string;

@@ -1,5 +1,5 @@
 /**
- * AuditService — one audit event per privileged write and per reviewer read
+ * AuditService — one audit event per privileged write and per admin read
  * of private evidence. Events hold identifiers, an action and a short bounded
  * summary; never message text, addresses or image data.
  */

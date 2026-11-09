@@ -36,7 +36,7 @@ const DECISION_TITLES: Record<ReportDecision, string> = {
 const TAKE_DOWN_TEXT: Record<ReportTargetType, string> = {
   listing:
     "Remove the listing from the platform and cancel its upcoming bookings (simulated payments refunded). The owner cannot publish it again; an admin can restore it.",
-  message: "Remove the message from the conversation. Both members see that a reviewer removed it.",
+  message: "Remove the message from the conversation. Both members see that an admin removed it.",
   review: "Hide the review from the profile and the rating. The rating itself is never edited.",
   member: "",
 };

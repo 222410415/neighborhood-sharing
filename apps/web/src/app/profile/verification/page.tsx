@@ -20,7 +20,7 @@ import {
 import { errorText } from "@/lib/api-client";
 import { formatDateTime } from "@/lib/format";
 
-const STATUS: Record<string, string> = { pending: "Waiting for a reviewer", verified: "Passed", rejected: "Not passed" };
+const STATUS: Record<string, string> = { pending: "Waiting for an admin", verified: "Passed", rejected: "Not passed" };
 
 export default function VerificationPage() {
   const router = useRouter();

@@ -11,7 +11,7 @@ import { useAuth } from "@/features/auth/auth-context";
 import { getSafeReturnUrl } from "@/lib/return-url";
 
 const SUSPENDED_TEXT =
-  "This account is suspended by a reviewer after a report. Contact the team if you think this is a mistake.";
+  "This account is suspended by an admin after a report. Contact the team if you think this is a mistake.";
 
 function SignInContent() {
   const router = useRouter();

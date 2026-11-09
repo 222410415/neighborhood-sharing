@@ -7,7 +7,7 @@ import { VerificationModule } from "../verification/verification.module.js";
 import { PoliciesModule } from "../policies/policies.module.js";
 import { AdminController } from "./admin.controller.js";
 
-/** Reviewer workspace routes; services come from the feature modules. */
+/** Admin workspace routes; services come from the feature modules. */
 @Module({
   imports: [FirebaseModule, TrustModule, ReviewsModule, VerificationModule, PoliciesModule],
   controllers: [AdminController],

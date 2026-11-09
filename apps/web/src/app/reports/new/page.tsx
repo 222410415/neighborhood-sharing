@@ -101,11 +101,11 @@ function NewReportContent() {
         </button>
         <PageHeading
           title={`Report ${TARGET_LABELS[type!]}`}
-          subtitle="Reports go to an authorised reviewer. Reporting does not change or remove anything by itself."
+          subtitle="Reports go to an admin. Reporting does not change or remove anything by itself."
         />
         {submitted ? (
           <Alert variant="success" title="Report sent">
-            Thank you. A reviewer will look at it, and you will get a notification when it is closed.{" "}
+            Thank you. An admin will look at it, and you will get a notification when it is closed.{" "}
             <Link href="/reports" className="underline font-semibold">
               See your reports
             </Link>
@@ -136,7 +136,7 @@ function NewReportContent() {
                 purpose="report"
               />
               <p className="mt-1 text-[12px] text-[var(--nsr-text-secondary)]">
-                Report photos are private: only the reviewer handling your report can see them.
+                Report photos are private: only the admin handling your report can see them.
               </p>
             </div>
             {error && (

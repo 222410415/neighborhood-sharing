@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/features/auth/auth-context";
-import { useRoles } from "@/features/roles/use-roles";
 import {
   CATEGORY_LABELS,
   ISSUE_LABELS,
@@ -32,7 +31,7 @@ import { formatDateTime, formatSar } from "@/lib/format";
 type Tab = "disputes" | "reports" | "verification" | "moderation";
 type QueueTab = Exclude<Tab, "moderation">;
 
-/** Admin only: suspended members and removed listings, with the way back. */
+/** Suspended members and removed listings, with the way back. */
 function ModerationPanel() {
   const [data, setData] = useState<ModerationOverview | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -151,7 +150,6 @@ function AdminContent() {
   const router = useRouter();
   const params = useSearchParams();
   const { user, loading: authLoading } = useAuth();
-  const roles = useRoles();
   const tab: Tab = (["disputes", "reports", "verification", "moderation"] as const).includes(params.get("tab") as Tab)
     ? (params.get("tab") as Tab)
     : "disputes";
@@ -189,8 +187,8 @@ function AdminContent() {
           <span className="catalogue-state-icon">
             <ShieldAlert size={25} />
           </span>
-          <h1 className="section-title">Reviewers only</h1>
-          <p>This area is for authorised reviewers. Your account does not have that role.</p>
+          <h1 className="section-title">Admins only</h1>
+          <p>This area is for admins. Your account does not have that role.</p>
         </div>
       </ContentContainer>
     );
@@ -220,7 +218,7 @@ function AdminContent() {
   return (
     <ContentContainer>
       <PageHeading
-        title="Review workspace"
+        title="Admin workspace"
         subtitle="Cases, reports and demonstration checks. Every action and every evidence read is recorded in the audit trail."
       />
       <div className="tab-row mb-5" role="tablist" aria-label="Queues">
@@ -229,11 +227,9 @@ function AdminContent() {
             {t === "disputes" ? "Disputes" : t === "reports" ? "Reports" : "Verification"}
           </button>
         ))}
-        {roles?.isAdmin && (
-          <button role="tab" aria-selected={tab === "moderation"} onClick={() => router.replace("/admin?tab=moderation")}>
-            Moderation
-          </button>
-        )}
+        <button role="tab" aria-selected={tab === "moderation"} onClick={() => router.replace("/admin?tab=moderation")}>
+          Moderation
+        </button>
       </div>
       {error && (
         <div className="mb-4">
@@ -241,13 +237,7 @@ function AdminContent() {
         </div>
       )}
       {tab === "moderation" ? (
-        roles?.isAdmin ? (
-          <ModerationPanel />
-        ) : roles ? (
-          <Alert variant="info">Restoring listings and lifting suspensions is for admins only.</Alert>
-        ) : (
-          <Skeleton className="h-32 w-full" />
-        )
+        <ModerationPanel />
       ) : !items ? (
         <Skeleton className="h-32 w-full" />
       ) : items.length === 0 ? (
@@ -275,11 +265,11 @@ function AdminContent() {
                     {tab === "disputes" && item.heldDepositHalalas
                       ? ` · simulated deposit held ${formatSar(item.heldDepositHalalas)}`
                       : ""}
-                    {item.assignedToMe ? " · assigned to you" : item.assignedReviewerUid ? " · assigned to another reviewer" : ""}
+                    {item.assignedToMe ? " · assigned to you" : item.assignedReviewerUid ? " · assigned to another admin" : ""}
                   </p>
                   {item.conflict && (
                     <p className="mt-1 text-[12px] font-semibold text-[var(--nsr-warning)]">
-                      You are involved in this item, so another reviewer must handle it.
+                      You are involved in this item, so another admin must handle it.
                     </p>
                   )}
                 </div>

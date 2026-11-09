@@ -104,7 +104,7 @@ export async function apiFetch<T>(
     const text = await response.text();
     const parsed = text ? JSON.parse(text) : null;
 
-    // A reviewer suspended this account: end the session and explain on the sign-in page.
+    // An admin suspended this account: end the session and explain on the sign-in page.
     if (response.status === 403 && parsed?.error?.details?.reason === "account_suspended" && typeof window !== "undefined") {
       cachedToken = null;
       tokenExpiry = 0;

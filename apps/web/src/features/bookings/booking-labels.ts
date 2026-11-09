@@ -51,7 +51,7 @@ export function nextStepText(status: BookingStatus, role: ParticipantRole): stri
     case "return_pending":
       return owner ? "Check the item and confirm receipt, or report an issue." : "Waiting for the owner to confirm receipt.";
     case "disputed":
-      return "An issue was reported. An authorised reviewer will look at the case; the deposit stays on hold until then.";
+      return "An issue was reported. An admin will look at the case; the deposit stays on hold until then.";
     case "completed":
       return "Exchange closed. You can review the other member for 14 days.";
     case "declined":
@@ -85,7 +85,7 @@ export const EVENT_LABELS: Record<string, string> = {
   completed: "Receipt confirmed; completed",
   issue_reported: "Issue reported",
   review_left: "Review left",
-  dispute_resolved: "Case resolved by a reviewer",
+  dispute_resolved: "Case resolved by an admin",
   complaint_opened: "Complaint opened after completion",
   collection_condition_corrected: "Collection record corrected (new version)",
   return_condition_corrected: "Return record corrected (new version)",

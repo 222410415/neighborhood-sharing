@@ -214,7 +214,7 @@ apps/api/src/modules/
   roles/          RolesService, RolesGuard (+ RequireRoles), AuditService, GET /me/roles (global)
   reviews/        ReviewService, MemberProfileService (public profile, reviews, photo)
   trust/          ReportService, DisputeService (participant routes)
-  admin/          AdminController: reviewer workspace (all routes behind RolesGuard)
+  admin/          AdminController: admin workspace (all routes behind RolesGuard)
   verification/   VerificationService (email from Firebase, demonstration checks)
   community/      FavoriteService (+ availability alerts), RequestService (requests, offers)
   ai/             AiClient (OpenAI Chat Completions via fetch, strict schema, timeout, retry), SuggestionService, pure prompt builder
@@ -237,16 +237,16 @@ release listeners called after commit (used for favorites alerts).
 | POST | /me/bookings/:id/dispute | participant | Open a case (exchange or complaint) |
 | GET | /me/disputes/:id; POST /me/disputes/:id/statement | participant | Case view, statements |
 | POST | /me/bookings/:id/condition/:stage/correct | author of the record | Correction as a new version |
-| GET | /admin/queue?type=reports\|disputes\|verification | reviewer | Queues with conflict flags |
-| GET, POST | /admin/reports/:id; /admin/reports/:id/{assign,close}; /admin/reports/:id/media/:mediaId | reviewer (assigned) | Report handling (audited) |
-| POST | /admin/reports/:id/decide | reviewer (assigned) | Moderation decision: invalid, warn (low), take_down (medium), suspend (high); effects and audit (D-42) |
+| GET | /admin/queue?type=reports\|disputes\|verification | admin | Queues with conflict flags |
+| GET, POST | /admin/reports/:id; /admin/reports/:id/{assign,close}; /admin/reports/:id/media/:mediaId | admin (assigned) | Report handling (audited) |
+| POST | /admin/reports/:id/decide | admin (assigned) | Moderation decision: invalid, warn (low), take_down (medium), suspend (high); effects and audit (D-42) |
 | GET | /admin/moderation | admin | Suspended members and removed listings |
 | POST | /admin/listings/:id/restore; /admin/members/:uid/reinstate | admin | Restore a removed listing (as paused); lift a suspension (D-42) |
-| GET, POST | /admin/disputes/:id/evidence; /admin/disputes/:id/{assign,resolve}; /admin/disputes/:id/media/:mediaId | reviewer (assigned, not a participant) | Case handling (audited) |
-| POST | /admin/reviews/:id/hide | reviewer | Hide a review with a reason |
-| POST | /admin/verification/:id/decide | reviewer | Decide a demonstration check |
+| GET, POST | /admin/disputes/:id/evidence; /admin/disputes/:id/{assign,resolve}; /admin/disputes/:id/media/:mediaId | admin (assigned, not a participant) | Case handling (audited) |
+| POST | /admin/reviews/:id/hide | admin | Hide a review with a reason |
+| POST | /admin/verification/:id/decide | admin | Decide a demonstration check |
 | POST | /admin/policies/:id/publish | admin | Record team approval of a policy version |
-| GET | /admin/audit?entityType&entityId | reviewer | Audit events of one entity |
+| GET | /admin/audit?entityType&entityId | admin | Audit events of one entity |
 | GET | /me/verification; POST /me/verification/email/sync; POST /me/verification/demo-check | member | Verification status and checks |
 | GET, PUT, DELETE | /me/favorites, /me/favorites/:listingId | member | Saved items and alert settings |
 | GET | /requests, /requests/:id | public | Open community requests, request with offers |
@@ -262,11 +262,11 @@ release listeners called after commit (used for favorites alerts).
 | Collection | Key | Access |
 | --- | --- | --- |
 | roleAssignments | uid | Script/admin only |
-| auditEvents | aud_* | Reviewers (read through /admin/audit) |
+| auditEvents | aud_* | Admins (read through /admin/audit) |
 | reviews | {bookingId}_{authorUid} | Public when visible |
-| reports | rpt_* | Reporter and assigned reviewer |
-| disputes | dsp_{bookingId} | Participants and assigned reviewer |
-| verificationChecks | vc_{uid}_{type} | Subject; reviewers for demo checks; public labels only |
+| reports | rpt_* | Reporter and assigned admin |
+| disputes | dsp_{bookingId} | Participants and assigned admin |
+| verificationChecks | vc_{uid}_{type} | Subject; admins for demo checks; public labels only |
 | favorites | {uid}_{listingId} | Owner of the favorite |
 | requestPosts | req_* | Public (open requests, safe fields) |
 | requestOffers | {requestId}_{listingId} | Public with the request |
@@ -276,12 +276,12 @@ release listeners called after commit (used for favorites alerts).
 
 ### Security notes
 
-- Reviewer access is checked on the server for every admin route; members get 403.
-- Reviewer reads of private evidence are case-scoped (assigned reviewer, no
+- Admin access is checked on the server for every admin route; members get 403.
+- Admin reads of private evidence are case-scoped (assigned admin, no
   conflict of interest) and audited.
 - Report and profile photos are separate media purposes; report photos are seen
-  only by the assigned reviewer, condition photos only by participants and the
-  assigned reviewer.
+  only by the assigned admin, condition photos only by participants and the
+  assigned admin.
 - AI receives public listing fields and policy passages only; no member data.
 - Rate limits return 429 with Retry-After on bookings, messages, reports,
   requests, offers, AI suggestions and policy questions.

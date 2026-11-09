@@ -154,17 +154,17 @@ test.describe("Signed-in exchange pages", () => {
 
 /**
  * Sprint 3: trust, community and AI pages. Needs the Sprint 3 seed (policies)
- * and the reviewer role for Jawharah (scripts/admin/grant-role.mjs).
+ * and the admin role for Jawharah (scripts/admin/grant-role.mjs; a stored "reviewer" counts, D-43).
  */
 test.describe("Sprint 3 pages", () => {
-  test("Review workspace refuses a member and loads for the reviewer", async ({ page }) => {
+  test("Admin workspace refuses a member and loads for the admin", async ({ page }) => {
     await signIn(page, "hanadi@neighborhood-demo.test");
     await page.goto("/admin");
-    await expect(page.getByText("Reviewers only")).toBeVisible({ timeout: 20000 });
+    await expect(page.getByText("Admins only")).toBeVisible({ timeout: 20000 });
     // Signing in again replaces the current member.
     await signIn(page, "jawharah@neighborhood-demo.test");
     await page.goto("/admin");
-    await expect(page.locator("h1")).toContainText("Review workspace", { timeout: 20000 });
+    await expect(page.locator("h1")).toContainText("Admin workspace", { timeout: 20000 });
   });
 
   test("Saved items page renders", async ({ page }) => {

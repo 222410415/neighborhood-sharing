@@ -62,8 +62,8 @@ docker compose run --rm tools npx tsx scripts/seed/demo-data.ts
 docker compose run --rm tools node scripts/seed/booking-settings.mjs
 # 12 policies (version 1.0, approved, imported as published) and 24 passages
 docker compose run --rm tools node scripts/seed/policies.mjs
-# Reviewer role for the Jawharah demo persona (demo accounts only)
-docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role reviewer
+# Admin role for the Jawharah demo persona (demo accounts only)
+docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
 # Admin role (needed to publish approved policies)
 docker compose run --rm tools node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
 ```
@@ -94,7 +94,7 @@ docker compose run --rm tools sh -c "pnpm --filter @neighborhood/contracts build
 docker compose run --rm tools sh -c "pnpm --filter @neighborhood/api test:unit"
 # API integration suite (health, reference data; Jest + NestJS 12 ES modules)
 docker compose run --rm -e NODE_OPTIONS=--experimental-vm-modules tools sh -c "pnpm --filter @neighborhood/contracts build && pnpm --filter @neighborhood/api test:api"
-# Functional checks F-1..F-72 (needs the seeds and the reviewer role above).
+# Functional checks F-1..F-72 (needs the seeds and the admin role above).
 # Waits for real time twice (about 1-2 minutes); creates test data in Firebase.
 docker compose run --rm tools node tests/functional/functional-check.mjs
 ```
@@ -182,7 +182,7 @@ curl -X POST -H "x-sweep-secret: $SWEEP_SECRET" http://127.0.0.1:3001/v1/interna
 1. Hanadi borrows from Leen (borrowing flow above); after receipt both use "Review ..."
    on the booking page; the reviews appear on `/members/<uid>`.
 2. A second exchange: Leen opens "Report a problem" (damage) on the booking.
-   Jawharah (reviewer) opens Account menu -> Review workspace, assigns the case,
+   Jawharah (admin) opens Account menu -> Admin workspace, assigns the case,
    reads the condition records, resolves with a partial allocation (the form
    shows "Balanced").
 3. Hanadi saves an item that is booked, sets alert dates on Saved items; when the

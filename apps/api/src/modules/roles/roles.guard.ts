@@ -1,6 +1,6 @@
 /**
  * RolesGuard — server-side role check for privileged routes. Use after
- * AuthGuard: `@UseGuards(AuthGuard, RolesGuard) @RequireRoles("reviewer", "admin")`.
+ * AuthGuard: `@UseGuards(AuthGuard, RolesGuard) @RequireRoles("admin")`.
  * Hiding a link in the interface is not access control; this is.
  */
 
@@ -35,7 +35,7 @@ export class RolesGuard implements CanActivate {
     const roles = await this.roles.rolesOf(user.uid);
     request.roles = roles;
     if (required.length > 0 && !required.some((r) => roles.includes(r))) {
-      throw new ForbiddenException("This area is for authorised reviewers only.");
+      throw new ForbiddenException("This area is for admins only.");
     }
     return true;
   }

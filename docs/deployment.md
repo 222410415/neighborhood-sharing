@@ -130,11 +130,11 @@ pnpm install --frozen-lockfile --ignore-scripts
 pnpm seed:demo          # reference data, demo members, listings, images
 pnpm seed:bookings      # booking settings on demo listings
 pnpm seed:policies      # 12 policies, version 1.0, published (approved by the project team)
-node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role reviewer
+node scripts/admin/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin
 ```
 
 Demo accounts are fictional personas for demonstration. For a real launch,
-skip `seed:demo` and create reviewer and admin roles for real staff accounts
+skip `seed:demo` and grant the admin role to real staff accounts
 (the grant script only accepts demo addresses by design; extend it consciously).
 
 ## 6. Check

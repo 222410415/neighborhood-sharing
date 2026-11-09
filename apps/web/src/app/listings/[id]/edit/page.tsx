@@ -298,8 +298,8 @@ export default function EditListingPage({
 
         {listing.moderationStatus === "removed" && (
           <div className="mb-4">
-            <Alert variant="error" title="Removed by a reviewer">
-              A reviewer removed this listing after a report{listing.moderationReason ? `: ${listing.moderationReason}` : "."} It
+            <Alert variant="error" title="Removed by an admin">
+              An admin removed this listing after a report{listing.moderationReason ? `: ${listing.moderationReason}` : "."} It
               cannot be edited or published again. Contact the team if you think this is a mistake.
             </Alert>
           </div>

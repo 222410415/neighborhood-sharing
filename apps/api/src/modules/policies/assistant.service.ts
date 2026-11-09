@@ -45,7 +45,7 @@ const TEXT = {
     limitation:
       "I can't answer that from the platform's policies. For a specific booking, use the booking page; to raise a concern, use Report or open a case from the booking.",
     action:
-      "I can't carry out actions such as refunds, cancellations, payments, verification or dispute decisions; those happen through the booking page and authorised reviewers. ",
+      "I can't carry out actions such as refunds, cancellations, payments, verification or dispute decisions; those happen through the booking page and admins. ",
     extractive: "Here is what the relevant policies say:",
     noAnswer: "The policies below do not fully answer this question.",
   },

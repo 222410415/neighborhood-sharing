@@ -100,7 +100,7 @@ export default function AdminDisputePage({ params }: { params: Promise<{ id: str
   const refund = Math.round((parseFloat(refundSar) || 0) * 100);
   const compensation = Math.round((parseFloat(compensationSar) || 0) * 100);
   const balanced = refund + compensation === held && refund >= 0 && compensation >= 0;
-  const nameOf = (uid: string) => (uid === owner.uid ? `${owner.displayName} (owner)` : uid === borrower.uid ? `${borrower.displayName} (borrower)` : "Reviewer");
+  const nameOf = (uid: string) => (uid === owner.uid ? `${owner.displayName} (owner)` : uid === borrower.uid ? `${borrower.displayName} (borrower)` : "Admin");
 
   const resolve = async () => {
     setError(null);

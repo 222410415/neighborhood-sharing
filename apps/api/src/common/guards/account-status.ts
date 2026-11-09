@@ -34,4 +34,4 @@ export function forgetAccountStatus(uid: string): void {
 }
 
 export const SUSPENDED_MESSAGE =
-  "This account is suspended by a reviewer. Contact the team if you think this is a mistake.";
+  "This account is suspended by an admin. Contact the team if you think this is a mistake.";

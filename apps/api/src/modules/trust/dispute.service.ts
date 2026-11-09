@@ -1,15 +1,15 @@
 /**
  * Dispute cases.
  *
- * Participants view their case and add statements. An authorised reviewer
+ * Participants view their case and add statements. An admin
  * assigns the case to themselves, reads the evidence (audited) and resolves
  * it with a rationale, an item outcome and a deposit allocation where
  * refund + compensation equals the held amount. Resolution writes simulated
  * payment records for both parts, settles the deposit, completes the booking
  * and notifies both members, all in one calendar-guard transaction.
  *
- * A reviewer who is the booking's owner or borrower is refused (409) and the
- * case stays waiting for another reviewer. Lost or needs-repair outcomes keep
+ * An admin who is the booking's owner or borrower is refused (409) and the
+ * case stays waiting for another admin. Lost or needs-repair outcomes keep
  * the item unavailable and pause the listing until the owner republishes it.
  */
 
@@ -164,7 +164,7 @@ export class DisputeService {
     });
   }
 
-  // ─── Reviewers ───
+  // ─── Admins ───
 
   async queue(reviewerUid: string) {
     const snaps = await Promise.all(
@@ -199,7 +199,7 @@ export class DisputeService {
   private assertNoConflict(booking: BookingDoc, reviewerUid: string): void {
     if (participantRole(booking, reviewerUid)) {
       throw new ConflictException(
-        "You are the owner or borrower in this booking, so another reviewer must decide this case. It stays waiting for review.",
+        "You are the owner or borrower in this booking, so another admin must decide this case. It stays waiting for review.",
         { reason: "conflict_of_interest" },
       );
     }
@@ -213,7 +213,7 @@ export class DisputeService {
       const dispute = (await tx.get(this.ref(id))).data() as DisputeDoc;
       if (dispute.status === "resolved") throw new ConflictException("This case is already resolved.");
       if (dispute.assignedReviewerUid && dispute.assignedReviewerUid !== reviewerUid) {
-        throw new ConflictException("Another reviewer is already handling this case.");
+        throw new ConflictException("Another admin is already handling this case.");
       }
       if (dispute.assignedReviewerUid === reviewerUid) return dispute;
       const updated: DisputeDoc = {
@@ -231,8 +231,8 @@ export class DisputeService {
           recipient,
           dispute,
           "dispute_assigned",
-          "A reviewer is looking at your case",
-          `An authorised reviewer is now reviewing the case about ${pre.booking.termsSnapshot.titleEn}.`,
+          "An admin is looking at your case",
+          `An admin is now reviewing the case about ${pre.booking.termsSnapshot.titleEn}.`,
           now,
         );
         buffer.set(this.db.collection(COLLECTIONS.notifications).doc(n.id), n);
@@ -255,7 +255,7 @@ export class DisputeService {
     }
   }
 
-  /** Case evidence for the assigned reviewer; every read is audited. */
+  /** Case evidence for the assigned admin; every read is audited. */
   async evidence(reviewerUid: string, id: string, requestId: string | null) {
     const { dispute, booking } = await this.load(id);
     this.assertNoConflict(booking, reviewerUid);
@@ -302,7 +302,7 @@ export class DisputeService {
     };
   }
 
-  /** A condition photo of the disputed booking, for the assigned reviewer (audited). */
+  /** A condition photo of the disputed booking, for the assigned admin (audited). */
   async evidencePhoto(reviewerUid: string, id: string, mediaId: string, requestId: string | null) {
     const { dispute, booking } = await this.load(id);
     this.assertNoConflict(booking, reviewerUid);
@@ -423,7 +423,7 @@ export class DisputeService {
           : "";
       let seq: number;
       if (dispute.kind === "exchange" && booking.status === "disputed") {
-        // Shown to participants as a reviewer decision; the reviewer's identity stays in the audit trail.
+        // Shown to participants as an admin decision; the admin's identity stays in the audit trail.
         seq = writer.transition("completed", SYSTEM_ACTOR, "dispute_resolved", `Item ${outcome}.${allocation}`);
         writer.set({ completedAt: now });
         scope.releaseReservation(booking.id);
@@ -449,7 +449,7 @@ export class DisputeService {
           recipientUid: recipient,
           type: "dispute_resolved",
           title: "Case resolved",
-          body: `A reviewer resolved the case about ${booking.termsSnapshot.titleEn}: item ${outcome}.${allocation}`,
+          body: `An admin resolved the case about ${booking.termsSnapshot.titleEn}: item ${outcome}.${allocation}`,
         });
       }
       writer.writeTo(scope.buffer, db);
