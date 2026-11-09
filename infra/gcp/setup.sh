@@ -55,9 +55,10 @@ create_sa neighborhood-web "Neighborhood web (Cloud Run runtime)"
 create_sa neighborhood-deployer "Neighborhood deployer (Cloud Build)"
 
 echo "== Roles"
-# API: read/write Firestore, read Firebase Auth users (email verification status).
+# API: read/write Firestore; manage Firebase Auth users (email verification status,
+# and disabling sign-in for a suspended member, D-42).
 grant "$API_SA" roles/datastore.user
-grant "$API_SA" roles/firebaseauth.viewer
+grant "$API_SA" roles/firebaseauth.admin
 # Deployer: build, push and deploy.
 grant "$DEPLOY_SA" roles/run.admin
 grant "$DEPLOY_SA" roles/artifactregistry.writer
