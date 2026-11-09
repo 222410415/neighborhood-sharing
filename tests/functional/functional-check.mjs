@@ -480,7 +480,7 @@ try {
 } catch (e) {
   rec("S2-ERR", false, String(e?.stack ?? e));
 }
-rec("F-48", sprint1Count === 26 && sprint1Passed === 26, `All 26 Sprint 1 checks still pass (${sprint1Passed}/${sprint1Count})`);
+rec("F-48", sprint1Count === 27 && sprint1Passed === 27, `All 27 Sprint 1 checks (26 plus MAN-04b) still pass (${sprint1Passed}/${sprint1Count})`);
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Sprint 3 checks (F-49 .. F-72).
@@ -783,7 +783,7 @@ try {
   rec("S3-ERR", false, String(e?.stack ?? e));
 }
 const earlier = results.filter((r) => earlierIds.has(r.id) && !r.id.endsWith("-ERR"));
-rec("F-72", earlier.length === 51 && earlier.every((r) => r.ok === true), `All 51 Sprint 1 and 2 checks still pass (${earlier.filter((r) => r.ok === true).length}/${earlier.length})`);
+rec("F-72", earlier.length === 52 && earlier.every((r) => r.ok === true), `All 52 Sprint 1 and 2 checks still pass (${earlier.filter((r) => r.ok === true).length}/${earlier.length})`);
 const passed = results.filter((r) => r.ok === true).length;
 const skipped = results.filter((r) => r.ok === null).length;
 const counted = results.length - skipped;
