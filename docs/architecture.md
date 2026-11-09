@@ -79,7 +79,7 @@ docs/                     documentation
 | GET | /v1/media/:id | Public media (listing images only; parent listing published) |
 | GET | /v1/listings/:id/availability?from&to | Busy intervals and bookable window (no reasons) |
 | POST | /v1/listings/:id/quote | Server quote and availability; optional token marks own item |
-| POST | /v1/internal/sweep | Bulk expiry/overdue; needs `x-sweep-secret`, disabled unless `SWEEP_SECRET` is set |
+| POST | /v1/internal/sweep | Bulk expiry/overdue, plus pickup/return reminders (D-41); needs `x-sweep-secret`, disabled unless `SWEEP_SECRET` is set |
 
 ### Authenticated
 | Method | Path | Purpose |

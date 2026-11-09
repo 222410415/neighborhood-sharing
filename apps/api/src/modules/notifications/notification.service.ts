@@ -2,7 +2,8 @@
  * Notification service — in-app notifications for the signed-in member only.
  *
  * Notifications are written by booking and message transactions; this
- * service only reads and marks them. Queries use equality filters only and
+ * service reads and marks them, and first creates any due pickup or return
+ * reminders (see ReminderService). Queries use equality filters only and
  * sort bounded results in memory.
  */
 
@@ -12,6 +13,7 @@ import { FirebaseService } from "../firebase/firebase.service.js";
 import { COLLECTIONS } from "../../common/repositories/base.repository.js";
 import { NotFoundException } from "../../common/errors/api-exceptions.js";
 import type { NotificationDoc } from "../exchange/exchange.types.js";
+import { ReminderService } from "./reminder.service.js";
 
 const LIST_LIMIT = 100;
 
@@ -19,7 +21,10 @@ const LIST_LIMIT = 100;
 export class NotificationService {
   private readonly logger = new Logger(NotificationService.name);
 
-  constructor(private readonly firebase: FirebaseService) {}
+  constructor(
+    private readonly firebase: FirebaseService,
+    private readonly reminders: ReminderService,
+  ) {}
 
   private get collection() {
     return this.firebase.firestore.collection(COLLECTIONS.notifications);
@@ -30,6 +35,7 @@ export class NotificationService {
   }
 
   async list(uid: string): Promise<NotificationDto[]> {
+    await this.reminders.ensureForMember(uid);
     const snap = await this.collection.where("recipientUid", "==", uid).get();
     return snap.docs
       .map((d) => d.data() as NotificationDoc)
@@ -38,6 +44,7 @@ export class NotificationService {
   }
 
   async unreadCount(uid: string): Promise<number> {
+    await this.reminders.ensureForMember(uid, { throttle: true });
     try {
       const agg = await this.unreadQuery(uid).count().get();
       return agg.data().count;

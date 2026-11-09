@@ -442,3 +442,17 @@ create and edit pages. Functional check MAN-07, which expected the refusal, now
 checks that a listing without a photo publishes (on a separate listing, archived
 afterwards). This changes the earlier rule (Week 9 design baseline) that a
 listing needs a photo before it goes public.
+
+## D-41: Pickup and return reminders without a scheduler (9 November 2026)
+
+The requirement "the workflow supports ... reminders" was not covered. Reminders
+are now in-app notifications: a pickup reminder to both members when a confirmed
+booking's pickup is within 24 hours (`BOOKING_CONFIG.reminderLeadHours`), and a
+return reminder to both when an active booking's return time is within 24 hours.
+Free hosting has no scheduler, so, like expiry and overdue, reminders are created
+lazily: when a member opens notifications, when the badge polls (at most once a
+minute per member), and by `POST /v1/internal/sweep` if `SWEEP_SECRET` is set.
+Each reminder has a fixed id per booking, kind and member and is written with
+`create()`, so it is sent once. Reminders do not change the booking. Consequence:
+a reminder appears the next time the member uses the app, not at an exact time;
+there are still no push or email notifications. Functional check F-73.

@@ -32,4 +32,7 @@ export const ids = {
   /** One unread message notification per conversation and recipient, refreshed in place. */
   messageNotification: (conversationId: string, recipientUid: string) =>
     `ntf_msg_${digest("message-notification", conversationId, recipientUid)}`,
+  /** One reminder per booking, kind and recipient. */
+  reminderNotification: (bookingId: string, kind: string, recipientUid: string) =>
+    `ntf_rem_${digest("reminder", bookingId, kind, recipientUid)}`,
 };

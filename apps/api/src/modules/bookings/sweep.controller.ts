@@ -1,5 +1,6 @@
 /**
- * POST /v1/internal/sweep — optional bulk expiry/overdue evaluation.
+ * POST /v1/internal/sweep — optional bulk expiry/overdue evaluation and
+ * pickup/return reminders.
  *
  * Free hosting has no reliable scheduler, so every read and command already
  * applies due transitions lazily. This endpoint lets an external pinger do the
@@ -11,6 +12,7 @@ import { Controller, Headers, HttpCode, HttpStatus, Post } from "@nestjs/common"
 import { timingSafeEqual } from "node:crypto";
 import { NotFoundException, UnauthorizedException } from "../../common/errors/api-exceptions.js";
 import { BookingService } from "./booking.service.js";
+import { ReminderService } from "../notifications/reminder.service.js";
 
 function secretsMatch(given: string, expected: string): boolean {
   const a = Buffer.from(given);
@@ -20,7 +22,10 @@ function secretsMatch(given: string, expected: string): boolean {
 
 @Controller("internal")
 export class SweepController {
-  constructor(private readonly bookings: BookingService) {}
+  constructor(
+    private readonly bookings: BookingService,
+    private readonly reminders: ReminderService,
+  ) {}
 
   @Post("sweep")
   @HttpCode(HttpStatus.OK)
@@ -30,6 +35,7 @@ export class SweepController {
     if (!secret || !secretsMatch(secret, expected)) {
       throw new UnauthorizedException("Invalid sweep secret");
     }
-    return this.bookings.sweep();
+    const result = await this.bookings.sweep();
+    return { ...result, remindersCreated: await this.reminders.sweep() };
   }
 }

@@ -14,6 +14,7 @@ import {
   computeExpiry,
   computeQuoteAmounts,
   depositInvariantHolds,
+  dueReminder,
   dueSystemTransition,
   findOverlaps,
   intervalsOverlap,
@@ -136,6 +137,37 @@ describe("expiry", () => {
     expect(dueSystemTransition({ status: "active", expiresAt: null, endAt }, NOW)).toBe("overdue");
     expect(dueSystemTransition({ status: "active", expiresAt: null, endAt: "2026-11-04T00:00:00.000Z" }, NOW)).toBeNull();
     expect(dueSystemTransition({ status: "overdue", expiresAt: null, endAt }, NOW)).toBeNull();
+  });
+});
+
+describe("reminders", () => {
+  const at = (h: number) => new Date(Date.parse(NOW) + h * 3_600_000).toISOString();
+
+  it("sends a pickup reminder for a confirmed booking within the lead time", () => {
+    expect(dueReminder({ status: "confirmed", startAt: at(23), endAt: at(47) }, NOW, 24)).toBe("pickup");
+    expect(dueReminder({ status: "confirmed", startAt: at(24), endAt: at(48) }, NOW, 24)).toBe("pickup");
+    expect(dueReminder({ status: "confirmed", startAt: at(25), endAt: at(49) }, NOW, 24)).toBeNull();
+    // Pickup time passed without a handover, return time not yet reached.
+    expect(dueReminder({ status: "confirmed", startAt: at(-2), endAt: at(10) }, NOW, 24)).toBe("pickup");
+  });
+
+  it("sends a return reminder for an active booking within the lead time", () => {
+    expect(dueReminder({ status: "active", startAt: at(-5), endAt: at(3) }, NOW, 24)).toBe("return");
+    expect(dueReminder({ status: "active", startAt: at(-5), endAt: at(30) }, NOW, 24)).toBeNull();
+  });
+
+  it("sends nothing once the return time has passed or for other states", () => {
+    expect(dueReminder({ status: "active", startAt: at(-30), endAt: at(-1) }, NOW, 24)).toBeNull();
+    expect(dueReminder({ status: "confirmed", startAt: at(-30), endAt: NOW }, NOW, 24)).toBeNull();
+    for (const status of ["pending", "accepted", "overdue", "return_pending", "completed", "cancelled"] as const) {
+      expect(dueReminder({ status, startAt: at(1), endAt: at(5) }, NOW, 24)).toBeNull();
+    }
+  });
+
+  it("uses the configured lead time by default", () => {
+    const lead = BOOKING_CONFIG.reminderLeadHours;
+    expect(dueReminder({ status: "confirmed", startAt: at(lead), endAt: at(lead + 24) }, NOW)).toBe("pickup");
+    expect(dueReminder({ status: "confirmed", startAt: at(lead + 1), endAt: at(lead + 25) }, NOW)).toBeNull();
   });
 });
 

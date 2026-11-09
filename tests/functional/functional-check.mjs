@@ -3,6 +3,7 @@
 // Sprint 2: F-27..F-48 plus TX-01, ZT-01 and API-06 for the exchange workflow.
 // Sprint 3: F-49..F-72 (trust, community, AI, policies, hardening); needs the
 // Sprint 3 seed and the reviewer role (see docs/development.md).
+// 9 Nov 2026: F-73 pickup and return reminders.
 // Runs inside the tools container against the running API and the real Firebase project.
 // Uses only the demo accounts; it creates test data (clean it with scripts/admin/reset-demo-data.mjs). Prints one line per check: ID | PASS/FAIL | detail.
 // The Sprint 2 part waits for real time twice (hold expiry, overdue), about one minute.
@@ -742,6 +743,33 @@ try {
   rec("F-71", up3.status === 201 && md3 && up3.data.widthPx === md3.w && up3.data.heightPx === md3.h && up3.data.thumbnailWidthPx === td3?.w && up3.data.originalWidthPx === 2400 && typeof up3.data.mainSizeBytes === "number",
     `Stored metadata ${up3.data?.widthPx}x${up3.data?.heightPx} matches the served image ${md3?.w}x${md3?.h} (original ${up3.data?.originalWidthPx}x${up3.data?.originalHeightPx})`);
   await call("DELETE", `/me/media/${up3.data?.mediaId}`, leen.token);
+
+  // F-73: pickup and return reminders (in-app), once per booking, kind and member.
+  const lR = await L("Reminder Lamp", { lendingMode: "paid", rate: 500, deposit: 1000, bookingMode: "instant" });
+  const rStart = Math.ceil((Date.now() + 3 * HOUR) / HOUR) * HOUR;
+  const near = await request(hanadi, lR.id, { startAt: iso(rStart), endAt: iso(rStart + 2 * HOUR) });
+  const far = await request(hanadi, lR.id, slot(10));
+  const nearC = await cmd(hanadi, near.data?.id, "confirm", { expectedRevision: near.data?.revision });
+  const farC = await cmd(hanadi, far.data?.id, "confirm", { expectedRevision: far.data?.revision });
+  const remOf = async (member, bookingId, type) =>
+    (await notificationsOf(member)).filter((n) => n.entityId === bookingId && n.type === type);
+  await notificationsOf(hanadi); // first read creates the reminders; the second must not duplicate them
+  const pickupB = await remOf(hanadi, near.data?.id, "pickup_reminder");
+  const pickupO = await remOf(leen, near.data?.id, "pickup_reminder");
+  const farPickup = await remOf(hanadi, far.data?.id, "pickup_reminder");
+  await call("POST", `/me/bookings/${near.data?.id}/condition/collection`, leen.token, collectionBody());
+  const nearA = await call("POST", `/me/bookings/${near.data?.id}/condition/collection/acknowledge`, hanadi.token, { decision: "agreed", expectedRevision: nearC.data?.revision });
+  await notificationsOf(hanadi);
+  const returnB = await remOf(hanadi, near.data?.id, "return_reminder");
+  const returnO = await remOf(leen, near.data?.id, "return_reminder");
+  const remText = JSON.stringify([...pickupB, ...pickupO, ...returnB, ...returnO]);
+  rec("F-73", nearC.status === 200 && farC.status === 200 && nearA.data?.status === "active" && pickupB.length === 1 && pickupO.length === 1 && farPickup.length === 0 && returnB.length === 1 && returnO.length === 1 && pickupB[0].actionPath === `/bookings/${near.data?.id}` && !remText.includes("@neighborhood-demo.test"),
+    `Pickup reminder within 24 hours (borrower ${pickupB.length}, owner ${pickupO.length}), none for a booking about three weeks ahead (${farPickup.length}); return reminder once active (borrower ${returnB.length}, owner ${returnO.length})`);
+  // Finish the reminder bookings so nothing becomes overdue later.
+  await call("POST", `/me/bookings/${near.data?.id}/condition/return`, hanadi.token, collectionBody());
+  const nearR = await cmd(hanadi, near.data?.id, "report-return", { expectedRevision: nearA.data?.revision });
+  await cmd(leen, near.data?.id, "confirm-receipt", { expectedRevision: nearR.data?.revision });
+  await cmd(hanadi, far.data?.id, "cancel", { expectedRevision: farC.data?.revision, reason: "Functional check" });
 
   // Clean up: archive the Sprint 3 check listings and close the request.
   await call("POST", `/me/requests/${req.data?.id}/close`, hanadi.token);

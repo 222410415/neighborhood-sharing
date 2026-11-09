@@ -241,6 +241,27 @@ export function dueSystemTransition(
   return null;
 }
 
+export type ReminderKind = "pickup" | "return";
+
+/**
+ * Reminder that is due now, if any. Pickup: a confirmed booking whose pickup
+ * is within the lead time (or has passed without a recorded handover).
+ * Return: an active booking whose return time is within the lead time. Nothing
+ * once the return time has passed; the overdue notice takes over then.
+ */
+export function dueReminder(
+  booking: { status: BookingStatus; startAt: string; endAt: string },
+  nowIso: string,
+  leadHours: number = BOOKING_CONFIG.reminderLeadHours,
+): ReminderKind | null {
+  const now = toMillis(nowIso);
+  const lead = leadHours * HOUR_MS;
+  if (now >= toMillis(booking.endAt)) return null;
+  if (booking.status === "confirmed" && now >= toMillis(booking.startAt) - lead) return "pickup";
+  if (booking.status === "active" && now >= toMillis(booking.endAt) - lead) return "return";
+  return null;
+}
+
 // ─── Intervals ───
 
 export interface Interval {

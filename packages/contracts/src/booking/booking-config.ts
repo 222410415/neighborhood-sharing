@@ -28,6 +28,10 @@ export const BOOKING_CONFIG = {
   conversationPollMs: 5_000,
   /** Polling for the notification badge. */
   notificationPollMs: 30_000,
+  /** Pickup and return reminders are sent this many hours ahead. */
+  reminderLeadHours: 24,
+  /** The badge poll checks a member's reminders at most this often. */
+  reminderCheckIntervalMs: 60_000,
   /** Display time zone. Saudi Arabia has no daylight saving (UTC+03:00). */
   timeZone: "Asia/Riyadh",
   riyadhUtcOffset: "+03:00",

@@ -34,6 +34,9 @@ export const notificationTypeSchema = z.enum([
   "offer_selected",
   "availability_alert",
   "verification_decided",
+  // Reminders (added 9 Nov 2026)
+  "pickup_reminder",
+  "return_reminder",
 ]);
 
 export const notificationEntityTypeSchema = z.enum([

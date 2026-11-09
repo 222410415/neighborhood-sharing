@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { FirebaseModule } from "../firebase/firebase.module.js";
 import { ExchangeModule } from "../exchange/exchange.module.js";
+import { NotificationsModule } from "../notifications/notifications.module.js";
 import { AuthGuard } from "../../common/guards/auth.guard.js";
 import { OptionalAuthGuard } from "../../common/guards/optional-auth.guard.js";
 import { AvailabilityService } from "./availability.service.js";
@@ -15,7 +16,7 @@ import { BookingController } from "./booking.controller.js";
 import { SweepController } from "./sweep.controller.js";
 
 @Module({
-  imports: [FirebaseModule, ExchangeModule],
+  imports: [FirebaseModule, ExchangeModule, NotificationsModule],
   controllers: [
     OwnerCalendarController,
     PublicAvailabilityController,
