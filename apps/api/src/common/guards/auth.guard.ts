@@ -5,7 +5,9 @@ import {
 } from "@nestjs/common";
 import type { DecodedIdToken } from "firebase-admin/auth";
 import { FirebaseService } from "../../modules/firebase/firebase.service.js";
-import { UnauthorizedException } from "../errors/api-exceptions.js";
+import { ForbiddenException, UnauthorizedException } from "../errors/api-exceptions.js";
+import { isSuspended, SUSPENDED_MESSAGE } from "./account-status.js";
+import { COLLECTIONS } from "../repositories/base.repository.js";
 
 export interface VerifiedUser {
   uid: string;
@@ -31,17 +33,21 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException("Empty bearer token");
     }
 
+    let decodedToken: DecodedIdToken;
     try {
-      const decodedToken = await this.firebase.auth.verifyIdToken(token, false);
-      const user: VerifiedUser = {
-        uid: decodedToken.uid,
-        email: decodedToken.email,
-        token: decodedToken,
-      };
-      request.user = user;
-      return true;
+      decodedToken = await this.firebase.auth.verifyIdToken(token, false);
     } catch {
       throw new UnauthorizedException("Invalid or expired token");
     }
+    if (await isSuspended(this.firebase.firestore.collection(COLLECTIONS.users), decodedToken.uid)) {
+      throw new ForbiddenException(SUSPENDED_MESSAGE, { reason: "account_suspended" });
+    }
+    const user: VerifiedUser = {
+      uid: decodedToken.uid,
+      email: decodedToken.email,
+      token: decodedToken,
+    };
+    request.user = user;
+    return true;
   }
 }

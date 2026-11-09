@@ -10,6 +10,9 @@ import { Alert } from "@/components/ui/alert";
 import { useAuth } from "@/features/auth/auth-context";
 import { getSafeReturnUrl } from "@/lib/return-url";
 
+const SUSPENDED_TEXT =
+  "This account is suspended by a reviewer after a report. Contact the team if you think this is a mistake.";
+
 function SignInContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -18,7 +21,9 @@ function SignInContent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(
+    searchParams.get("suspended") === "1" ? SUSPENDED_TEXT : null,
+  );
   const [loading, setLoading] = useState(false);
 
   const returnUrl = getSafeReturnUrl(searchParams.get("return"));
@@ -38,6 +43,8 @@ function SignInContent() {
         code === "auth/wrong-password"
       ) {
         setError("Invalid email or password");
+      } else if (code === "auth/user-disabled") {
+        setError(SUSPENDED_TEXT);
       } else if (code === "auth/too-many-requests") {
         setError("Too many attempts. Please try again later.");
       } else if (code === "auth/network-request-failed") {

@@ -4,13 +4,16 @@
  * audited by the services.
  *
  * GET  /v1/admin/queue?type=reports|disputes|verification
- * GET  /v1/admin/reports/:id                 POST /v1/admin/reports/:id/{assign,close}
+ * GET  /v1/admin/reports/:id                 POST /v1/admin/reports/:id/{assign,close,decide}
  * GET  /v1/admin/reports/:id/media/:mediaId
  * GET  /v1/admin/disputes/:id/evidence       POST /v1/admin/disputes/:id/{assign,resolve}
  * GET  /v1/admin/disputes/:id/media/:mediaId
  * POST /v1/admin/reviews/:id/hide
  * POST /v1/admin/verification/:id/decide
  * POST /v1/admin/policies/:id/publish        (admin role only)
+ * GET  /v1/admin/moderation                  (admin role only) suspended members, removed listings
+ * POST /v1/admin/listings/:id/restore        (admin role only)
+ * POST /v1/admin/members/:uid/reinstate      (admin role only)
  * GET  /v1/admin/audit?entityType&entityId
  */
 
@@ -31,11 +34,15 @@ import type { Response } from "express";
 import { z } from "zod";
 import {
   closeReportBodySchema,
+  decideReportBodySchema,
   decideVerificationBodySchema,
+  moderationReasonBodySchema,
   hideReviewBodySchema,
   resolveDisputeBodySchema,
   type CloseReportBody,
+  type DecideReportBody,
   type DecideVerificationBody,
+  type ModerationReasonBody,
   type HideReviewBody,
   type ResolveDisputeBody,
 } from "@neighborhood/contracts";
@@ -51,6 +58,7 @@ import { RequireRoles, RolesGuard } from "../roles/roles.guard.js";
 import { AuditService } from "../roles/audit.service.js";
 import { ReportService } from "../trust/report.service.js";
 import { DisputeService } from "../trust/dispute.service.js";
+import { ModerationService } from "../trust/moderation.service.js";
 import { ReviewService } from "../reviews/review.service.js";
 import { VerificationService } from "../verification/verification.service.js";
 import { PolicyService } from "../policies/policy.service.js";
@@ -82,6 +90,7 @@ export class AdminController {
     private readonly verification: VerificationService,
     private readonly policies: PolicyService,
     private readonly audit: AuditService,
+    private readonly moderation: ModerationService,
   ) {}
 
   @Get("queue")
@@ -115,6 +124,53 @@ export class AdminController {
     @RequestId() requestId: string | null,
   ) {
     return this.reports.close(user.uid, id, body, requestId);
+  }
+
+  /** Moderation decision: invalid, warn (low), take_down (medium) or suspend (high). */
+  @Post("reports/:id/decide")
+  @UseInterceptors(new ZodValidationInterceptor(decideReportBodySchema))
+  @HttpCode(HttpStatus.OK)
+  async decideReport(
+    @CurrentUser() user: VerifiedUser,
+    @Param("id") id: string,
+    @Body() body: DecideReportBody,
+    @RequestId() requestId: string | null,
+  ) {
+    return this.moderation.decide(user.uid, id, body, requestId);
+  }
+
+  // ─── Moderation follow-up (admin only) ───
+
+  @Get("moderation")
+  @RequireRoles("admin")
+  async moderationOverview() {
+    return this.moderation.overview();
+  }
+
+  @Post("listings/:id/restore")
+  @RequireRoles("admin")
+  @UseInterceptors(new ZodValidationInterceptor(moderationReasonBodySchema))
+  @HttpCode(HttpStatus.OK)
+  async restoreListing(
+    @CurrentUser() user: VerifiedUser,
+    @Param("id") id: string,
+    @Body() body: ModerationReasonBody,
+    @RequestId() requestId: string | null,
+  ) {
+    return this.moderation.restoreListing(user.uid, id, body.reason, requestId);
+  }
+
+  @Post("members/:uid/reinstate")
+  @RequireRoles("admin")
+  @UseInterceptors(new ZodValidationInterceptor(moderationReasonBodySchema))
+  @HttpCode(HttpStatus.OK)
+  async reinstateMember(
+    @CurrentUser() user: VerifiedUser,
+    @Param("uid") uid: string,
+    @Body() body: ModerationReasonBody,
+    @RequestId() requestId: string | null,
+  ) {
+    return this.moderation.reinstateMember(user.uid, uid, body.reason, requestId);
   }
 
   @Get("reports/:id/media/:mediaId")

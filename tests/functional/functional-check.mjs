@@ -3,7 +3,8 @@
 // Sprint 2: F-27..F-48 plus TX-01, ZT-01 and API-06 for the exchange workflow.
 // Sprint 3: F-49..F-72 (trust, community, AI, policies, hardening); needs the
 // Sprint 3 seed and the reviewer role (see docs/development.md).
-// 9 Nov 2026: F-73 pickup and return reminders.
+// 9 Nov 2026: F-73 pickup and return reminders; F-74..F-77 moderation decisions
+// (F-77 needs the admin role for Jawharah and briefly suspends Leen).
 // Runs inside the tools container against the running API and the real Firebase project.
 // Uses only the demo accounts; it creates test data (clean it with scripts/admin/reset-demo-data.mjs). Prints one line per check: ID | PASS/FAIL | detail.
 // The Sprint 2 part waits for real time twice (hold expiry, overdue), about one minute.
@@ -781,6 +782,165 @@ try {
   }
 } catch (e) {
   rec("S3-ERR", false, String(e?.stack ?? e));
+}
+// F-74..F-77 (9 Nov 2026, D-42): moderation decisions on reports.
+// F-77 suspends Leen briefly and lifts it again; it needs the admin role for
+// Jawharah and is skipped without it. A safety net lifts the suspension if
+// anything fails part way.
+let seq4 = 0;
+const rid4 = (tag) => `fc3-${RUN}-mod-${tag}-${++seq4}`;
+const created4 = [];
+const created4h = [];
+let suspendedUid = null;
+let adminToken = null;
+try {
+  const hanadi = await signIn("hanadi@neighborhood-demo.test");
+  const leen = await signIn("leen@neighborhood-demo.test");
+  const jawharah = await signIn("jawharah@neighborhood-demo.test");
+  const isAdmin = (await call("GET", "/me/roles", jawharah.token)).data?.isAdmin === true;
+  if (isAdmin) adminToken = jawharah.token;
+  const ML = async (title, opts) => {
+    const l = await makeListing(leen, { title: `FC3 ${title}`, ...opts });
+    created4.push(l.id);
+    return l;
+  };
+  const fileReport = (reporter, body) =>
+    call("POST", "/me/reports", reporter.token, { description: "FC3 moderation check report.", clientRequestId: rid4("report"), ...body });
+  const assignAndRead = async (id) => {
+    await call("POST", `/admin/reports/${id}/assign`, jawharah.token);
+    return call("GET", `/admin/reports/${id}`, jawharah.token);
+  };
+  const decide = (id, decision, note) => call("POST", `/admin/reports/${id}/decide`, jawharah.token, { decision, note });
+  const myReport = async (member, id) => ((await call("GET", "/me/reports", member.token)).data?.items ?? []).find((r) => r.id === id);
+
+  // F-74: invalid closes with a note to the reporter; warn tells the owner and changes nothing else.
+  const lW = await ML("Moderation Lamp", { lendingMode: "free", deposit: 0, bookingMode: "approval" });
+  const rInv = await fileReport(hanadi, { targetType: "listing", targetId: lW.id, category: "misleading" });
+  const dInv = await assignAndRead(rInv.data?.id);
+  const closedInv = await decide(rInv.data?.id, "invalid", "FC3 the photos match the item.");
+  const seenInv = await myReport(hanadi, rInv.data?.id);
+  const rWarn = await fileReport(hanadi, { targetType: "listing", targetId: lW.id, category: "misleading" });
+  await assignAndRead(rWarn.data?.id);
+  const warned = await decide(rWarn.data?.id, "warn", "FC3 please correct the description.");
+  const repeated = await decide(rWarn.data?.id, "warn", "FC3 please correct the description.");
+  const changed = await decide(rWarn.data?.id, "take_down", "FC3 a second decision");
+  const seenWarn = await myReport(hanadi, rWarn.data?.id);
+  const warnNotes = (await notificationsOf(leen)).filter((n) => n.type === "moderation_warning" && n.entityId === lW.id);
+  const lWPublic = await call("GET", `/listings/${lW.id}`);
+  rec("F-74", rInv.status === 201 && dInv.data?.suggestedSeverity === "low" && dInv.data?.subject?.uid === leen.uid && (dInv.data?.allowedDecisions ?? []).length === 4 &&
+      closedInv.status === 200 && closedInv.data?.decision === "invalid" && seenInv?.outcome === "no_action" && (seenInv?.outcomeNote ?? "").includes("photos match") &&
+      warned.status === 200 && warned.data?.severity === "low" && repeated.status === 200 && changed.status === 409 &&
+      seenWarn?.outcome === "member_warned" && seenWarn?.outcomeNote === null && seenWarn?.subjectUid === null &&
+      warnNotes.length === 1 && warnNotes[0].body.includes("correct the description") && lWPublic.status === 200,
+    `Invalid: closed (${closedInv.status}), reporter sees the note; warn: severity ${warned.data?.severity}, owner told once (${warnNotes.length}), reporter sees outcome only, listing still public (${lWPublic.status}); repeat ${repeated.status}, a different second decision ${changed.status}`);
+
+  // F-75: take down removes the listing, cancels its upcoming booking with simulated refunds; owner cannot republish.
+  const lT = await ML("Moderation Saw", { lendingMode: "paid", rate: 1000, deposit: 2000, bookingMode: "instant" });
+  const bT = await request(hanadi, lT.id, slot(12));
+  const bTc = await cmd(hanadi, bT.data?.id, "confirm", { expectedRevision: bT.data?.revision });
+  const rT = await fileReport(hanadi, { targetType: "listing", targetId: lT.id, category: "unsafe" });
+  const dT = await assignAndRead(rT.data?.id);
+  const removed = await decide(rT.data?.id, "take_down", "FC3 the blade guard is missing.");
+  const ownerView = await call("GET", `/me/listings/${lT.id}`, leen.token);
+  const publicView = await call("GET", `/listings/${lT.id}`);
+  const republish = await call("POST", `/me/listings/${lT.id}/publish`, leen.token, { expectedRevision: ownerView.data?.revision });
+  const bTd = await detail(hanadi, bT.data?.id);
+  const tPays = bTd.data?.payments ?? [];
+  const removedNotes = (await notificationsOf(leen)).filter((n) => n.type === "content_removed" && n.entityId === lT.id);
+  // A further report about the same owner shows the earlier upheld decisions to the reviewer.
+  const rU = await fileReport(hanadi, { targetType: "listing", targetId: lW.id, category: "other" });
+  const dU = await assignAndRead(rU.data?.id);
+  await decide(rU.data?.id, "invalid", "FC3 nothing to do.");
+  let restoreText = "restore not tried (Jawharah is not an admin)";
+  let restoreOk = true;
+  if (isAdmin) {
+    const overview = await call("GET", "/admin/moderation", jawharah.token);
+    const restored = await call("POST", `/admin/listings/${lT.id}/restore`, jawharah.token, { reason: "FC3 restore check." });
+    const afterRestore = await call("GET", `/me/listings/${lT.id}`, leen.token);
+    restoreOk = (overview.data?.removedListings ?? []).some((l) => l.id === lT.id) && restored.status === 200 && afterRestore.data?.status === "paused" && !afterRestore.data?.moderationStatus;
+    restoreText = `admin restore ${restored.status}, listing now ${afterRestore.data?.status}`;
+  } else {
+    const denied = await call("POST", `/admin/listings/${lT.id}/restore`, jawharah.token, { reason: "FC3" });
+    restoreOk = denied.status === 403;
+    restoreText = `restore refused for a reviewer without the admin role (${denied.status})`;
+  }
+  rec("F-75", bTc.data?.status === "confirmed" && dT.data?.suggestedSeverity === "high" && removed.status === 200 && removed.data?.severity === "medium" &&
+      ownerView.data?.status === "archived" && ownerView.data?.moderationStatus === "removed" && publicView.status === 404 && republish.status >= 400 &&
+      bTd.data?.booking?.status === "cancelled" && tPays.some((p) => p.operation === "refund" && p.component === "rental" && p.mode === "simulated") &&
+      bTd.data?.deposit?.heldHalalas === 0 && invariant(bTd.data?.deposit) && removedNotes.length === 1 && (dU.data?.subject?.upheldReports ?? 0) >= 2 && restoreOk,
+    `Listing removed (public ${publicView.status}, republish ${republish.status}); confirmed booking ${bTd.data?.booking?.status} with simulated refunds; owner told; upheld reports shown: ${dU.data?.subject?.upheldReports}; ${restoreText}`);
+
+  // F-76: taking down a message replaces it for both participants; the sender is told.
+  const conv = await call("POST", "/me/conversations", hanadi.token, { contextType: "listing", contextId: lW.id });
+  const msg = await call("POST", `/me/conversations/${conv.data?.id}/messages`, hanadi.token, { body: "FC3 rude message for the moderation check.", clientMessageId: rid4("msg") });
+  const rM = await fileReport(leen, { targetType: "message", targetId: msg.data?.id, category: "harassment" });
+  const dM = await assignAndRead(rM.data?.id);
+  const hid = await decide(rM.data?.id, "take_down", "FC3 keep messages polite.");
+  const threadL = await call("GET", `/me/conversations/${conv.data?.id}/messages`, leen.token);
+  const threadH = await call("GET", `/me/conversations/${conv.data?.id}/messages`, hanadi.token);
+  const shownL = (threadL.data?.items ?? []).find((m) => m.id === msg.data?.id);
+  const senderNotes = (await notificationsOf(hanadi)).filter((n) => n.type === "content_removed" && n.entityId === rM.data?.id);
+  rec("F-76", msg.status === 201 && dM.data?.suggestedSeverity === "medium" && dM.data?.subject?.uid === hanadi.uid && hid.status === 200 &&
+      shownL?.body === "This message was removed by a reviewer." && !JSON.stringify(threadL.data).includes("rude message") && !JSON.stringify(threadH.data).includes("rude message") && senderNotes.length === 1,
+    `Message removed (${hid.status}); both participants see the placeholder; sender told (${senderNotes.length})`);
+
+  // F-77: suspension blocks sign-in and the API, hides the profile and listings, cancels upcoming bookings; lifting restores access.
+  if (!isAdmin) {
+    rec("F-77", null, "SKIP: lifting a suspension needs the admin role for Jawharah (scripts/grant-role.mjs --email jawharah@neighborhood-demo.test --role admin)");
+  } else {
+    const lS = await ML("Moderation Tent", { lendingMode: "free", deposit: 0, bookingMode: "instant" });
+    const lH = await makeListing(hanadi, { title: "FC3 Moderation Cooler", lendingMode: "free", deposit: 0, bookingMode: "instant" });
+    created4h.push(lH.id);
+    const bS = await request(hanadi, lS.id, slot(13));
+    const bL = await request(leen, lH.id, slot(13));
+    const rS = await fileReport(hanadi, { targetType: "member", targetId: leen.uid, category: "harassment" });
+    const dS = await assignAndRead(rS.data?.id);
+    const memberTakeDown = await decide(rS.data?.id, "take_down", "FC3 not available for members");
+    const susp = await decide(rS.data?.id, "suspend", "FC3 repeated harassment.");
+    if (susp.status === 200) suspendedUid = leen.uid;
+    const blocked = await call("GET", "/me/listings", leen.token);
+    const signInTry = await fetch(SIGN_IN_URL, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: "leen@neighborhood-demo.test", password: PASSWORD, returnSecureToken: true }),
+    });
+    const signInErr = JSON.stringify(await signInTry.json());
+    const profile = await call("GET", `/members/${leen.uid}/profile`);
+    const lSPublic = await call("GET", `/listings/${lS.id}`);
+    const bSd = await detail(hanadi, bS.data?.id);
+    const bLd = await detail(hanadi, bL.data?.id);
+    const overview = await call("GET", "/admin/moderation", jawharah.token);
+    const lifted = await call("POST", `/admin/members/${leen.uid}/reinstate`, jawharah.token, { reason: "FC3 check finished." });
+    if (lifted.status === 200) suspendedUid = null;
+    const leen2 = await signIn("leen@neighborhood-demo.test");
+    const back = await call("GET", "/me/listings", leen2.token);
+    const lSBack = await call("GET", `/listings/${lS.id}`);
+    rec("F-77", (dS.data?.allowedDecisions ?? []).join(",") === "invalid,warn,suspend" && memberTakeDown.status === 422 && susp.status === 200 && susp.data?.severity === "high" &&
+        blocked.status === 403 && blocked.data?.error?.details?.reason === "account_suspended" && signInErr.includes("USER_DISABLED") &&
+        profile.status === 404 && lSPublic.status === 404 && bSd.data?.booking?.status === "cancelled" && bLd.data?.booking?.status === "cancelled" &&
+        (overview.data?.suspendedMembers ?? []).some((m) => m.uid === leen.uid) && lifted.status === 200 && back.status === 200 && lSBack.status === 200,
+      `Suspended: API ${blocked.status} (${blocked.data?.error?.details?.reason}), sign-in refused (${signInErr.includes("USER_DISABLED") ? "USER_DISABLED" : signInErr.slice(0, 60)}), profile ${profile.status}, listing ${lSPublic.status}, bookings ${bSd.data?.booking?.status}/${bLd.data?.booking?.status}; lifted ${lifted.status}: API ${back.status}, listing public again ${lSBack.status}`);
+  }
+} catch (e) {
+  rec("MOD-ERR", false, String(e?.stack ?? e));
+} finally {
+  if (suspendedUid && adminToken) {
+    const net = await call("POST", `/admin/members/${suspendedUid}/reinstate`, adminToken, { reason: "FC3 safety net." });
+    console.log(`MOD-SAFETY | reinstated Leen after a failure (${net.status})`);
+  }
+  try {
+    const leenC = await signIn("leen@neighborhood-demo.test");
+    const hanadiC = await signIn("hanadi@neighborhood-demo.test");
+    for (const [owner, ids] of [[leenC, created4], [hanadiC, created4h]]) {
+      for (const id of ids) {
+        const cur = await call("GET", `/me/listings/${id}`, owner.token);
+        if (cur.data && cur.data.status !== "archived") {
+          await call("POST", `/me/listings/${id}/archive`, owner.token, { expectedRevision: cur.data.revision });
+        }
+      }
+    }
+  } catch (e) {
+    console.log(`MOD-CLEANUP | ${String(e?.message ?? e)}`);
+  }
 }
 const earlier = results.filter((r) => earlierIds.has(r.id) && !r.id.endsWith("-ERR"));
 rec("F-72", earlier.length === 52 && earlier.every((r) => r.ok === true), `All 52 Sprint 1 and 2 checks still pass (${earlier.filter((r) => r.ok === true).length}/${earlier.length})`);

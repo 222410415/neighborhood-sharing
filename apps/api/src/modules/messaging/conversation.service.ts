@@ -53,12 +53,14 @@ function isAfterCursor(m: MessageDoc, cursor: string): boolean {
   return t > 0 || (t === 0 && m.id.localeCompare(id) > 0);
 }
 
+export const MESSAGE_REMOVED_TEXT = "This message was removed by a reviewer.";
+
 function toMessageDto(m: MessageDoc): MessageDto {
   return {
     id: m.id,
     conversationId: m.conversationId,
     senderUid: m.senderUid,
-    body: m.body,
+    body: m.moderationStatus === "removed" ? MESSAGE_REMOVED_TEXT : m.body,
     clientMessageId: m.clientMessageId,
     createdAt: m.createdAt,
   };

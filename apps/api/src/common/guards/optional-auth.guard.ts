@@ -1,6 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { FirebaseService } from "../../modules/firebase/firebase.service.js";
 import type { VerifiedUser } from "./auth.guard.js";
+import { isSuspended } from "./account-status.js";
+import { COLLECTIONS } from "../repositories/base.repository.js";
 
 /**
  * For public routes that personalise their answer when a member is signed in
@@ -20,6 +22,8 @@ export class OptionalAuthGuard implements CanActivate {
       if (token) {
         try {
           const decoded = await this.firebase.auth.verifyIdToken(token, false);
+          // A suspended member browses as a visitor.
+          if (await isSuspended(this.firebase.firestore.collection(COLLECTIONS.users), decoded.uid)) return true;
           const user: VerifiedUser = { uid: decoded.uid, email: decoded.email, token: decoded };
           request.user = user;
         } catch {

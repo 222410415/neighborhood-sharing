@@ -10,7 +10,13 @@
 
 import { Injectable } from "@nestjs/common";
 import { createHash } from "node:crypto";
-import type { CloseReportBody, CreateReportBody, ReportDto } from "@neighborhood/contracts";
+import {
+  SUGGESTED_SEVERITY,
+  decisionsFor,
+  type CloseReportBody,
+  type CreateReportBody,
+  type ReportDto,
+} from "@neighborhood/contracts";
 import { FirebaseService } from "../firebase/firebase.service.js";
 import { COLLECTIONS } from "../../common/repositories/base.repository.js";
 import { ConflictException, NotFoundException, ValidationException } from "../../common/errors/api-exceptions.js";
@@ -35,20 +41,38 @@ export interface ReportTargetSummary {
   title: string;
   /** Members connected to the target; a reviewer among them has a conflict. */
   involvedUids: string[];
+  /** The member a moderation decision is about (owner, sender, author or the member). */
+  responsibleUid: string;
   detail: Record<string, string | number | null>;
 }
 
-const OUTCOME_LABELS: Record<CloseReportBody["outcome"], string> = {
+export const OUTCOME_LABELS: Record<string, string> = {
   no_action: "No action needed",
   content_hidden: "Content hidden",
   member_warned: "Member warned",
   escalated_to_dispute: "Handled in a dispute case",
   other: "Handled",
+  listing_removed: "Listing removed",
+  member_suspended: "Member suspended",
 };
 
-function toDto(doc: ReportDoc): ReportDto {
+export function toDto(doc: ReportDoc): ReportDto {
   const { clientRequestId: _c, ...dto } = doc;
-  return dto;
+  // Reports closed before moderation decisions existed lack these fields.
+  return {
+    ...dto,
+    decision: dto.decision ?? null,
+    severity: dto.severity ?? null,
+    subjectUid: dto.subjectUid ?? null,
+    decidedAt: dto.decidedAt ?? null,
+  };
+}
+
+/** What the reporter sees: no note addressed to the reported member, no member id. */
+function toReporterDto(doc: ReportDoc): ReportDto {
+  const dto = toDto(doc);
+  const noteForReporter = dto.decision === null || dto.decision === "invalid";
+  return { ...dto, subjectUid: null, outcomeNote: noteForReporter ? dto.outcomeNote : null };
 }
 
 @Injectable()
@@ -96,6 +120,7 @@ export class ReportService {
         targetType,
         title: listing.titleEn,
         involvedUids: [listing.ownerUid],
+        responsibleUid: listing.ownerUid,
         detail: { status: listing.status, ownerUid: listing.ownerUid },
       };
     }
@@ -113,6 +138,7 @@ export class ReportService {
         targetType,
         title: "A message",
         involvedUids: conversation.participantUids,
+        responsibleUid: message.senderUid,
         detail: { senderUid: message.senderUid, conversationId: message.conversationId, sentAt: message.createdAt },
       };
     }
@@ -124,6 +150,7 @@ export class ReportService {
         targetType,
         title: `A ${review.rating}-star review`,
         involvedUids: [review.authorUid, review.recipientUid],
+        responsibleUid: review.authorUid,
         detail: {
           rating: review.rating,
           comment: review.comment,
@@ -141,6 +168,7 @@ export class ReportService {
       targetType,
       title: member.displayName ?? "A member",
       involvedUids: [targetId],
+      responsibleUid: targetId,
       detail: { displayName: member.displayName ?? null },
     };
   }
@@ -149,7 +177,7 @@ export class ReportService {
   async create(uid: string, body: CreateReportBody): Promise<ReportDto> {
     const id = `rpt_${createHash("sha256").update(`${uid}\u0000${body.clientRequestId}`).digest("hex").slice(0, 24)}`;
     const existing = (await this.ref(id).get()).data() as ReportDoc | undefined;
-    if (existing) return toDto(existing);
+    if (existing) return toReporterDto(existing);
 
     const target = await this.resolveTarget(body.targetType, body.targetId, uid);
     if (!target) throw new NotFoundException("Nothing to report was found");
@@ -196,6 +224,10 @@ export class ReportService {
         outcomeNote: null,
         assignedReviewerUid: null,
         disputeId: linkDispute ? dispute!.id : null,
+        decision: null,
+        severity: null,
+        subjectUid: null,
+        decidedAt: null,
         createdAt: now,
         updatedAt: now,
         clientRequestId: body.clientRequestId,
@@ -220,13 +252,13 @@ export class ReportService {
       buffer.flush(tx);
       return report;
     });
-    return toDto(doc);
+    return toReporterDto(doc);
   }
 
   async listMine(uid: string): Promise<ReportDto[]> {
     const snap = await this.db.collection(COLLECTIONS.reports).where("reporterUid", "==", uid).get();
     return snap.docs
-      .map((d) => toDto(d.data() as ReportDoc))
+      .map((d) => toReporterDto(d.data() as ReportDoc))
       .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   }
 
@@ -259,6 +291,7 @@ export class ReportService {
         id: r.id,
         targetType: r.targetType,
         category: r.category,
+        suggestedSeverity: SUGGESTED_SEVERITY[r.category],
         status: r.status,
         createdAt: r.createdAt,
         assignedReviewerUid: r.assignedReviewerUid,
@@ -299,7 +332,7 @@ export class ReportService {
     return toDto(doc);
   }
 
-  private assertAssigned(report: ReportDoc, reviewerUid: string): void {
+  assertAssigned(report: ReportDoc, reviewerUid: string): void {
     if (report.assignedReviewerUid !== reviewerUid) {
       throw new ConflictException("Assign this report to yourself before working on it.", {
         reason: "not_assigned",
@@ -327,9 +360,21 @@ export class ReportService {
       requestId,
     });
     const names = await this.members.displayNames([report.reporterUid, ...(target?.involvedUids ?? [])]);
+    const subjectUid = report.subjectUid ?? target?.responsibleUid ?? null;
+    const subjectProfile = subjectUid ? await this.members.profile(subjectUid) : null;
     return {
       report: toDto(report),
       reporterName: names.get(report.reporterUid) ?? "Member",
+      suggestedSeverity: SUGGESTED_SEVERITY[report.category],
+      allowedDecisions: target ? decisionsFor(report.targetType) : (["invalid"] as const),
+      subject: subjectUid
+        ? {
+            uid: subjectUid,
+            displayName: names.get(subjectUid) ?? subjectProfile?.displayName ?? "Member",
+            accountStatus: subjectProfile?.accountStatus ?? "active",
+            upheldReports: await this.upheldCount(subjectUid, report.id),
+          }
+        : null,
       target: target
         ? {
             ...target,
@@ -338,6 +383,14 @@ export class ReportService {
           }
         : null,
     };
+  }
+
+  /** Earlier reports about this member that a reviewer upheld (warn, take down, suspend). */
+  async upheldCount(subjectUid: string, excludeReportId?: string): Promise<number> {
+    const snap = await this.db.collection(COLLECTIONS.reports).where("subjectUid", "==", subjectUid).get();
+    return snap.docs
+      .map((d) => d.data() as ReportDoc)
+      .filter((r) => r.id !== excludeReportId && r.decision && r.decision !== "invalid").length;
   }
 
   async close(reviewerUid: string, id: string, body: CloseReportBody, requestId: string | null): Promise<ReportDto> {

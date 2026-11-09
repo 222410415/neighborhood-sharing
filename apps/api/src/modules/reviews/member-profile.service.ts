@@ -30,7 +30,9 @@ export class MemberProfileService {
   private async completedProfile(uid: string): Promise<ProfileStorage> {
     const snap = await this.firebase.firestore.collection(COLLECTIONS.users).doc(uid).get();
     const profile = snap.exists ? (snap.data() as ProfileStorage) : null;
-    if (!profile || !profile.completedProfile) throw new NotFoundException("Member not found");
+    if (!profile || !profile.completedProfile || profile.accountStatus === "suspended") {
+      throw new NotFoundException("Member not found");
+    }
     return profile;
   }
 

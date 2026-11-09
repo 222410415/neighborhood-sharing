@@ -8,7 +8,7 @@ import { Alert } from "@/components/ui/alert";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/features/auth/auth-context";
-import { CATEGORY_LABELS, fetchMyReports, type Report } from "@/features/trust/trust-api";
+import { CATEGORY_LABELS, REPORT_OUTCOME_LABELS, fetchMyReports, type Report } from "@/features/trust/trust-api";
 import { errorText } from "@/lib/api-client";
 import { formatDateTime } from "@/lib/format";
 
@@ -18,13 +18,7 @@ const STATUS: Record<Report["status"], string> = {
   closed: "Closed",
 };
 
-const OUTCOME: Record<string, string> = {
-  no_action: "No action needed",
-  content_hidden: "Content hidden",
-  member_warned: "Member warned",
-  escalated_to_dispute: "Handled in a dispute case",
-  other: "Handled",
-};
+const OUTCOME = REPORT_OUTCOME_LABELS;
 
 export default function MyReportsPage() {
   const router = useRouter();

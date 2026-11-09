@@ -28,6 +28,10 @@ export interface OwnerListing {
   bookingMode?: "approval" | "instant";
   bookableFrom?: string | null;
   bookableUntil?: string | null;
+  /** Set when a reviewer removed the listing after a report; only an admin can restore it. */
+  moderationStatus?: "removed" | null;
+  moderationReason?: string | null;
+  moderatedAt?: string | null;
 }
 
 export async function fetchMyListings(status?: string) {

@@ -37,6 +37,12 @@ export const notificationTypeSchema = z.enum([
   // Reminders (added 9 Nov 2026)
   "pickup_reminder",
   "return_reminder",
+  // Moderation (added 9 Nov 2026)
+  "moderation_warning",
+  "content_removed",
+  "listing_restored",
+  "account_suspended",
+  "account_reinstated",
 ]);
 
 export const notificationEntityTypeSchema = z.enum([
@@ -47,6 +53,7 @@ export const notificationEntityTypeSchema = z.enum([
   "request",
   "listing",
   "verification",
+  "account",
 ]);
 
 export type NotificationType = z.infer<typeof notificationTypeSchema>;

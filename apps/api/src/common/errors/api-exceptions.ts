@@ -35,8 +35,8 @@ export class UnauthorizedException extends ApiException {
 }
 
 export class ForbiddenException extends ApiException {
-  constructor(message = "You do not have access to this resource") {
-    super("FORBIDDEN", message, HttpStatus.FORBIDDEN);
+  constructor(message = "You do not have access to this resource", details?: Record<string, unknown>) {
+    super("FORBIDDEN", message, HttpStatus.FORBIDDEN, undefined, undefined, details);
   }
 }
 

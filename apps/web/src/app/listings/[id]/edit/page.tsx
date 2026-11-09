@@ -284,7 +284,7 @@ export default function EditListingPage({
             title="Edit your listing"
             subtitle="Keep the details clear and photos up to date."
           />
-          <StatusBadge status={listing.status} />
+          <StatusBadge status={listing.moderationStatus === "removed" ? "removed" : listing.status} />
           {!isArchived && (
             <Link
               href={`/listings/${listing.id}/availability`}
@@ -295,6 +295,15 @@ export default function EditListingPage({
             </Link>
           )}
         </div>
+
+        {listing.moderationStatus === "removed" && (
+          <div className="mb-4">
+            <Alert variant="error" title="Removed by a reviewer">
+              A reviewer removed this listing after a report{listing.moderationReason ? `: ${listing.moderationReason}` : "."} It
+              cannot be edited or published again. Contact the team if you think this is a mistake.
+            </Alert>
+          </div>
+        )}
 
         {saved && (
           <div className="mb-4">

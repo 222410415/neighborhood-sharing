@@ -104,6 +104,14 @@ export async function apiFetch<T>(
     const text = await response.text();
     const parsed = text ? JSON.parse(text) : null;
 
+    // A reviewer suspended this account: end the session and explain on the sign-in page.
+    if (response.status === 403 && parsed?.error?.details?.reason === "account_suspended" && typeof window !== "undefined") {
+      cachedToken = null;
+      tokenExpiry = 0;
+      await getFirebaseAuth().signOut().catch(() => undefined);
+      if (!window.location.pathname.startsWith("/sign-in")) window.location.assign("/sign-in?suspended=1");
+    }
+
     if (!response.ok) {
       return {
         data: null,

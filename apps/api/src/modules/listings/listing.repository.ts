@@ -42,6 +42,13 @@ export interface ListingDocument {
   bookingMode?: "approval" | "instant";
   bookableFrom?: string | null;
   bookableUntil?: string | null;
+  // Moderation (D-42). A removed listing is archived and only an admin can restore it.
+  moderationStatus?: "removed" | null;
+  moderationReason?: string | null;
+  moderationReportId?: string | null;
+  moderatedAt?: string | null;
+  /** Paused because the owner was suspended; published again when the suspension is lifted. */
+  suspensionHold?: boolean;
 }
 
 @Injectable()

@@ -11,25 +11,148 @@ import { Button } from "@/components/ui/button";
 import { EmptyState } from "@/components/ui/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useAuth } from "@/features/auth/auth-context";
+import { useRoles } from "@/features/roles/use-roles";
 import {
   CATEGORY_LABELS,
   ISSUE_LABELS,
+  SEVERITY_LABELS,
   assignDispute,
   assignReport,
   decideVerification,
+  fetchModeration,
   fetchQueue,
+  reinstateMember,
+  restoreListing,
+  type ModerationOverview,
   type QueueItem,
 } from "@/features/trust/trust-api";
-import { errorText } from "@/lib/api-client";
+import { errorText, type ApiError } from "@/lib/api-client";
 import { formatDateTime, formatSar } from "@/lib/format";
 
-type Tab = "disputes" | "reports" | "verification";
+type Tab = "disputes" | "reports" | "verification" | "moderation";
+type QueueTab = Exclude<Tab, "moderation">;
+
+/** Admin only: suspended members and removed listings, with the way back. */
+function ModerationPanel() {
+  const [data, setData] = useState<ModerationOverview | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [reasons, setReasons] = useState<Record<string, string>>({});
+  const [busyId, setBusyId] = useState<string | null>(null);
+
+  const load = useCallback(async () => {
+    const res = await fetchModeration();
+    if (res.data) setData(res.data);
+    else setError(errorText(res.error, "The moderation list could not be loaded."));
+  }, []);
+
+  useEffect(() => {
+    load();
+  }, [load]);
+
+  const act = async (key: string, run: (reason: string) => Promise<{ error: ApiError | null }>, done: string) => {
+    const reason = (reasons[key] ?? "").trim();
+    setError(null);
+    setNotice(null);
+    if (!reason) {
+      setError("Give a reason first. It is sent to the member and kept in the audit trail.");
+      return;
+    }
+    setBusyId(key);
+    const res = await run(reason);
+    setBusyId(null);
+    if (res.error) setError(errorText(res.error, "That did not work."));
+    else setNotice(done);
+    await load();
+  };
+
+  const reasonField = (key: string) => (
+    <label className="booking-field mt-2">
+      <span>Reason</span>
+      <input
+        value={reasons[key] ?? ""}
+        maxLength={500}
+        onChange={(e) => setReasons((r) => ({ ...r, [key]: e.target.value }))}
+      />
+    </label>
+  );
+
+  if (!data) return error ? <Alert variant="error">{error}</Alert> : <Skeleton className="h-32 w-full" />;
+
+  return (
+    <div className="flex flex-col gap-4">
+      {error && <Alert variant="error">{error}</Alert>}
+      {notice && <Alert variant="success">{notice}</Alert>}
+      <section className="workspace-card">
+        <h2>Suspended members</h2>
+        {data.suspendedMembers.length === 0 ? (
+          <p className="text-[14px] text-[var(--nsr-text-secondary)]">No member is suspended.</p>
+        ) : (
+          <ul className="flex flex-col gap-3">
+            {data.suspendedMembers.map((m) => (
+              <li key={m.uid} className="border-t border-[var(--nsr-divider)] pt-3 first:border-0 first:pt-0">
+                <p className="text-[15px] font-semibold">{m.displayName}</p>
+                <p className="text-[12px] text-[var(--nsr-text-secondary)]">
+                  {m.suspendedAt ? `Suspended ${formatDateTime(m.suspendedAt)}` : "Suspended"}
+                  {m.reason ? ` · ${m.reason}` : ""}
+                </p>
+                {reasonField(`m:${m.uid}`)}
+                <Button
+                  className="mt-2"
+                  size="sm"
+                  loading={busyId === `m:${m.uid}`}
+                  onClick={() =>
+                    act(`m:${m.uid}`, (r) => reinstateMember(m.uid, r), `${m.displayName} can sign in again.`)
+                  }
+                >
+                  Lift suspension
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+      <section className="workspace-card">
+        <h2>Removed listings</h2>
+        {data.removedListings.length === 0 ? (
+          <p className="text-[14px] text-[var(--nsr-text-secondary)]">No listing is removed.</p>
+        ) : (
+          <ul className="flex flex-col gap-3">
+            {data.removedListings.map((l) => (
+              <li key={l.id} className="border-t border-[var(--nsr-divider)] pt-3 first:border-0 first:pt-0">
+                <p className="text-[15px] font-semibold">
+                  {l.titleEn} <span className="font-normal text-[var(--nsr-text-secondary)]">by {l.ownerName}</span>
+                </p>
+                <p className="text-[12px] text-[var(--nsr-text-secondary)]">
+                  {l.removedAt ? `Removed ${formatDateTime(l.removedAt)}` : "Removed"}
+                  {l.reason ? ` · ${l.reason}` : ""}
+                </p>
+                {reasonField(`l:${l.id}`)}
+                <Button
+                  className="mt-2"
+                  size="sm"
+                  loading={busyId === `l:${l.id}`}
+                  onClick={() =>
+                    act(`l:${l.id}`, (r) => restoreListing(l.id, r), `${l.titleEn} is restored as paused. The owner can publish it again.`)
+                  }
+                >
+                  Restore listing
+                </Button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+}
 
 function AdminContent() {
   const router = useRouter();
   const params = useSearchParams();
   const { user, loading: authLoading } = useAuth();
-  const tab: Tab = (["disputes", "reports", "verification"] as const).includes(params.get("tab") as Tab)
+  const roles = useRoles();
+  const tab: Tab = (["disputes", "reports", "verification", "moderation"] as const).includes(params.get("tab") as Tab)
     ? (params.get("tab") as Tab)
     : "disputes";
   const [items, setItems] = useState<QueueItem[] | null>(null);
@@ -43,7 +166,8 @@ function AdminContent() {
 
   const load = useCallback(async () => {
     setItems(null);
-    const res = await fetchQueue(tab);
+    if (tab === "moderation") return;
+    const res = await fetchQueue(tab as QueueTab);
     if (res.status === 403) {
       setForbidden(true);
       return;
@@ -105,13 +229,26 @@ function AdminContent() {
             {t === "disputes" ? "Disputes" : t === "reports" ? "Reports" : "Verification"}
           </button>
         ))}
+        {roles?.isAdmin && (
+          <button role="tab" aria-selected={tab === "moderation"} onClick={() => router.replace("/admin?tab=moderation")}>
+            Moderation
+          </button>
+        )}
       </div>
       {error && (
         <div className="mb-4">
           <Alert variant="error">{error}</Alert>
         </div>
       )}
-      {!items ? (
+      {tab === "moderation" ? (
+        roles?.isAdmin ? (
+          <ModerationPanel />
+        ) : roles ? (
+          <Alert variant="info">Restoring listings and lifting suspensions is for admins only.</Alert>
+        ) : (
+          <Skeleton className="h-32 w-full" />
+        )
+      ) : !items ? (
         <Skeleton className="h-32 w-full" />
       ) : items.length === 0 ? (
         <div className="workspace-card">
@@ -126,7 +263,10 @@ function AdminContent() {
                   <p className="text-[15px] font-semibold">
                     {tab === "disputes" &&
                       `${item.itemTitle} · ${ISSUE_LABELS[item.issue!]}${item.kind === "complaint" ? " (complaint)" : ""}`}
-                    {tab === "reports" && `${CATEGORY_LABELS[item.category!]} · ${item.targetType}`}
+                    {tab === "reports" &&
+                      `${CATEGORY_LABELS[item.category!]} · ${item.targetType}${
+                        item.suggestedSeverity ? ` · suggested ${SEVERITY_LABELS[item.suggestedSeverity].toLowerCase()} severity` : ""
+                      }`}
                     {tab === "verification" &&
                       `${item.subjectName ?? "Member"} · ${item.type === "phone_demo" ? "Phone (demo)" : "Identity (demo)"}`}
                   </p>

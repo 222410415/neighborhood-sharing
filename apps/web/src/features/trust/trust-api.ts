@@ -60,9 +60,29 @@ export interface Report {
   outcomeNote: string | null;
   assignedReviewerUid: string | null;
   disputeId: string | null;
+  decision: ReportDecision | null;
+  severity: ReportSeverity | null;
+  subjectUid: string | null;
+  decidedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
+
+export type ReportSeverity = "low" | "medium" | "high";
+export type ReportDecision = "invalid" | "warn" | "take_down" | "suspend";
+
+export const SEVERITY_LABELS: Record<ReportSeverity, string> = { low: "Low", medium: "Medium", high: "High" };
+
+/** Outcome codes stored on a closed report, in plain words. */
+export const REPORT_OUTCOME_LABELS: Record<string, string> = {
+  no_action: "No action needed",
+  content_hidden: "Content hidden",
+  member_warned: "Member warned",
+  escalated_to_dispute: "Handled in a dispute case",
+  other: "Handled",
+  listing_removed: "Listing removed",
+  member_suspended: "Member suspended",
+};
 
 export type DisputeIssue = "damage" | "missing_accessory" | "not_returned" | "late_return" | "conduct" | "other";
 export type ItemOutcome = "returned_ok" | "returned_damaged" | "lost" | "needs_repair";
@@ -209,6 +229,7 @@ export interface QueueItem {
   // reports
   targetType?: ReportTargetType;
   category?: ReportCategory;
+  suggestedSeverity?: ReportSeverity;
   // verification
   subjectUid?: string;
   subjectName?: string;
@@ -237,6 +258,27 @@ export interface ReportForReviewer {
     detail: Record<string, string | number | null>;
     messageBody: string | null;
   } | null;
+  suggestedSeverity: ReportSeverity;
+  allowedDecisions: ReportDecision[];
+  subject: {
+    uid: string;
+    displayName: string;
+    accountStatus: "active" | "suspended";
+    upheldReports: number;
+  } | null;
+}
+
+export interface ModerationOverview {
+  suspendedMembers: { uid: string; displayName: string; suspendedAt: string | null; reason: string | null; reportId: string | null }[];
+  removedListings: {
+    id: string;
+    titleEn: string;
+    ownerUid: string;
+    ownerName: string;
+    removedAt: string | null;
+    reason: string | null;
+    reportId: string | null;
+  }[];
 }
 
 export const fetchQueue = (type: "reports" | "disputes" | "verification") =>
@@ -266,6 +308,16 @@ export const closeReport = (
     note: string;
   },
 ) => apiFetch<Report>(`/admin/reports/${id}/close`, { method: "POST", body });
+export const decideReport = (id: string, body: { decision: ReportDecision; note: string }) =>
+  apiFetch<Report>(`/admin/reports/${id}/decide`, { method: "POST", body });
+export const fetchModeration = () => apiFetch<ModerationOverview>("/admin/moderation");
+export const restoreListing = (id: string, reason: string) =>
+  apiFetch<{ id: string; status: string }>(`/admin/listings/${id}/restore`, { method: "POST", body: { reason } });
+export const reinstateMember = (uid: string, reason: string) =>
+  apiFetch<{ reinstated: boolean; republishedListings: number }>(`/admin/members/${uid}/reinstate`, {
+    method: "POST",
+    body: { reason },
+  });
 export const reportPhotoPath = (id: string, mediaId: string, variant: "main" | "thumbnail") =>
   `/api/admin/reports/${id}/media/${mediaId}?variant=${variant}`;
 

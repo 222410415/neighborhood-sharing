@@ -195,7 +195,7 @@ export default function MyListingsPage() {
                   <h3 className="text-[15px] font-medium text-[var(--nsr-text)] truncate">
                     {listing.titleEn}
                   </h3>
-                  <StatusBadge status={listing.status} />
+                  <StatusBadge status={listing.moderationStatus === "removed" ? "removed" : listing.status} />
                 </div>
                 <p className="text-[13px] text-[var(--nsr-text-secondary)]">
                   {listing.lendingMode === "free"
@@ -204,6 +204,9 @@ export default function MyListingsPage() {
                   {listing.depositHalalas > 0 &&
                     ` · Deposit SAR ${(listing.depositHalalas / 100).toFixed(0)}`}
                 </p>
+                {listing.moderationStatus === "removed" && listing.moderationReason && (
+                  <p className="mt-1 text-[13px] text-[var(--nsr-error)]">Reviewer&apos;s reason: {listing.moderationReason}</p>
+                )}
               </div>
               {listing.status !== "archived" && (
                 <a

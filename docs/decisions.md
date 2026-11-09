@@ -456,3 +456,41 @@ Each reminder has a fixed id per booking, kind and member and is written with
 `create()`, so it is sent once. Reminders do not change the booking. Consequence:
 a reminder appears the next time the member uses the app, not at an exact time;
 there are still no push or email notifications. Functional check F-73.
+
+## D-42: Moderation decisions with real effects (9 November 2026)
+
+Before this change a reviewer closed a report with an outcome label only; nothing
+happened to the listing or the member, and the reported member was never told.
+The team asked for graded actions. The reporter still chooses the type and gives
+a description and optional photos; the reviewer, not the reporter, judges
+severity (the queue shows a suggested severity per type: unsafe and fraud high,
+harassment and inappropriate medium, misleading, spam and other low). The
+assigned reviewer records one decision with a note (`POST /v1/admin/reports/:id/decide`):
+
+- invalid: closed; the reporter sees the note; nothing else changes.
+- low, warn: the reported member is told what to fix; nothing is removed.
+- medium, take down: a listing is archived with `moderationStatus: "removed"`
+  and its pending, accepted and confirmed bookings are cancelled in the
+  calendar transaction (simulated payments refunded); the owner cannot edit or
+  republish it. A message is replaced by a placeholder; a review is hidden.
+  Not offered for member reports.
+- high, suspend: `users/{uid}.accountStatus = "suspended"`; the Firebase Auth
+  account is disabled and its refresh tokens revoked; the auth guard refuses
+  every protected route with 403 `account_suspended` (active status cached 30 s
+  per instance, suspension never cached); the public profile returns 404; the
+  member's published listings are paused with `suspensionHold` and their
+  upcoming bookings are cancelled. Bookings already handed over stay open; the
+  other member can report an issue. A reviewer or admin cannot be suspended
+  until an admin removes the role.
+
+Effects run first and are safe to repeat, then the report is closed in one
+transaction with the notifications and the audit event. The reporter sees the
+outcome, not the note addressed to the reported member. The reviewer sees how
+many earlier reports about the same member were upheld; strikes are shown, not
+applied automatically. Admins only (`GET /v1/admin/moderation`,
+`POST /v1/admin/listings/:id/restore`, `POST /v1/admin/members/:uid/reinstate`)
+can restore a removed listing (as paused) and lift a suspension (listings held
+by it are published again). Consequence: no appeal flow and no email to the
+member; there is no admin account until the team grants the admin role with
+`scripts/grant-role.mjs --role admin`. Functional checks F-74..F-77 (F-77 needs
+the admin role and is skipped without it).

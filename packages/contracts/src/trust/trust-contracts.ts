@@ -115,6 +115,68 @@ export const closeReportBodySchema = z.object({
   note: z.string().trim().min(1, "Record the reasoning").max(1000),
 });
 
+// Moderation decisions (added 9 Nov 2026, D-42). The reviewer, not the
+// reporter, judges severity; each decision maps to one severity level.
+export const reportSeveritySchema = z.enum(["low", "medium", "high"]);
+export const reportDecisionSchema = z.enum(["invalid", "warn", "take_down", "suspend"]);
+
+export const decideReportBodySchema = z.object({
+  decision: reportDecisionSchema,
+  /** For "invalid" the reporter sees it; otherwise it is sent to the reported member. */
+  note: z.string().trim().min(1, "Write a note").max(1000),
+});
+
+export const moderationReasonBodySchema = z.object({
+  reason: z.string().trim().min(1, "Give a reason").max(500),
+});
+
+export type ReportSeverity = z.infer<typeof reportSeveritySchema>;
+export type ReportDecision = z.infer<typeof reportDecisionSchema>;
+export type DecideReportBody = z.infer<typeof decideReportBodySchema>;
+export type ModerationReasonBody = z.infer<typeof moderationReasonBodySchema>;
+
+export const DECISION_SEVERITY: Record<ReportDecision, ReportSeverity | null> = {
+  invalid: null,
+  warn: "low",
+  take_down: "medium",
+  suspend: "high",
+};
+
+/** Starting point shown to the reviewer; the reviewer decides. */
+export const SUGGESTED_SEVERITY: Record<z.infer<typeof reportCategorySchema>, ReportSeverity> = {
+  unsafe: "high",
+  fraud: "high",
+  harassment: "medium",
+  inappropriate: "medium",
+  misleading: "low",
+  spam: "low",
+  other: "low",
+};
+
+/** Decisions available for a target; a member report has nothing to take down. */
+export function decisionsFor(targetType: z.infer<typeof reportTargetTypeSchema>): ReportDecision[] {
+  return targetType === "member" ? ["invalid", "warn", "suspend"] : ["invalid", "warn", "take_down", "suspend"];
+}
+
+export interface ModerationOverviewDto {
+  suspendedMembers: {
+    uid: string;
+    displayName: string;
+    suspendedAt: string | null;
+    reason: string | null;
+    reportId: string | null;
+  }[];
+  removedListings: {
+    id: string;
+    titleEn: string;
+    ownerUid: string;
+    ownerName: string;
+    removedAt: string | null;
+    reason: string | null;
+    reportId: string | null;
+  }[];
+}
+
 export type ReportTargetType = z.infer<typeof reportTargetTypeSchema>;
 export type ReportCategory = z.infer<typeof reportCategorySchema>;
 export type ReportStatus = z.infer<typeof reportStatusSchema>;
@@ -135,6 +197,12 @@ export interface ReportDto {
   outcomeNote: string | null;
   assignedReviewerUid: string | null;
   disputeId: string | null;
+  /** Set by a moderation decision; null for reports closed the older way. */
+  decision: ReportDecision | null;
+  severity: ReportSeverity | null;
+  /** The member the decision was about (listing owner, sender, author or member). */
+  subjectUid: string | null;
+  decidedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }

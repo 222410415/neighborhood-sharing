@@ -239,6 +239,9 @@ release listeners called after commit (used for favorites alerts).
 | POST | /me/bookings/:id/condition/:stage/correct | author of the record | Correction as a new version |
 | GET | /admin/queue?type=reports\|disputes\|verification | reviewer | Queues with conflict flags |
 | GET, POST | /admin/reports/:id; /admin/reports/:id/{assign,close}; /admin/reports/:id/media/:mediaId | reviewer (assigned) | Report handling (audited) |
+| POST | /admin/reports/:id/decide | reviewer (assigned) | Moderation decision: invalid, warn (low), take_down (medium), suspend (high); effects and audit (D-42) |
+| GET | /admin/moderation | admin | Suspended members and removed listings |
+| POST | /admin/listings/:id/restore; /admin/members/:uid/reinstate | admin | Restore a removed listing (as paused); lift a suspension (D-42) |
 | GET, POST | /admin/disputes/:id/evidence; /admin/disputes/:id/{assign,resolve}; /admin/disputes/:id/media/:mediaId | reviewer (assigned, not a participant) | Case handling (audited) |
 | POST | /admin/reviews/:id/hide | reviewer | Hide a review with a reason |
 | POST | /admin/verification/:id/decide | reviewer | Decide a demonstration check |
