@@ -18,6 +18,7 @@ import {
   type RequestPost,
 } from "@/features/community/community-api";
 import { fetchMyListings, type OwnerListing } from "@/features/listings/listings-api";
+import { openConversation } from "@/features/messages/messages-api";
 import { CATEGORIES } from "@/lib/catalogue-options";
 import { errorText, type ApiResponse } from "@/lib/api-client";
 import { formatDateTime, formatSar } from "@/lib/format";
@@ -77,6 +78,16 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
     await load();
   };
 
+  /** Have the item at home but not listed? Talk to the member who asked. */
+  const messageAuthor = async () => {
+    setBusy("message");
+    setError(null);
+    const res = await openConversation("request", id);
+    setBusy(null);
+    if (res.data) router.push(`/messages/${encodeURIComponent(res.data.id)}`);
+    else setError(errorText(res.error, "The conversation could not be opened."));
+  };
+
   const choose = async (offerId: string) => {
     setBusy(offerId);
     setError(null);
@@ -128,7 +139,8 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
           {isAuthor && open && (
             <p className="text-[13px] text-[var(--nsr-text-secondary)] mb-3">
               Choosing an offer opens the normal booking review with your dates filled in. Nothing is reserved until you
-              send the booking.
+              send the booking. Neighbors who have the item but have not listed it can message you; their messages appear
+              in Messages.
             </p>
           )}
           {offers.length === 0 ? (
@@ -185,10 +197,18 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
 
           {user && !isAuthor && open && (
             <div className="mt-5 border-t border-[var(--nsr-divider)] pt-4">
-              <h3 className="text-[15px] font-semibold mb-2">Offer one of your items</h3>
+              <h3 className="text-[15px] font-semibold mb-1">Have this item?</h3>
+              <p className="text-[13px] text-[var(--nsr-text-secondary)] mb-3">
+                You do not need to list it first. Message {request.authorName} and agree the details between you.
+                Booking records, simulated payments and deposits apply only to listed items.
+              </p>
+              <Button size="sm" variant="secondary" loading={busy === "message"} onClick={messageAuthor}>
+                Message {request.authorName}
+              </Button>
+              <h3 className="text-[15px] font-semibold mt-5 mb-2">Or offer one of your listings</h3>
               {myListings.length === 0 ? (
                 <p className="text-[13px] text-[var(--nsr-text-secondary)]">
-                  You need a published listing to make an offer.{" "}
+                  You have no published listings to offer.{" "}
                   <Link href="/listings/new" className="underline">
                     List an item
                   </Link>
@@ -240,7 +260,7 @@ export default function RequestDetailPage({ params }: { params: Promise<{ id: st
               <Link href={`/sign-in?return=/requests/${id}`} className="underline">
                 Sign in
               </Link>{" "}
-              to offer one of your items.
+              to message {request.authorName} or offer one of your items.
             </p>
           )}
         </section>

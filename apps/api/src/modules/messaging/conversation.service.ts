@@ -3,7 +3,9 @@
  *
  * Participants and context are derived by the server: a listing enquiry is
  * between the asking member and the listing owner; a booking conversation is
- * between the booking's owner and borrower. Anyone else gets 404.
+ * between the booking's owner and borrower; a request conversation is between
+ * a neighbor and the member who posted the community request (the neighbor may
+ * have the item at home without listing it). Anyone else gets 404.
  *
  * Polling is cheap: a poll with a cursor reads only the conversation document
  * unless a newer message exists. Messages are found by an equality filter and
@@ -22,8 +24,9 @@ import {
 import type { DocumentReference } from "firebase-admin/firestore";
 import { FirebaseService } from "../firebase/firebase.service.js";
 import { COLLECTIONS } from "../../common/repositories/base.repository.js";
-import { ForbiddenException, NotFoundException } from "../../common/errors/api-exceptions.js";
+import { ConflictException, ForbiddenException, NotFoundException } from "../../common/errors/api-exceptions.js";
 import type { ListingDocument } from "../listings/listing.repository.js";
+import type { RequestPostDoc } from "../community/request.service.js";
 import type { BookingDoc, ConversationDoc, MessageDoc, NotificationDoc } from "../exchange/exchange.types.js";
 import { ids } from "../exchange/ids.js";
 import { MemberDirectory } from "../exchange/member-directory.service.js";
@@ -97,6 +100,7 @@ export class ConversationService {
   ): Promise<Map<string, { title: string; path: string | null }>> {
     const listingIds = [...new Set(conversations.filter((c) => c.contextType === "listing").map((c) => c.contextId))];
     const bookingIds = [...new Set(conversations.filter((c) => c.contextType === "booking").map((c) => c.contextId))];
+    const requestIds = [...new Set(conversations.filter((c) => c.contextType === "request").map((c) => c.contextId))];
     const out = new Map<string, { title: string; path: string | null }>();
     if (listingIds.length > 0) {
       const snaps = await this.db.getAll(...listingIds.map((id) => this.db.collection(COLLECTIONS.listings).doc(id)));
@@ -115,6 +119,16 @@ export class ConversationService {
         out.set(`booking:${snap.id}`, {
           title: b ? `${b.termsSnapshot.titleEn} (booking)` : "A booking",
           path: `/bookings/${snap.id}`,
+        });
+      }
+    }
+    if (requestIds.length > 0) {
+      const snaps = await this.db.getAll(...requestIds.map((id) => this.db.collection(COLLECTIONS.requestPosts).doc(id)));
+      for (const snap of snaps) {
+        const r = snap.exists ? (snap.data() as RequestPostDoc) : null;
+        out.set(`request:${snap.id}`, {
+          title: r ? `Request: ${r.title}` : "A community request",
+          path: r ? `/requests/${snap.id}` : null,
         });
       }
     }
@@ -151,8 +165,21 @@ export class ConversationService {
   /** POST /me/conversations — find or create. */
   async open(uid: string, body: CreateConversationBody): Promise<ConversationDto> {
     let otherUid: string;
-    let listingId: string;
-    if (body.contextType === "listing") {
+    let listingId: string | null;
+    if (body.contextType === "request") {
+      // A neighbor answers a community request directly, without listing the item.
+      const snap = await this.db.collection(COLLECTIONS.requestPosts).doc(body.contextId).get();
+      const request = snap.exists ? (snap.data() as RequestPostDoc) : null;
+      if (!request) throw new NotFoundException("Request not found");
+      if (request.authorUid === uid) throw new ForbiddenException("This is your request.");
+      otherUid = request.authorUid;
+      listingId = null;
+      const existing = await this.conversationRef(ids.conversation("request", request.id, uid, otherUid)).get();
+      const stillOpen = request.status === "open" && toMillis(request.desiredEndAt) > Date.now();
+      if (!existing.exists && !stillOpen) {
+        throw new ConflictException("This request is no longer open.");
+      }
+    } else if (body.contextType === "listing") {
       const snap = await this.db.collection(COLLECTIONS.listings).doc(body.contextId).get();
       const listing = snap.exists ? (snap.data() as ListingDocument) : null;
       if (!listing) throw new NotFoundException("Item not found");
@@ -206,7 +233,7 @@ export class ConversationService {
       .get();
     const visible = snap.docs
       .map((d) => d.data() as ConversationDoc)
-      // An enquiry with no messages yet is only shown to the member who opened it.
+      // An enquiry or request reply with no messages yet is only shown to the member who opened it.
       .filter((c) => c.contextType === "booking" || c.lastMessageAt || c.createdByUid === uid)
       .sort(
         (a, b) => toMillis(b.lastMessageAt ?? b.createdAt) - toMillis(a.lastMessageAt ?? a.createdAt),

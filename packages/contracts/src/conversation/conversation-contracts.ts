@@ -5,11 +5,12 @@ import { clientRequestIdSchema, type MemberSummaryDto } from "../booking/booking
 
 /**
  * Contextual conversations between exactly two members: a listing enquiry
- * ("Ask the owner") or a booking conversation. Participants and context are
- * derived by the server; plain text only.
+ * ("Ask the owner"), a booking conversation, or a reply to a community request
+ * from a neighbor who has the item but has not listed it. Participants and
+ * context are derived by the server; plain text only.
  */
 
-export const conversationContextTypeSchema = z.enum(["listing", "booking"]);
+export const conversationContextTypeSchema = z.enum(["listing", "booking", "request"]);
 
 export const createConversationBodySchema = z.object({
   contextType: conversationContextTypeSchema,
@@ -34,7 +35,7 @@ export interface ConversationDto {
   contextType: ConversationContextType;
   contextId: string;
   contextTitle: string;
-  /** Page inside the app for the item or booking; null if no longer viewable. */
+  /** Page inside the app for the item, booking or request; null if no longer viewable. */
   contextPath: string | null;
   otherMember: MemberSummaryDto;
   lastMessageAt: string | null;

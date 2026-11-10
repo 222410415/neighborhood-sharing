@@ -509,3 +509,18 @@ field names are unchanged (`assignedReviewerUid`, dispute statements with
 "Admin". Conflict-of-interest rules are unchanged: an admin involved in a
 report or case cannot handle it. An admin cannot be suspended until the role is
 revoked.
+
+## D-44: Message the author of a community request without listing the item (10 November 2026)
+
+A member who has the requested item at home but has not listed it can answer a
+community request by message. Conversations gain a third context, `request`
+(next to `listing` and `booking`), between the responder and the request
+author; the server derives both participants, the author cannot open one on
+their own request, and anyone else gets 404. A new conversation needs an open
+request (409 otherwise); an existing one stays usable after the request closes.
+Like an item enquiry, it appears for the author only once a message is sent,
+and the usual message notification applies. Offering a published listing is
+unchanged and remains the way to get a booking record, simulated payment and
+deposit; the request page says that arrangements made in messages are between
+the two members. Checked by F-78. The reset script removes conversations of
+removed test requests.

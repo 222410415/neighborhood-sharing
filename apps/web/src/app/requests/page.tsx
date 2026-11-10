@@ -74,7 +74,7 @@ export default function RequestsPage() {
       </Link>
       <PageHeading
         title="Community requests"
-        subtitle="Neighbors asking for something they need. Owners can offer one of their listed items; nothing is reserved until a booking is made."
+        subtitle="Neighbors asking for something they need. Have it? Message them directly, even if it is not listed, or offer one of your listed items. Nothing is reserved until a booking is made."
         action={
           <Link href={user ? "/requests/new" : "/sign-in?return=/requests/new"} className="primary-link">
             <Plus size={16} /> Ask for an item

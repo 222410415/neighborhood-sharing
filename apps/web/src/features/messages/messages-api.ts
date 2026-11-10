@@ -4,7 +4,7 @@ import { apiFetch } from "@/lib/api-client";
 
 export interface Conversation {
   id: string;
-  contextType: "listing" | "booking";
+  contextType: "listing" | "booking" | "request";
   contextId: string;
   contextTitle: string;
   contextPath: string | null;
@@ -27,8 +27,8 @@ export interface Message {
 
 const path = (id: string) => `/me/conversations/${encodeURIComponent(id)}`;
 
-/** Find or create the conversation for an item enquiry or a booking. */
-export function openConversation(contextType: "listing" | "booking", contextId: string) {
+/** Find or create the conversation for an item enquiry, a booking or a community request. */
+export function openConversation(contextType: "listing" | "booking" | "request", contextId: string) {
   return apiFetch<Conversation>("/me/conversations", {
     method: "POST",
     body: { contextType, contextId },

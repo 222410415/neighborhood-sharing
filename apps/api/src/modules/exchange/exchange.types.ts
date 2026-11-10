@@ -92,8 +92,8 @@ export interface ConversationDoc {
   id: string;
   contextType: ConversationContextType;
   contextId: string;
-  /** Listing behind the context (the listing itself, or the booked listing). */
-  listingId: string;
+  /** Listing behind the context (the listing itself, or the booked listing); null for a request. */
+  listingId: string | null;
   /** Exactly two member UIDs, sorted. */
   participantUids: string[];
   /** Who opened it; an enquiry without messages is shown only to them. */

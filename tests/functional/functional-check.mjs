@@ -944,6 +944,43 @@ try {
     console.log(`MOD-CLEANUP | ${String(e?.message ?? e)}`);
   }
 }
+// F-78 (10 Nov 2026): a neighbor answers a community request by message,
+// without listing the item. The request and its conversation are removed by
+// the reset script (FC3 title).
+let seq5 = 0;
+const rid5 = (tag) => `fc3-${RUN}-reqmsg-${tag}-${++seq5}`;
+try {
+  const hanadi = await signIn("hanadi@neighborhood-demo.test");
+  const leen = await signIn("leen@neighborhood-demo.test");
+  const jawharah = await signIn("jawharah@neighborhood-demo.test");
+  const day = 24 * 60 * 60 * 1000;
+  const base = Math.ceil(Date.now() / day) * day + 20 * day;
+  const reqM = await call("POST", "/me/requests", hanadi.token, {
+    title: `FC3 Pressure washer ${RUN}`, description: "For the courtyard.", categoryId: "cat_tools", neighborhoodId: "area_al-nuzhah",
+    desiredStartAt: new Date(base).toISOString(), desiredEndAt: new Date(base + day).toISOString(), maxDailyRateHalalas: null,
+  });
+  const rqId = reqM.data?.id;
+  const opened = await call("POST", "/me/conversations", leen.token, { contextType: "request", contextId: rqId });
+  const again = await call("POST", "/me/conversations", leen.token, { contextType: "request", contextId: rqId });
+  const own = await call("POST", "/me/conversations", hanadi.token, { contextType: "request", contextId: rqId });
+  const convId = opened.data?.id;
+  const authorBefore = ((await call("GET", "/me/conversations", hanadi.token)).data?.items ?? []).some((c) => c.id === convId);
+  const sent = await call("POST", `/me/conversations/${encodeURIComponent(convId)}/messages`, leen.token, { body: "I have one at home, not listed. Happy to lend it.", clientMessageId: rid5("msg") });
+  const authorList = (await call("GET", "/me/conversations", hanadi.token)).data?.items ?? [];
+  const seen = authorList.find((c) => c.id === convId);
+  const outsider = await call("GET", `/me/conversations/${encodeURIComponent(convId)}/messages`, jawharah.token);
+  const reply = await call("POST", `/me/conversations/${encodeURIComponent(convId)}/messages`, hanadi.token, { body: "Thank you, see you Thursday.", clientMessageId: rid5("msg") });
+  const note = ((await call("GET", "/me/notifications", hanadi.token)).data?.items ?? []).find((n) => n.entityId === convId);
+  await call("POST", `/me/requests/${rqId}/close`, hanadi.token);
+  const lateNew = await call("POST", "/me/conversations", jawharah.token, { contextType: "request", contextId: rqId });
+  const lateExisting = await call("POST", "/me/conversations", leen.token, { contextType: "request", contextId: rqId });
+  rec("F-78", reqM.status === 201 && opened.status === 200 && opened.data?.contextType === "request" && opened.data?.contextTitle === `Request: FC3 Pressure washer ${RUN}` &&
+    opened.data?.contextPath === `/requests/${rqId}` && opened.data?.otherMember?.uid === hanadi.uid && again.data?.id === convId && own.status === 403 && !authorBefore &&
+    sent.status === 201 && seen?.unread === true && outsider.status === 404 && reply.status === 201 && !!note && lateNew.status === 409 && lateExisting.status === 200,
+    `Member without a listing messages the requester (${opened.status}, ${opened.data?.contextTitle}); same conversation on retry; author cannot message own request (${own.status}); author sees it only after a message (unread ${seen?.unread}, notified ${!!note}); outsider ${outsider.status}; after closing: new ${lateNew.status}, existing ${lateExisting.status}`);
+} catch (e) {
+  rec("REQMSG-ERR", false, String(e?.stack ?? e));
+}
 const earlier = results.filter((r) => earlierIds.has(r.id) && !r.id.endsWith("-ERR"));
 rec("F-72", earlier.length === 52 && earlier.every((r) => r.ok === true), `All 52 Sprint 1 and 2 checks still pass (${earlier.filter((r) => r.ok === true).length}/${earlier.length})`);
 const passed = results.filter((r) => r.ok === true).length;

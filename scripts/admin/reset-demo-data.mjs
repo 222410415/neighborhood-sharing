@@ -85,6 +85,7 @@ for (const r of await all("requestPosts")) {
   if (typeof r.title === "string" && r.title.startsWith("FC3")) {
     add("requestPosts", r.id);
     for (const o of await where("requestOffers", "requestPostId", r.id)) add("requestOffers", o.id);
+    for (const c of await where("conversations", "contextId", r.id)) add("conversations", c.id);
   }
 }
 for (const r of await all("reports")) {

@@ -1,7 +1,7 @@
 /**
  * Conversation controller — participants only (404 for anyone else).
  *
- * POST /v1/me/conversations                    — find or create (listing enquiry or booking)
+ * POST /v1/me/conversations                    — find or create (listing enquiry, booking or community request)
  * GET  /v1/me/conversations                    — list with unread markers
  * GET  /v1/me/conversations/:id                — one conversation
  * GET  /v1/me/conversations/:id/messages?after — poll with a cursor

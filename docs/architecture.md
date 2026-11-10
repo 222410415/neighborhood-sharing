@@ -117,7 +117,7 @@ docs/                     documentation
 | POST | /v1/me/bookings/:id/condition/collection/acknowledge | Borrower agrees (active) or disagrees |
 | POST | /v1/me/bookings/:id/{report-return,confirm-receipt,report-issue} | Return, completion, issue |
 | GET | /v1/me/bookings/:id/media/:mediaId?variant= | Condition photo |
-| POST | /v1/me/conversations | Find or create (listing enquiry or booking) |
+| POST | /v1/me/conversations | Find or create (listing enquiry, booking or community request, D-44) |
 | GET | /v1/me/conversations | List with unread markers |
 | GET | /v1/me/conversations/:id | One conversation |
 | GET | /v1/me/conversations/:id/messages?after= | Poll with a cursor |

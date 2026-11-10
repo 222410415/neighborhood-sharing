@@ -11,7 +11,7 @@ import { ids } from "./ids.js";
 export function newConversationDoc(input: {
   contextType: ConversationContextType;
   contextId: string;
-  listingId: string;
+  listingId: string | null;
   uidA: string;
   uidB: string;
   createdByUid: string;
