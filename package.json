@@ -1,7 +1,14 @@
 {
   "name": "neighborhood-sharing",
   "version": "1.0.0",
+  "description": "Neighborhood Sharing and Rental Platform: lend or rent items to neighbors",
+  "license": "MIT",
   "private": true,
+  "homepage": "https://neighborhood-sharing.web.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/222410415/neighborhood-sharing.git"
+  },
   "packageManager": "pnpm@12.6.0",
   "engines": {
     "node": ">=24.0.0"
