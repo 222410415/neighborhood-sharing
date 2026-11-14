@@ -16,6 +16,13 @@
 </p>
 
 <p align="center">
+  <a href="https://neighborhood-sharing.web.app">Live demo</a> ·
+  <a href="#screenshots">Screenshots</a> ·
+  <a href="#run-locally-with-docker">Local setup</a> ·
+  <a href="#documentation">Documentation</a>
+</p>
+
+<p align="center">
   <img src="docs/screenshots/home.jpg" alt="Home page: search bar, category filters and a grid of nearby items with daily prices" width="900">
 </p>
 
@@ -30,10 +37,28 @@ disputes.
 > Payments and deposits are **simulated**. No real money moves and no card or
 > bank details are collected.
 
-**Try it:** open the [live demo](https://neighborhood-sharing.web.app) and sign
-in with `hanadi@neighborhood-demo.test` / `DemoPass123!`. The other demo members
-are `leen@neighborhood-demo.test` and `jawharah@neighborhood-demo.test` (admin),
-with the same password.
+## Explore the demo
+
+Open the [live demo](https://neighborhood-sharing.web.app) to browse without
+an account, or sign in with one of the fictional demo members below.
+All three accounts use the password `DemoPass123!`.
+
+| Demo member | Email | Role |
+| --- | --- | --- |
+| Hanadi | `hanadi@neighborhood-demo.test` | Member |
+| Leen | `leen@neighborhood-demo.test` | Member |
+| Jawharah | `jawharah@neighborhood-demo.test` | Admin |
+
+For a quick tour:
+
+1. **Discover an item.** Search the catalog, filter by neighborhood, and check
+   the item's price, deposit and availability.
+2. **Arrange an exchange.** Request available dates, then use the owner account
+   to approve the booking. Follow the booking page through simulated payment,
+   pickup, condition records and return.
+3. **Keep track.** Open Activity for pending actions, messages and updates.
+4. **Explore trust features.** Read the bilingual policies, ask the policy
+   assistant a question, or use the admin account to view moderation tools.
 
 ## Features
 
@@ -49,17 +74,24 @@ with the same password.
 | Community | Saved items with availability alerts, community requests and offers |
 | Moderation | Admin workspace for disputes, reports, verification and moderation (warn, take down, suspend) with an audit trail |
 | AI | Related-item suggestions and a policy assistant that cites its sources (OpenAI when configured, built-in fallbacks otherwise) |
+| Interface | Responsive desktop and mobile layouts, mobile navigation, English and Arabic listing and policy content |
 
 ## Screenshots
 
+The desktop views below show discovery, booking and member workflows using
+demo data. Open an image to view it at full size.
+
 | Item page | Booking |
 | --- | --- |
-| <img src="docs/screenshots/item.jpg" alt="Item page with photo, owner, availability calendar and deposit" width="440"> | <img src="docs/screenshots/booking.jpg" alt="Booking page with next step, arrangements and simulated payments" width="440"> |
+| [<img src="docs/screenshots/item.jpg" alt="Item page with photo, owner, availability calendar and deposit" width="440">](docs/screenshots/item.jpg) | [<img src="docs/screenshots/booking.jpg" alt="Booking page with next step, arrangements and simulated payments" width="440">](docs/screenshots/booking.jpg) |
 | **Activity hub** | **Policies and assistant** |
-| <img src="docs/screenshots/activity.jpg" alt="Activity hub with bookings that need action, messages and updates" width="440"> | <img src="docs/screenshots/policies.jpg" alt="Policies list in English and Arabic with the policy assistant" width="440"> |
+| [<img src="docs/screenshots/activity.jpg" alt="Activity hub with bookings that need action, messages and updates" width="440">](docs/screenshots/activity.jpg) | [<img src="docs/screenshots/policies.jpg" alt="Policies list in English and Arabic with the policy assistant" width="440">](docs/screenshots/policies.jpg) |
 
 <p align="center">
-  <img src="docs/screenshots/mobile.jpg" alt="Home page on a phone with bottom navigation" width="260">
+  <a href="docs/screenshots/mobile.jpg"><img src="docs/screenshots/mobile.jpg" alt="Home page on a phone with bottom navigation" width="260"></a>
+</p>
+<p align="center">
+  <em>Mobile discovery with a two-column catalog and bottom navigation.</em>
 </p>
 
 ## Tech stack
@@ -106,6 +138,13 @@ Needs Docker Desktop (or Docker Engine with Compose v2) and an internet
 connection. The first build downloads dependencies and takes several minutes.
 The app uses a real Firebase project (Authentication and Firestore); there is
 no offline database.
+
+Clone the repository first:
+
+```sh
+git clone https://github.com/222410415/neighborhood-sharing.git
+cd neighborhood-sharing
+```
 
 1. Get a Firebase service-account key (JSON) for the project from the team, or
    from Firebase console -> Project settings -> Service accounts. Keep it
